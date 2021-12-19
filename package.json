@@ -6,9 +6,11 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/undefined/**/*.json\"",
-    "gh-pages-deploy": "node scripts/gh-pages-deploy.js"
+
+
+    "gh-pages-deploy": "node scripts/gh-pages-deploy.js",
+    "gh-pages-build": "vue-cli-service build --mode gh-pages"
   },
   "dependencies": {
     "core-js": "^3.6.5",
