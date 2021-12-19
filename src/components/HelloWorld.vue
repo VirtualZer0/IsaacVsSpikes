@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <HelloI18n/>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -36,8 +37,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import HelloI18n from './HelloI18n.vue';
 
 export default defineComponent({
+  components: { HelloI18n },
   name: 'HelloWorld',
   props: {
     msg: String,
