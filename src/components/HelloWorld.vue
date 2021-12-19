@@ -38,7 +38,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import HelloI18n from './HelloI18n.vue';
-
+//hello World!
 export default defineComponent({
   components: { HelloI18n },
   name: 'HelloWorld',
