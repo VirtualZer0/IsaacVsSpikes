@@ -6,7 +6,11 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/undefined/**/*.json\""
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/undefined/**/*.json\"",
+
+
+    "gh-pages-deploy": "node scripts/gh-pages-deploy.js",
+    "gh-pages-build": "vue-cli-service build --mode gh-pages"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -35,7 +39,7 @@
     "eslint-plugin-vue": "^7.0.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "typescript": "~4.1.5",
+    "typescript": "~4.4.0",
     "vue-cli-plugin-i18n": "^2.3.1"
   }
 }
