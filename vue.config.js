@@ -1,5 +1,6 @@
 module.exports = {
   publicPath: process.env.DEPLOY_URL,
+
   pluginOptions: {
     i18n: {
       locale: undefined,
