@@ -10,18 +10,21 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    title: "Isaac VS Spikes",
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env
           .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
+      experimentalFeatures: true
     }
   })
 

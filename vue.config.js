@@ -3,14 +3,20 @@ module.exports = {
 
   pluginOptions: {
     i18n: {
-      locale: undefined,
+      locale: 'ru',
       fallbackLocale: undefined,
       localeDir: undefined,
       enableLegacy: undefined,
       runtimeOnly: false,
       compositionOnly: false,
       fullInstall: true
-    }
+    },
+  },
+
+  configureWebpack: {
+    experiments: {
+      topLevelAwait: true
+    },
   }
 }
 

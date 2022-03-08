@@ -1,0 +1,1 @@
+export type LocaleText = Nullable<{ [key: string]: string; }>;
