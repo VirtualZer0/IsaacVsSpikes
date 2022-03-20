@@ -6,6 +6,10 @@ export class Item {
 
   /** Id предмета */
   id: number = 0;
+
+  /** Открыт-ли предмет */
+  isOpen: boolean = false;
+
   /** Спрайт предмета */
   sprite: SpriteSource | null = null;
 
