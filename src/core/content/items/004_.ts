@@ -1,8 +1,9 @@
 import { Item } from "@/core/classes/game/Item";
 import { ItemPool } from "@/core/types/game/ItemPool";
-const item: Item =  {
+const item: Item = Object.assign(new Item(), {
 
-  id: 4,
+  id: '00ef8dd7-0790-4362-8630-6576fcc803ee',
+  isOpen: true,
   sprite: {
     width: 197,
     height: 178,
@@ -21,6 +22,6 @@ const item: Item =  {
 
   pool: ItemPool.BOSS,
 
-};
+});
 
 export default item;

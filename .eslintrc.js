@@ -15,7 +15,9 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-debugger': 'off',
+    'no-undef': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
 
     'vue/multi-word-component-names': 'off',
     'vue/no-multiple-template-root': 'off'

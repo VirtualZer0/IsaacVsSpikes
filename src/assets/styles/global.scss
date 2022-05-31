@@ -1,0 +1,60 @@
+// Global SCSS rules
+
+// Screen
+.screen {
+  width: 100%;
+  min-height: 100vh;
+}
+
+// Scroll
+/* width */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: rgba(128, 128, 128, .25);
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: #555;
+  transition: background-color .2s ease;
+  cursor: pointer;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.no-scroll {
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    display: none;
+    background: transparent;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    display: none;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    display: none;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+    display: none;
+  }
+}

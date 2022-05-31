@@ -1,23 +1,21 @@
 import { ConsumablePool } from "@/core/types/game/ConsumablePool";
 import { SpriteSource } from "@/core/types/gfx/SpriteSource";
+import IConsumable from "../base/IConsumable";
 import { LocaleText } from "../base/LocaleText";
+import { Resource } from "../base/Resource";
 
 /** Класс для карт/рун */
-export class ConsumablePassive {
+export class ConsumablePassive extends Resource implements IConsumable {
 
-    /** Открыт-ли расходник */
-    isOpen: boolean = false;
+  isOpen: boolean = false;
+  sprite: SpriteSource | null = null;
+  pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
 
-    /** Спрайт расходника */
-    sprite: SpriteSource | null = null;
+  getPreview(): Nullable<SpriteSource> {
+    return this.sprite;
+  }
 
-    /** Название расходника */
-    name: LocaleText = null;
-
-    /** Пул расходника */
-    pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
-
-    onPickup?: Nullable<() => void> = null;
-    onRoomChange?: Nullable<() => void> = null;
+  onPickup?: Nullable<() => void> = null;
+  onRoomChange?: Nullable<() => void> = null;
 
 }

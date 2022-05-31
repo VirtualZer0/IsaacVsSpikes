@@ -1,26 +1,40 @@
 import { ConsumablePool } from "@/core/types/game/ConsumablePool";
 import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { LocaleText } from "../base/LocaleText";
+import IConsumable from "../base/IConsumable";
+import { Resource } from "../base/Resource";
+import { ResourceFilter } from "../base/ResourceFilter";
 
 /** Класс для монеток/бомб/ключей и их вариаций */
-export class ConsumableActive {
+export class ConsumableActive extends Resource implements IConsumable {
 
-    /** Эффект карты/руны */
-    effect: ;
+  isOpen: boolean = false;
+  sprite: SpriteSource | null = null;
+  pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
 
-    /** Открыта-ли карта/руна */
-    isOpen: boolean = false;
+  getPreview(): Nullable<SpriteSource> {
+    return this.sprite;
+  }
 
-    /** Спрайт карты/руны */
-    sprite: SpriteSource | null = null;
+  getFilters(): ResourceFilter[] {
+    return [
+      {name: 'isOpen', values: ['true', 'false']},
+      {name: 'pool', values: Object.values(ConsumablePool).map(v => v.toString())},
+    ]
+  }
 
-    /** Название карты/руны */
-    name: LocaleText = null;
+  isMatchFilter(filter: string, value: string): boolean {
+    switch (filter) {
+      case 'isOpen':
+        return this.isOpen.toString() === value;
+      case 'pool':
+        return this.pool.toString() === value;
+      default:
+        return super.isMatchFilter(filter, value);
+    }
+  }
 
-    /** Пул карты/руны */
-    pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
-
-    onPickup?: Nullable<() => void> = null;
-    onRoomChange?: Nullable<() => void> = null;
+  onPickup?: Nullable<() => void> = null;
+  onRoomChange?: Nullable<() => void> = null;
+  onUse?: Nullable<() => void> = null;
 
 }
