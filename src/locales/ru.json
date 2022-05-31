@@ -1,3 +1,86 @@
 {
-  "message": "TEST"
+  "editor": {
+    "editor": "Редактор",
+    "welcome": "Добро пожаловать в редактор контента IsaacVsSpikes",
+    "asideHint": "Создайте или откройте существующий проект",
+    "createProject": "Создать проект",
+    "openProject": "Открыть проект",
+    "sidebarNoProject": "Выберите существующий проект или создайте новый, чтобы приступить к работе",
+    "language": "Язык",
+
+    "levels": "Уровни",
+    "rooms": "Комнаты",
+    "monsters": "Монстры",
+    "bosses": "Боссы",
+    "objects": "Объекты",
+    "items": "Предметы",
+    "characters": "Персонажи",
+    "resources": "Ресурсы",
+    "assets": "Ресурсы",
+    "scripts": "Скрипты",
+
+    "level": "Уровень",
+    "room": "Комната",
+    "monster": "Монстр",
+    "boss": "Босс",
+    "object": "Объект",
+    "item": "Предмет",
+    "character": "Персонаж",
+    "resource": "Ресурс",
+    "asset": "Ресурс",
+    "script": "Скрипт",
+
+    "general": "Общие",
+    "view": "Вид",
+    "scenaries": "Сценарии",
+
+    "indev": "В разработке",
+    "projectName": "Имя проекта",
+    "projectDir": "Папка проекта",
+    "cancel": "Отмена",
+    "create": "Создать",
+    "inCurrentDir": "Создать в текущей папке",
+
+    "deleteResource": "Удалить ресурс",
+    "copyResource": "Копировать ресурс",
+    "dropFile": "Перетащите файл в эту зону",
+    "dropFileOver": "Теперь отпустите файл",
+    "or": "или",
+    "selectFile": "Выберите файл",
+
+    "name": "Название",
+    "description": "Описание",
+    "doorDescription": "Описание двери",
+
+    "baseEvent": "Событие",
+    "textEvent": "Текст",
+    "dialogEvent": "Диалог",
+    "statscheckEvent": "Проверка статов",
+    "rewardEvent": "Награда",
+    "statschangeEvent": "Изменение статов",
+    "chanceEvent": "Случайность",
+
+    "startDialog": "Стартовый диалог",
+    "requiredStats": "Требуемые статы",
+
+    "ghostBlockLBM": "ЛКМ - разместить",
+    "ghostBlockRBM": "ПКМ - отменить",
+
+    "required": "Требуется",
+    "from": "От",
+    "to": "До"
+  },
+
+  "game": {
+
+    "countdown": "Отсчет",
+    "health": "Здоровье",
+    "damage": "DPS",
+    "speed": "Скорость",
+    "skill": "Скилл",
+    "flight": "Полет",
+    "devilChance": "Шанс дьявола",
+    "angelChance": "Шанс ангела"
+
+  }
 }

@@ -19,8 +19,8 @@ export function dynamicImport(imports: any): unknown[] {
  * @param imports - Функция запроса модулей
  * @returns Словарь импортированных модулей
  */
-export function dynamicImportUsingId(imports: any): Map<number,unknown> {
-  const arr: Map<number, unknown> = new Map();
+export function dynamicImportUsingId(imports: any): Map<string,unknown> {
+  const arr: Map<string, unknown> = new Map();
 
   imports.keys().forEach((key: string) => {
     const item = imports(key).default;

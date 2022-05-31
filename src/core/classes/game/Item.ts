@@ -1,22 +1,25 @@
 import { ItemPool } from "@/core/types/game/ItemPool";
 import { SpriteSource } from "@/core/types/gfx/SpriteSource";
+import { Resource } from "../base/Resource";
 import { LocaleText } from "../base/LocaleText";
 
-export class Item {
+export class Item extends Resource {
 
-  /** Id предмета */
-  id: number = 0;
+  /** Открыт-ли предмет */
+  isOpen: boolean = false;
+
   /** Спрайт предмета */
   sprite: SpriteSource | null = null;
 
-  /** Название предмета */
-  name: LocaleText = null;
-
   /** Описание предмета */
-  desc: LocaleText = null;
+  desc: LocaleText = {};
 
   /** Пул предмета */
   pool: ItemPool = ItemPool.DEFAULT;
+
+  getPreview(): Nullable<SpriteSource> {
+    return this.sprite;
+  }
 
   onPickup?: Nullable<() => void> = null;
   onRoomChange?: Nullable<() => void> = null;

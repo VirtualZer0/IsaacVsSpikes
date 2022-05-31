@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../pages/Home.vue'
+
+// Routes for editor screen
+import { EditorRoutes } from './editor';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,8 +13,15 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/dev/library',
     name: 'DevLibrary',
-    component: () => import(/* webpackChunkName: "devlibrary" */ '../views/dev/Library.vue')
-  }
+    component: () => import(/* webpackChunkName: "devlibrary" */ '../pages/dev/Library.vue')
+  },
+
+  {
+    path: '/editor',
+    name: 'Editor',
+    component: () => import(/* webpackChunkName: "editormain" */ '../pages/editor/Main.vue'),
+    children: EditorRoutes
+  },
 ]
 
 const router = createRouter({

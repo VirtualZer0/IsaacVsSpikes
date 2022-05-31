@@ -1,0 +1,230 @@
+.eui {
+
+  svg {
+    fill: $editorFg;
+    transition: fill .3s ease;
+  }
+
+  &.edit-form {
+    padding: 16px;
+
+    .line {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 26px;
+
+      .label {
+        margin-right: 12px;
+        font-size: 18px;
+        width: 200px;
+        text-align: left;
+        font-weight: bold;
+      }
+
+      .input {
+        width: calc(40% + 40px);
+        min-width: 200px;
+      }
+    }
+
+    .vertical-line {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 832px;
+      margin-bottom: 26px;
+
+      .label {
+        margin-right: 12px;
+        font-size: 18px;
+        text-align: left;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  &.button {
+    background: none;
+    color: $editorFg;
+    padding: 4px 8px;
+    border: 2px solid $editorFg;
+    cursor: pointer;
+    transition: all .3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    &:hover {
+      background: $editorFg;
+      color: $editorBg;
+
+      svg {
+        fill: $editorFg;
+      }
+    }
+  }
+
+  &.circleButton {
+    background: none;
+    color: $editorFg;
+    padding: 4px 8px;
+    display: flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 100%;
+    transition: all .3s ease;
+    cursor: pointer;
+    color: $editorBg;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+
+    &:hover {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+      0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+  }
+
+  &.input {
+    outline: none;
+    background: none;
+    border: 2px solid $editorFg;
+    height: 32px;
+    padding: 0 6px;
+    color: $editorFg;
+
+    &.simple {
+      border: none;
+      border-bottom: 2px solid $editorFg;
+      padding: 0;
+    }
+
+    &::placeholder {
+      color: #bbb;
+      font-style: italic;
+    }
+
+    &:disabled {
+      border-color: $editorGray;
+      color: #aaa;
+    }
+  }
+
+  &.textarea {
+    width: 100%;
+    border: 1px solid #fff;
+    background: none;
+    min-height: 260px;
+    color: #fff;
+    padding: 8px;
+    resize: none;
+    border: 2px solid $editorFg;
+    outline: none;
+  }
+
+  &.card {
+
+    background: $editorBg;
+    color: $editorFg;
+
+  }
+
+  &.paper {
+    background: $editorPaper;
+    color: $editorFg;
+  }
+
+  &.fast-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  &.label {
+    font-weight: bold;
+  }
+
+  &.quill-editor {
+
+    .ql-editor {
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    &.ql-container {
+      border: 2px solid $editorFg !important;
+    }
+
+    &.quill-fullwidth {
+      width: 100%;
+    }
+  }
+
+  &.ql-toolbar {
+
+    .ql-picker-options {
+      margin-top: 10px !important;
+    }
+
+    .ql-picker {
+      margin-right: 8px !important;
+    }
+
+    button, .ql-picker-label {
+      background: none !important;
+      color: $editorFg !important;
+      height: 35px !important;
+      width: 35px !important;
+      border: 2px solid $editorFg !important;
+      cursor: pointer;
+      transition: color .3s ease, background-color .3s ease, border-color .3s ease, !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      svg {
+        transition: all .3s ease !important;
+        fill: $editorBg  !important;
+
+        .ql-stroke {
+          stroke: $editorFg  !important;
+          transition: all .3s ease !important;
+        }
+        .ql-fill {
+          fill: $editorFg  !important;
+          transition: all .3s ease !important;
+        }
+      }
+
+      &:hover, &.ql-active {
+        background: $editorFg !important;
+        color: $editorBg !important;
+
+        svg {
+          fill: $editorFg !important;
+
+          .ql-stroke {
+            stroke: $editorBg  !important;
+          }
+
+          .ql-fill {
+            fill: $editorBg  !important;
+          }
+        }
+      }
+    }
+
+  }
+
+}
