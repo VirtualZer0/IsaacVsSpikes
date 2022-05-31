@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../pages/Home.vue'
 
 // Routes for editor screen
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: process.env.USE_HASH_MODE ? createWebHashHistory(process.env.BASE_URL) : createWebHistory(process.env.BASE_URL),
   routes
 })
 

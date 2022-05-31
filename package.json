@@ -8,7 +8,7 @@
     "dev": "vue-cli-service serve",
     "electron:build": "vue-cli-service electron:build",
     "electron:dev": "vue-cli-service electron:serve",
-    "gh-pages-build": "vue-cli-service build",
+    "gh-pages-build": "vue-cli-service build --mode gh-pages",
     "gh-pages-deploy": "node scripts/gh-pages-deploy.js",
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/undefined/**/*.json\"",
     "postinstall": "electron-builder install-app-deps",
