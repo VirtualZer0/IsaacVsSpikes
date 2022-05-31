@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.DEPLOY_URL,
+  publicPath: '/',
 
   css: {
     loaderOptions: {
@@ -32,4 +32,4 @@ module.exports = {
   }
 }
 
-console.log(`Deploy point: ${process.env.DEPLOY_URL}`);
+console.log(`Deploy point: /`);
