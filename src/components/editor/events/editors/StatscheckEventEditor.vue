@@ -31,9 +31,9 @@
 
           <div class="range" v-else-if="typeof params == 'object'">
             {{$t('editor.from')}}
-            <input class="eui input" type="number" v-model.number="params.from" :max="params.to"/>
+            <input class="eui input" type="number" v-model.number="params.from"/>
             {{$t('editor.to')}}
-            <input class="eui input" type="number" v-model.number="params.to" :min="params.from"/>
+            <input class="eui input" type="number" v-model.number="params.to"/>
           </div>
 
         </div>
@@ -101,7 +101,7 @@ export default defineComponent({
 
   .nth-format {
     .stat-line:nth-child(2n+1) {
-      background-color: #ddd;
+      background-color: $editorBgInvariant;
     }
   }
 

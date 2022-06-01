@@ -51,10 +51,11 @@
     "name": "Название",
     "description": "Описание",
     "doorDescription": "Описание двери",
+    "weight": "Вес",
 
     "baseEvent": "Событие",
     "textEvent": "Текст",
-    "dialogEvent": "Диалог",
+    "selectEvent": "Выбор",
     "statscheckEvent": "Проверка статов",
     "rewardEvent": "Награда",
     "statschangeEvent": "Изменение статов",
@@ -68,7 +69,12 @@
 
     "required": "Требуется",
     "from": "От",
-    "to": "До"
+    "to": "До",
+    "variants": "Варианты",
+    "addVariant": "Добавить вариант",
+    "out": "Выход",
+    "newOutKey": "Ключ нового выхода",
+    "keyAlreadyExists": "Такой ключ уже существует"
   },
 
   "game": {

@@ -118,10 +118,10 @@
 
   &.textarea {
     width: 100%;
-    border: 1px solid #fff;
+    border: 1px solid $editorFg;
     background: none;
     min-height: 260px;
-    color: #fff;
+    color: $editorFg;
     padding: 8px;
     resize: none;
     border: 2px solid $editorFg;

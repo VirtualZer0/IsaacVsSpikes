@@ -1,7 +1,7 @@
 export enum RoomEventType {
   BASE = 'base',
   TEXT = 'text',
-  DIALOG = 'dialog',
+  SELECT = 'select',
   STATSCHECK = 'statscheck',
   REWARD = 'reward',
   STATSCHANGE = 'statschange',

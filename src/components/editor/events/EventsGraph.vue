@@ -75,7 +75,7 @@
 import { RoomEvent } from "@/core/classes/game/sub/room/RoomEvent";
 import { RoomEventType } from "@/core/classes/game/sub/room/RoomEventType";
 import { RoomStatsCheckEvent } from "@/core/classes/game/sub/room/RoomStatsCheckEvent";
-import { RoomDialogEvent } from "@/core/classes/game/sub/room/RoomDialogEvent";
+import { RoomSelectEvent } from "@/core/classes/game/sub/room/RoomSelectEvent";
 import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChangeEvent";
 import { RoomRewardEvent } from "@/core/classes/game/sub/room/RoomRewardEvent";
 import { RoomTextEvent } from "@/core/classes/game/sub/room/RoomTextEvent";
@@ -122,6 +122,8 @@ export default defineComponent({
 
     TextEventEditor: defineAsyncComponent(() => import("./editors/TextEventEditor.vue")),
     StatscheckEventEditor: defineAsyncComponent(() => import("./editors/StatscheckEventEditor.vue")),
+    SelectEventEditor: defineAsyncComponent(() => import("./editors/SelectEventEditor.vue")),
+    ChanceEventEditor: defineAsyncComponent(() => import("./editors/ChanceEventEditor.vue")),
   },
   props: {
     events: {
@@ -345,7 +347,7 @@ export default defineComponent({
           case RoomEventType.STATSCHECK: (newEvent = new RoomStatsCheckEvent()).id = uuid(); break;
           case RoomEventType.STATSCHANGE: (newEvent = new RoomStatsChangeEvent()).id = uuid(); break;
           case RoomEventType.REWARD: (newEvent = new RoomRewardEvent()).id = uuid(); break;
-          case RoomEventType.DIALOG: (newEvent = new RoomDialogEvent()).id = uuid(); break;
+          case RoomEventType.SELECT: (newEvent = new RoomSelectEvent()).id = uuid(); break;
           case RoomEventType.TEXT : (newEvent = new RoomTextEvent()).id = uuid(); break;
           case RoomEventType.CHANCE : (newEvent = new RoomChanceEvent()).id = uuid(); break;
           default: return;

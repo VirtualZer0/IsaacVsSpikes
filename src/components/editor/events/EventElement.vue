@@ -197,6 +197,13 @@ export default defineComponent({
     }
   }
 
+  .name {
+    padding: 0 6px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    max-height: 36px;
+  }
+
   .input {
     position: absolute;
     width: 14px;

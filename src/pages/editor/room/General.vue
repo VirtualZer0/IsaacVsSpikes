@@ -6,6 +6,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.weight`)}}</label>
+      <input type="number" class="eui input small" v-model.number="curRoom.weight" min="0" step=".1"/>
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{$t(`editor.description`)}}</label>
       <editor-locale-multi-text class="input" :text="room.desc"/>
     </div>
@@ -36,7 +41,11 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+
+    const curRoom = reactive(props.room);
+
     return {
+      curRoom,
       emit
     }
   },
@@ -45,4 +54,7 @@ export default defineComponent({
 
 
 <style lang="scss" scoped>
+.input.small {
+  width: 100px;
+}
 </style>
