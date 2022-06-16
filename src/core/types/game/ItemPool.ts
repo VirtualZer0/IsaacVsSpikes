@@ -1,10 +1,10 @@
 export enum ItemPool {
   /** Стандартный пул */
-  DEFAULT,
+  DEFAULT = 'default',
   /** Сокровищница */
-  TREASURE,
+  TREASURE = 'treasure',
   /** Босс */
-  BOSS,
+  BOSS = 'boss',
   /** Магазин */
-  SHOP
+  SHOP = 'shop',
 }

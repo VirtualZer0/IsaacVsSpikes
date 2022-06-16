@@ -1,4 +1,3 @@
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
 import IBaseFS from "@/utils/uniFS/IBaseFS";
 import IFile from "@/utils/uniFS/IFile";
 import { Resource } from "../base/Resource";
@@ -7,17 +6,30 @@ import { v4 as uuid } from 'uuid'
 import { detectFileType } from "@/core/helpers/detectFileType";
 import { ResourceFilter } from "../base/ResourceFilter";
 import IDirectory from "@/utils/uniFS/IDirectory";
+import { useEditorStore } from "@/store/editor";
 
 export class Asset extends Resource {
   type: 'image' | 'audio' | 'video' | 'font' | 'script' | 'json' | 'other' = 'other';
   filename: string = '';
   extension: string = '';
+  exportFolder: string = '';
+  exportName: string = '';
   file?: Nullable<IFile> = null;
 
-  getPreview(): Nullable<SpriteSource> {
-    throw new Error("Method not implemented.");
-  }
+  async getPreview(): Promise<string> {
+    const editor = useEditorStore();
+    if (!editor.fs) {
+      return '';
+    }
 
+    const file = await this.getFile(await editor.fs.getDirectory('assets'));
+    if (!file) {
+      return '';
+    }
+
+
+    return `<img lazy src="${await file.getUrl()}"/>`;
+  }
 
   public static async create(file: File, fs: IBaseFS): Promise<Asset> {
     const assetsDir = await fs.getDirectory('assets');
@@ -37,13 +49,14 @@ export class Asset extends Resource {
     return asset;
   }
 
-  public async  getFile(assetDir: IDirectory): Promise<Nullable<IFile>> {
+  public async getFile(assetDir: IDirectory): Promise<Nullable<IFile>> {
     if (this.file) {
       return this.file;
     }
 
     const dir = await assetDir.getDirectory(this.type);
-    return await dir.getFile(`${this.id}.${this.extension}`);
+    this.file = await dir.getFile(`${this.id}.${this.extension}`);
+    return this.file;
   }
 
   public getDisplayName(locale = 'ru'): string {

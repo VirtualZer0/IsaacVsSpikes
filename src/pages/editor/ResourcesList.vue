@@ -5,33 +5,63 @@
         <div class="title">{{$t(`editor.${resource}`)}}</div>
         <div class="search">
           <svg style="width:32px;height:32px" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+            <path fill="currentColor"
+              d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
           </svg>
-          <input type="text" class="eui input simple" v-model="filter"/>
+          <input type="text" class="eui input simple" v-model="filter" />
         </div>
       </div>
 
+      <!-- Встроенные ресурсы -->
+      <div class="eui items builtin">
+        <div class="group">
+          <div class="group-title">{{$t('editor.builtin')}}</div>
+        </div>
+        <div class="eui card shadow-l1 item" v-for="[id,res] in library.items" :key="id" @click="emit('select', id)">
+          <div class="name">{{res.getDisplayName(store.currentLocale)}}</div>
+          <div class="uuid">{{res.id}}</div>
+        </div>
+      </div>
+
+      <!-- Пользовательские ресурсы -->
       <div class="eui items">
-        <div class="eui card shadow-l1 item" v-for="[id,res] in filteredItems" :key="id" @click="router.push(`/editor/${resource}/${id}`)">
+        <div class="group">
+          <div class="group-title">{{$t('editor.custom')}}</div>
+        </div>
+        <div class="eui card shadow-l1 item" v-for="[id,res] in filteredItems" :key="id"
+          @click="selectMode ? emit('select', id) : router.push(`/editor/${resource}/${id}`)">
+          <Suspense>
+            <template #default>
+              <editor-res-preview :res="res" class="preview" />
+            </template>
+            <template #fallback>
+              <svg style="width:24px;height:24px" class="preview-loader" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" />
+              </svg>
+            </template>
+          </Suspense>
           <div class="name">{{res.getDisplayName(store.currentLocale)}}</div>
           <div class="uuid">{{res.id}}</div>
 
           <div class="item-controls">
-            <div class="control duplicate" :title="$t('editor.copyResource')" @click.stop="duplicateResource(res)" v-if="resource != 'assets'">
+            <div class="control duplicate" :title="$t('editor.copyResource')" @click.stop="duplicateResource(res)"
+              v-if="resource != 'assets'">
               <svg style="width:18px;height:18px" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                <path fill="currentColor"
+                  d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
               </svg>
             </div>
 
             <div class="control delete" :title="$t('editor.deleteResource')" @click.stop="deleteResource(res)">
               <svg style="width:20px;height:20px" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" />
+                <path fill="currentColor"
+                  d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" />
               </svg>
             </div>
           </div>
         </div>
 
-        <router-link class="eui item new" :to="`/editor/${resource}/new`">
+        <router-link class="eui item new" :to="`/editor/${resource}/new`" v-if="!selectMode">
           <svg style="width:64px;height:64px" viewBox="0 0 24 24">
             <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
           </svg>
@@ -55,14 +85,36 @@ import { Level } from '@/core/classes/game/Level';
 import { Room } from '@/core/classes/game/Room';
 import { Item } from '@/core/classes/game/Item';
 
+import EditorResPreview from '@/components/editor/ui/EditorResPreview.vue';
+
+import { library } from '@/core/Core';
+
 export default defineComponent({
   name: 'EditorResourcesListScreen',
-  setup() {
+  props: {
+    selectMode: {
+      type: Boolean,
+      default: false
+    },
+    includeBuiltin: {
+      type: Boolean,
+      default: false
+    },
+    resourceType: {
+      type: String,
+      default: ''
+    }
+  },
+  components: {
+    EditorResPreview
+  },
+  emits: ['select'],
+  setup(props, {emit}) {
     const editor = useEditorStore();
     const store = useMainStore();
     const route = useRoute();
     const router = useRouter();
-    const resource = route.params.resource as string;
+    const resource = props.resourceType || route.params.resource as string;
     const items = (editor as unknown as Indexable<Map<string, Resource>>)[resource] as Map<string, Resource>;
     const filter = ref('');
 
@@ -128,13 +180,18 @@ export default defineComponent({
 
     return {
       editor, store, filteredItems, resource, router, filter,
-      duplicateResource, deleteResource
+      library,
+      duplicateResource, deleteResource, emit
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
+
+
+
+
 .editor-resources-list {
 
   @include center;
@@ -147,6 +204,7 @@ export default defineComponent({
   height: 100%;
   width: calc(100% - 32px);
   padding: 24px;
+  overflow: auto;
 }
 
 .top {
@@ -177,6 +235,25 @@ export default defineComponent({
 
 }
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.group {
+  margin-top: 24px;
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-variant: small-caps;
+
+  &-title {
+    width: 60%;
+    padding-bottom: 8px;
+    border-bottom: 2px solid $editorFg;
+  }
+}
+
 .item {
   @include center;
   flex-direction: column;
@@ -185,8 +262,21 @@ export default defineComponent({
   height: 140px;
   cursor: pointer;
   transition: all .25s ease;
-  font-size: 21px;
+  font-size: 18px;
   color: $editorFg;
+
+  .preview {
+    width: 100%;
+    max-height: 85px;
+    margin-bottom: 4px;
+    overflow: hidden;
+  }
+
+  .preview-loader {
+    animation: spin 1s linear infinite;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 
   .name {
     word-wrap: break-word;

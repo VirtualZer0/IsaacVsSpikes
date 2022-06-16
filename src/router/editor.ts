@@ -40,6 +40,16 @@ export const EditorRoutes = [
         path: 'general',
         name: 'EditorLevelGeneral',
         component: () => import(/* webpackChunkName: "editorlevel" */ '../pages/editor/level/General.vue'),
+      },
+      {
+        path: 'view',
+        name: 'EditorLevelView',
+        component: () => import(/* webpackChunkName: "editorlevel" */ '../pages/editor/level/View.vue'),
+      },
+      {
+        path: 'generation',
+        name: 'EditorLevelGeneration',
+        component: () => import(/* webpackChunkName: "editorlevel" */ '../pages/editor/level/Generation.vue'),
       }
     ]
   },

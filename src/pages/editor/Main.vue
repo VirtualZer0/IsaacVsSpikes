@@ -1,5 +1,5 @@
 <template>
-  <main class="screen editor-screen" :key="editor.isOpen">
+  <main class="screen editor-screen" :key="(editor.isOpen as any)">
     <editor-sidebar class="editor-sidebar"/>
     <Suspense>
       <!-- STUB: Временный обход бага vue-i18n: https://github.com/intlify/vue-i18n-next/issues/601 -->
@@ -29,7 +29,6 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const editor = useEditorStore();
-    console.log(route);
     return { route, editor }
   }
 })

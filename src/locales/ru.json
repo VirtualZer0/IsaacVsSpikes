@@ -19,6 +19,9 @@
     "assets": "Ресурсы",
     "scripts": "Скрипты",
 
+    "builtin": "Встроенные",
+    "custom": "Пользовательские",
+
     "level": "Уровень",
     "room": "Комната",
     "monster": "Монстр",
@@ -33,6 +36,7 @@
     "general": "Общие",
     "view": "Вид",
     "scenaries": "Сценарии",
+    "generation": "Генерация",
 
     "indev": "В разработке",
     "projectName": "Имя проекта",
@@ -74,7 +78,14 @@
     "addVariant": "Добавить вариант",
     "out": "Выход",
     "newOutKey": "Ключ нового выхода",
-    "keyAlreadyExists": "Такой ключ уже существует"
+    "keyAlreadyExists": "Такой ключ уже существует",
+
+    "levelGen": "Расположение уровня",
+    "isRegular": "Обычная генерация",
+    "regularSlot": "Слот уровня",
+
+    "exportFolder": "Папка экспорта",
+    "exportName": "Имя при экспорте"
   },
 
   "game": {

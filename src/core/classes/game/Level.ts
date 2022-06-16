@@ -3,11 +3,22 @@ import { Resource } from "../base/Resource";
 import { LocaleText } from "../base/LocaleText";
 import { Room } from "./Room";
 import { Asset } from "./Asset";
+import { LevelGenSystemType } from "./sub/level/LevelGenSystemType";
+import { RoomRuleGen } from "./sub/room/RoomRuleGen";
 
 export class Level extends Resource {
 
   /** Описание уровня */
   desc: LocaleText = {};
+
+  /** Является ли уровень обычным (встроенным в стандартную цепочку уровней) */
+  regular: boolean = true;
+
+  /** Вес уровня, применяется если уровень обычный */
+  regularWeight: number = 1;
+
+  /** Слот уровня при обычной генерации */
+  regularSlot: number = 0;
 
   /** Спрайт уровня */
   sprite: Asset | null = null;
@@ -18,6 +29,9 @@ export class Level extends Resource {
   /** Объект с комнатами */
   rooms: Room[] = [];
 
+  /** Система генерации */
+  genSystem: LevelGenSystemType = LevelGenSystemType.INCREMENTAL;
+
   /** Количество подуровней */
   sublevels: number = 2;
 
@@ -27,7 +41,9 @@ export class Level extends Resource {
   /** Максимальное количество комнат в подуровне */
   maxRooms: number = 8;
 
-  getPreview(): Nullable<SpriteSource> {
-    return null;
-  }
+  /** Увеличение количества комнат при инкриментальной системе */
+  incrementCount: number = 1;
+
+  /** Правила генерации комнат */
+  roomRules: RoomRuleGen[] = [];
 }

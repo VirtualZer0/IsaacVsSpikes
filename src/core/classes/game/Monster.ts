@@ -15,8 +15,4 @@ export class Monster extends Resource {
 
   /** Визуальные эффекты монстра */
   effects: MonsterEffect[] = [];
-
-  getPreview(): Nullable<SpriteSource> {
-    return this.sprite;
-  }
 }

@@ -115,7 +115,7 @@ export const useEditorStore = defineStore('editor', {
         if (dir.name === 'assets') {
           const index = await dir.getFile('index.json');
           const assets = JSON.parse(await index.readAllText());
-          assets.forEach((asset: Asset) => {
+          assets.forEach(async (asset: Asset) => {
             const restoredAsset = restoreClass<Asset>(asset, Asset);
             this.assets.set(asset.id, restoredAsset);
           });
@@ -217,12 +217,24 @@ export const useEditorStore = defineStore('editor', {
     async saveAsset(asset: Asset) {
       const fs = this.fs as IBaseFS;
       const assetCopy = Object.assign({}, asset)
+
+      if (!this.assets.has(asset.id)) {
+        this.assets.set(asset.id, assetCopy);
+      }
+
       delete assetCopy.file;
-      this.assets.set(asset.id, assetCopy);
+
       const assetsDir = await fs.getDirectory('assets');
 
+      const indexCopy: Asset[] = [];
+      this.assets.forEach((asset) => {
+        const assetCopy = JSON.parse(JSON.stringify(asset));
+        delete assetCopy.file;
+        indexCopy.push(assetCopy);
+      })
+
       await (await assetsDir.getFile(`index.json`))
-        .writeAllText(JSON.stringify([...this.assets.values()]));
+        .writeAllText(JSON.stringify(indexCopy));
     },
 
     /**
@@ -235,8 +247,16 @@ export const useEditorStore = defineStore('editor', {
       const targetDir = await assetsDir.getDirectory(asset.type);
       await targetDir.deleteFile(`${asset.id}.${asset.extension}`);
       this.assets.delete(asset.id);
+
+      const indexCopy: Asset[] = [];
+      this.assets.forEach((asset) => {
+        const assetCopy = JSON.parse(JSON.stringify(asset));
+        delete assetCopy.file;
+        indexCopy.push(assetCopy);
+      });
+
       await (await assetsDir.getFile(`index.json`))
-        .writeAllText(JSON.stringify([...this.assets.values()]));
+        .writeAllText(JSON.stringify(indexCopy));
     },
 
     /** Сохранить текущий набор нод для событий на диск */

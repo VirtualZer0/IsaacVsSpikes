@@ -1,3 +1,8 @@
+/**
+ * Получает категорию файла по его MIME-типу
+ * @param mime - MIME-тип файла
+ * @returns Категория файла
+ */
 export function detectFileType(mime: string) {
 
   if (mime.includes('image')) {

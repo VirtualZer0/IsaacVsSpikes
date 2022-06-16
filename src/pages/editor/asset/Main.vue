@@ -23,10 +23,12 @@ import { Asset } from '@/core/classes/game/Asset';
 import {v4 as uuid} from 'uuid'
 import { useMainStore } from '@/store/main';
 import reactiveCopy from '@/core/helpers/reactiveCopy';
+import { restoreClass } from '@/core/helpers/restoreClass';
 
 import EditorResourceTop from '@/components/editor/EditorResourceTop.vue'
 import EditorFileDrop from '@/components/editor/ui/EditorFileDrop.vue';
 import EditorAssetGeneral from '@/pages/editor/asset/General.vue';
+import { FSAccessFile } from '@/utils/uniFS/FSAccess/FSAccessFile';
 
 export default defineComponent({
   name: 'EditorAsset',
@@ -51,7 +53,7 @@ export default defineComponent({
       if (!editor.fs) {
         return;
       }
-      asset.value = await Asset.create(ev, editor.fs)
+      asset.value = await Asset.create(ev, editor.fs);
       await editor.saveAsset(asset.value);
 
       await router.replace(`/editor/assets/${asset.value.id}`);
@@ -64,7 +66,12 @@ export default defineComponent({
             return;
           }
 
-          editor.assets.set(asset.value.id, asset.value);
+          // Восстановление классов ассета и файла
+          const restoredAsset = restoreClass<Asset>(asset.value, Asset);
+          if (restoredAsset.file) {
+            restoredAsset.file = restoreClass<FSAccessFile>(restoredAsset.file, FSAccessFile);
+          }
+          editor.assets.set(asset.value.id, restoredAsset);
         });
       }
 

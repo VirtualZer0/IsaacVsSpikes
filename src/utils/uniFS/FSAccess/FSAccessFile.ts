@@ -7,7 +7,7 @@ export class FSAccessFile implements IFile {
   parent: IDirectory;
 
   protected handler: any = null;
-  protected url: Nullable<string> = null;
+  public url: Nullable<string> = null;
 
   constructor(name: string, path: string, parent: IDirectory, handler: any) {
     this.name = name;
@@ -18,6 +18,11 @@ export class FSAccessFile implements IFile {
 
   async getUrl(): Promise<string> {
     return this.url ?? (this.url = window.URL.createObjectURL(await this.handler.getFile()));
+  }
+
+  free(): void {
+    if (this.url)
+      window.URL.revokeObjectURL(this.url);
   }
 
   async writeAllText(content: string): Promise<void> {

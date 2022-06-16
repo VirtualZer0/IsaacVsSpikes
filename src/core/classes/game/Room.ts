@@ -26,8 +26,4 @@ export class Room extends Resource {
 
   /** События в комнате */
   events: RoomEvent[] = [];
-
-  getPreview(): Nullable<SpriteSource> {
-    return this.background;
-  }
 }

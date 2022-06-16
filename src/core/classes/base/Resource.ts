@@ -16,8 +16,8 @@ export class Resource {
   tags: string[] = [];
 
   /** Получить превью ресурса */
-  getPreview(): Nullable<SpriteSource> {
-    return null;
+  async getPreview(): Promise<string> {
+    return '';
   }
 
   /** Получить отображаемое имя ресурса */

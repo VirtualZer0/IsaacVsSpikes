@@ -11,10 +11,6 @@ export class ConsumableActive extends Resource implements IConsumable {
   sprite: SpriteSource | null = null;
   pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
 
-  getPreview(): Nullable<SpriteSource> {
-    return this.sprite;
-  }
-
   getFilters(): ResourceFilter[] {
     return [
       {name: 'isOpen', values: ['true', 'false']},

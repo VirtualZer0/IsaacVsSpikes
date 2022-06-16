@@ -17,10 +17,6 @@ export class Item extends Resource {
   /** Пул предмета */
   pool: ItemPool = ItemPool.DEFAULT;
 
-  getPreview(): Nullable<SpriteSource> {
-    return this.sprite;
-  }
-
   onPickup?: Nullable<() => void> = null;
   onRoomChange?: Nullable<() => void> = null;
 }

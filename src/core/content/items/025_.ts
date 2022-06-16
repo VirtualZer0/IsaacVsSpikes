@@ -20,7 +20,7 @@ const item: Item = Object.assign(new Item(), {
     en: ''
   },
 
-  pool: ItemPool.DEFAULT,
+  pool: 'default',
 
 });
 

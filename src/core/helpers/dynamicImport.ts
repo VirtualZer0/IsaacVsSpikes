@@ -29,3 +29,19 @@ export function dynamicImportUsingId(imports: any): Map<string,unknown> {
 
   return arr;
 }
+
+/**
+ * Динамический импорт всех JSON-файлов из папки на этапе компиляции с получением id
+ * @param imports - Функция запроса модулей
+ * @returns Словарь импортированных модулей
+ */
+export function dynamicJSONImportUsingId(imports: any): Map<string, unknown> {
+  const arr: Map<string, unknown> = new Map();
+
+  imports.keys().forEach((key: string) => {
+    const item = imports(key);
+    arr.set(item.id, item);
+  });
+
+  return arr;
+}

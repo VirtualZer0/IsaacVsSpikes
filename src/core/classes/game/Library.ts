@@ -6,7 +6,7 @@ export class Library {
   items: Map<string, Item> = new Map();
 
   loadItems() {
-    this.items = dynamicImportUsingId(require.context('../../content/items', true, /\.ts$/, 'sync')) as Map<string, Item>;
+    this.items = dynamicImportUsingId(require.context('../../content/items/scripts', true, /\.ts$/, 'sync')) as Map<string, Item>;
     this.log(`Loaded ${this.items.size} items`);
   }
 

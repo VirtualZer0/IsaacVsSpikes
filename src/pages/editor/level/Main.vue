@@ -1,19 +1,15 @@
 <template>
   <div class="screen editor editor-level">
 
-    <editor-resource-top
-      type="level"
-      :res="level"
-      @save="saveLevel"
-      @cancel="router.push('/editor/list/levels')"/>
+    <editor-resource-top type="level" :res="level" @save="saveLevel" @cancel="router.push('/editor/list/levels')" />
 
-    <editor-resource-menu
-      :items="[
-        {name: 'editor.general', value: 'general'},
-      ]"
-      @select="switchMenu"/>
+    <editor-resource-menu :items="[
+      {name: 'editor.general', value: 'general'},
+      {name: 'editor.view', value: 'view'},
+      {name: 'editor.generation', value: 'generation'},
+    ]" @select="switchMenu" />
 
-    <router-view :level="level" class="eui paper content"/>
+    <router-view :level="level" class="eui paper content" />
 
   </div>
 </template>

@@ -11,10 +11,6 @@ export class ConsumablePill extends Resource implements IConsumable {
   sprite: SpriteSource | null = null;
   pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
 
-  getPreview(): Nullable<SpriteSource> {
-    return this.sprite;
-  }
-
   onPickup?: Nullable<() => void> = null;
   onRoomChange?: Nullable<() => void> = null;
   onActivate?: Nullable<() => void> = null;
