@@ -1,0 +1,18 @@
+{
+    "id": "ee879d1e-b226-4888-87f4-947a173db577",
+    "isOpen": true,
+    "sprite": {
+        "width": 96,
+        "height": 212,
+        "src": "image/items/2.png"
+    },
+    "name": {
+        "ru": "Какой-то предмет",
+        "en": ""
+    },
+    "desc": {
+        "ru": "Какое-то описание",
+        "en": ""
+    },
+    "pool": "boss"
+}

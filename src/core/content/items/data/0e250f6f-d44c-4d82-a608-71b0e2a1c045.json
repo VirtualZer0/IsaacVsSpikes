@@ -1,0 +1,18 @@
+{
+    "id": "0e250f6f-d44c-4d82-a608-71b0e2a1c045",
+    "isOpen": true,
+    "sprite": {
+        "width": 139,
+        "height": 220,
+        "src": "image/items/29.png"
+    },
+    "name": {
+        "ru": "Какой-то предмет",
+        "en": ""
+    },
+    "desc": {
+        "ru": "Какое-то описание",
+        "en": ""
+    },
+    "pool": "default"
+}
