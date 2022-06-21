@@ -1,4 +1,5 @@
 .eui {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 
   svg {
     fill: $editorFg;
@@ -7,6 +8,8 @@
 
   &.edit-form {
     padding: 16px;
+    overflow: auto;
+    max-height: 100%;
 
     .line {
       display: flex;

@@ -1,5 +1,5 @@
 import { LevelDoorSlot } from "../level/LevelDoorSlot";
-import { RoomType } from "../RoomType";
+import { RoomType } from "./RoomType";
 
 /** Правило генерации комнаты */
 export type RoomRuleGen = {

@@ -83,6 +83,8 @@
     "levelGen": "Расположение уровня",
     "isRegular": "Обычная генерация",
     "regularSlot": "Слот уровня",
+    "background": "Фон",
+    "overlay": "Оверлей",
 
     "exportFolder": "Папка экспорта",
     "exportName": "Имя при экспорте"
@@ -97,7 +99,15 @@
     "skill": "Скилл",
     "flight": "Полет",
     "devilChance": "Шанс дьявола",
-    "angelChance": "Шанс ангела"
+    "angelChance": "Шанс ангела",
+
+    "normalRoom": "Обычная комната",
+    "bossRoom": "Комната босса",
+    "secretRoom": "Секретная комната",
+    "treasureRoom": "Сокровищница",
+    "shopRoom": "Магазин",
+    "spikesRoom": "Кусачая комната"
+
 
   }
 }

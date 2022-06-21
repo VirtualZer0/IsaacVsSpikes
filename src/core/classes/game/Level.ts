@@ -5,6 +5,8 @@ import { Room } from "./Room";
 import { Asset } from "./Asset";
 import { LevelGenSystemType } from "./sub/level/LevelGenSystemType";
 import { RoomRuleGen } from "./sub/room/RoomRuleGen";
+import { ResourceLink } from "../base/ResourceLink";
+import { RoomType } from "./sub/room/RoomType";
 
 export class Level extends Resource {
 
@@ -20,11 +22,11 @@ export class Level extends Resource {
   /** Слот уровня при обычной генерации */
   regularSlot: number = 0;
 
-  /** Спрайт уровня */
-  sprite: Asset | null = null;
+  /** Спрайты уровня */
+  sprites: { [key: string]: ResourceLink[] } = {};
 
-  /** Оверлей уровня */
-  overlay: Asset | null = null;
+  /** Оверлеи уровня */
+  overlays: { [key: string]: ResourceLink[] } = {};
 
   /** Объект с комнатами */
   rooms: Room[] = [];
@@ -46,4 +48,13 @@ export class Level extends Resource {
 
   /** Правила генерации комнат */
   roomRules: RoomRuleGen[] = [];
+
+  constructor() {
+    super();
+
+    Object.values(RoomType).forEach(type => {
+      this.sprites[type] = [];
+      this.overlays[type] = [];
+    })
+  }
 }

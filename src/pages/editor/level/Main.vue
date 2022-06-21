@@ -6,7 +6,6 @@
     <editor-resource-menu :items="[
       {name: 'editor.general', value: 'general'},
       {name: 'editor.view', value: 'view'},
-      {name: 'editor.generation', value: 'generation'},
     ]" @select="switchMenu" />
 
     <router-view :level="level" class="eui paper content" />
@@ -78,6 +77,7 @@ export default defineComponent({
   flex-direction: column;
   gap: 12px;
   padding-left: 24px;
+  max-height: 100%;
 }
 
 .content {

@@ -1,5 +1,5 @@
 <template>
-  <div class="editor editor-resources-list">
+  <div class="editor editor-resources-list" :class="{modal: modal}">
     <div class="eui paper">
       <div class="top">
         <div class="title">{{$t(`editor.${resource}`)}}</div>
@@ -13,11 +13,12 @@
       </div>
 
       <!-- Встроенные ресурсы -->
-      <div class="eui items builtin">
+      <div class="eui items builtin" v-if="includeBuiltin && (library as any)[resource]">
         <div class="group">
           <div class="group-title">{{$t('editor.builtin')}}</div>
         </div>
-        <div class="eui card shadow-l1 item" v-for="[id,res] in library.items" :key="id" @click="emit('select', id)">
+        <div class="eui card shadow-l1 item" v-for="[id,res] in (library as any)[resource]" :key="id"
+          @click="emit('select', res)">
           <div class="name">{{res.getDisplayName(store.currentLocale)}}</div>
           <div class="uuid">{{res.id}}</div>
         </div>
@@ -25,11 +26,11 @@
 
       <!-- Пользовательские ресурсы -->
       <div class="eui items">
-        <div class="group">
+        <div class="group" v-if="includeBuiltin">
           <div class="group-title">{{$t('editor.custom')}}</div>
         </div>
         <div class="eui card shadow-l1 item" v-for="[id,res] in filteredItems" :key="id"
-          @click="selectMode ? emit('select', id) : router.push(`/editor/${resource}/${id}`)">
+          @click="selectMode ? emit('select', res) : router.push(`/editor/${resource}/${id}`)">
           <Suspense>
             <template #default>
               <editor-res-preview :res="res" class="preview" />
@@ -43,7 +44,7 @@
           <div class="name">{{res.getDisplayName(store.currentLocale)}}</div>
           <div class="uuid">{{res.id}}</div>
 
-          <div class="item-controls">
+          <div class="item-controls" v-if="!selectMode">
             <div class="control duplicate" :title="$t('editor.copyResource')" @click.stop="duplicateResource(res)"
               v-if="resource != 'assets'">
               <svg style="width:18px;height:18px" viewBox="0 0 24 24">
@@ -92,6 +93,10 @@ import { library } from '@/core/Core';
 export default defineComponent({
   name: 'EditorResourcesListScreen',
   props: {
+    modal: {
+      type: Boolean,
+      default: false
+    },
     selectMode: {
       type: Boolean,
       default: false
@@ -197,6 +202,14 @@ export default defineComponent({
   @include center;
   flex-grow: 1;
   height: 100%;
+
+  &.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
 
 }
 
