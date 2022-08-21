@@ -31,12 +31,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 
 .res-preview {
-  &::v-deep {
-    img {
-      width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
+  :deep(img) {
+    width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
 }
 </style>

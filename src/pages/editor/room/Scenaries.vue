@@ -14,7 +14,6 @@ import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
 
 export default defineComponent({
   name: 'EditorRoomScenaries',
-  emits: ['changeEvents'],
   components: {
     EventsGraph,
   },

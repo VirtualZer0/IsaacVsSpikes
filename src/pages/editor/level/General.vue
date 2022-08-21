@@ -7,6 +7,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.tags`)}}</label>
+      <editor-tag-list :tags="level.tags" />
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{$t(`editor.description`)}}</label>
       <editor-locale-text class="input" :text="level.desc" />
     </div>
@@ -29,6 +34,17 @@
       </div>
     </div>
 
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.musicStart`)}}</label>
+      <editor-link :res="curLevel.musicStart" @select="curLevel.musicStart = $event"
+        @remove="curLevel.musicStart = null" type="assets" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.musicLoop`)}}</label>
+      <editor-link :res="curLevel.musicLoop" @select="curLevel.musicLoop = $event" @remove="curLevel.musicLoop = null"
+        type="assets" />
+    </div>
   </div>
 </template>
 
@@ -38,9 +54,11 @@ import { Level } from '@/core/classes/game/Level'
 import { defineComponent, PropType, ref, } from 'vue'
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';
+import EditorLink from '@/components/editor/ui/EditorLink.vue';
+import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 
 export default defineComponent({
-  components: { EditorLocaleInput, EditorLocaleText, EditorCheckbox },
+  components: { EditorLocaleInput, EditorLocaleText, EditorCheckbox, EditorLink, EditorTagList },
   name: 'EditorLevelGeneral',
   props: {
     level: {

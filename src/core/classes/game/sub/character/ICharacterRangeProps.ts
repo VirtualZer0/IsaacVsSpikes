@@ -10,3 +10,9 @@ export interface ICharacterPropsBoolean {
   enabled: boolean;
   value: boolean;
 }
+
+export interface ICharacterPropsTags {
+  type: 'tags',
+  enabled: boolean;
+  value: string[];
+}

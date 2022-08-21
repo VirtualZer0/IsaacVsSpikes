@@ -1,23 +1,45 @@
 <template>
-  <div class="room-editor-general eui edit-form">
+  <div class="room-editor-general edit-form">
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.name`)}}</label>
-      <editor-locale-input class="input" :text="room.name"/>
+      <editor-locale-input class="input" :text="room.name" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.tags`)}}</label>
+      <editor-tag-list :tags="room.tags" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.level`)}}</label>
+      <editor-link type="levels" :res="curRoom.level" @select="curRoom.level = $event" @remove="curRoom.level = null" />
     </div>
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.weight`)}}</label>
-      <input type="number" class="eui input small" v-model.number="curRoom.weight" min="0" step=".1"/>
+      <input type="number" class="eui input small" v-model.number="curRoom.weight" min="0" step=".1" />
     </div>
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.description`)}}</label>
-      <editor-locale-multi-text class="input" :text="room.desc"/>
+      <editor-locale-multi-text class="input" :text="room.desc" />
     </div>
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.doorDescription`)}}</label>
-      <editor-locale-text class="input" :text="room.doorDesc"/>
+      <editor-locale-text class="input" :text="room.doorDesc" />
+    </div>
+
+    <div class="room-split">
+      <div class="vertical-line">
+        <label class="eui label">{{$t(`editor.background`)}}</label>
+        <editor-link-list type="assets" :links="curRoom.background" spriteMode />
+      </div>
+      <div class="vertical-split" />
+      <div class="vertical-line">
+        <label class="eui label">{{$t(`editor.overlay`)}}</label>
+        <editor-link-list type="assets" :links="curRoom.overlay" spriteMode />
+      </div>
     </div>
   </div>
 </template>
@@ -28,11 +50,13 @@ import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
 import { Room } from '@/core/classes/game/Room'
 import { defineComponent, PropType, reactive } from 'vue'
+import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
+import EditorLink from '@/components/editor/ui/EditorLink.vue';
+import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 
 export default defineComponent({
-  components: { EditorLocaleInput, EditorLocaleText, EditorLocaleMultiText },
+  components: { EditorLocaleInput, EditorLocaleText, EditorLocaleMultiText, EditorLinkList, EditorLink, EditorTagList },
   name: 'EditorRoomGeneral',
-  emits: ['changeName'],
   props: {
     room: {
       type: Object as PropType<Room>,
@@ -54,7 +78,26 @@ export default defineComponent({
 
 
 <style lang="scss" scoped>
+
 .input.small {
   width: 100px;
+}
+
+.room-split {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+
+  .vertical-line {
+    width: auto;
+    max-width: 33%;
+  }
+
+  .vertical-split {
+    width: 3px;
+    height: 120px;
+    background-color: $editorFg;
+  }
 }
 </style>

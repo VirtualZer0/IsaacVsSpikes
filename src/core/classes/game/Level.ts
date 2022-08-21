@@ -23,13 +23,16 @@ export class Level extends Resource {
   regularSlot: number = 0;
 
   /** Спрайты уровня */
-  sprites: { [key: string]: ResourceLink[] } = {};
+  sprites: { [key: string]: SpriteSource[] } = {};
 
   /** Оверлеи уровня */
-  overlays: { [key: string]: ResourceLink[] } = {};
+  overlays: { [key: string]: SpriteSource[] } = {};
 
-  /** Объект с комнатами */
-  rooms: Room[] = [];
+  /** Музыка уровня - начало */
+  musicStart: ResourceLink | null = null;
+
+  /** Музыка уровня - цикл */
+  musicLoop: ResourceLink | null = null;
 
   /** Система генерации */
   genSystem: LevelGenSystemType = LevelGenSystemType.INCREMENTAL;

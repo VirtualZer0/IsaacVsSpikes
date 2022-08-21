@@ -53,6 +53,7 @@ export const EditorRoutes = [
       }
     ]
   },
+
   {
     path: 'rooms/:id',
     name: 'EditorRoomMain',
@@ -66,13 +67,26 @@ export const EditorRoutes = [
       {
         path: 'view',
         name: 'EditorRoomView',
-        component: () => import(/* webpackChunkName: "editorroom" */ '../pages/editor/InDev.vue'),
+        component: () => import(/* webpackChunkName: "editorroom" */ '../pages/editor/room/View.vue'),
       },
       {
         path: 'scenaries',
         name: 'EditorRoomScenaries',
         component: () => import(/* webpackChunkName: "editorroom" */ '../pages/editor/room/Scenaries.vue'),
       }
+    ]
+  },
+
+  {
+    path: 'monsters/:id',
+    name: 'EditorMonsterMain',
+    component: () => import(/* webpackChunkName: "editormonster" */ '../pages/editor/monster/Main.vue'),
+    children: [
+      {
+        path: 'general',
+        name: 'EditorMonsterGeneral',
+        component: () => import(/* webpackChunkName: "editormonster" */ '../pages/editor/monster/General.vue'),
+      },
     ]
   },
 

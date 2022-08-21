@@ -1,8 +1,8 @@
 <template>
-  <div class="checkstats-event-editor eui edit-form">
+  <div class="changestats-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{$t('editor.statscheckEvent')}}
+      {{$t('editor.statschangeEvent')}}
     </div>
 
     <div class="vertical-line">
@@ -15,10 +15,12 @@
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
+    <!--
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.requiredItems`)}}</label>
-      <editor-link-list :links="event.requiredItems" type="items" />
+      <editor-link-list :links="event.requiredItems" type="items"/>
     </div>
+    -->
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.requiredStats`)}}</label>
@@ -26,23 +28,18 @@
       <div class="nth-format">
         <div class="stat-line" v-for="[stat, params] of Object.entries(requiredStats)" :key="stat">
 
-          <editor-checkbox v-model="params.enabled" />
           <div class="name">{{$t(`game.${stat}`)}}</div>
 
-          <div class="checkbox" v-if="params.type == 'boolean'">
-            <editor-checkbox v-model="params.value" />
-            <div class="sub">{{$t(`editor.required`)}}</div>
+          <div class="checkbox" v-if="typeof params == 'boolean'">
+            <editor-checkbox v-model="(requiredStats as any)[stat]" />
+            <div class="sub">{{$t(`editor.give`)}}</div>
           </div>
 
-          <div class="range" v-else-if="typeof params == 'object' && params.type == 'number'">
-            {{$t('editor.from')}}
-            <input class="eui input" type="number" v-model.number="params.from" />
-            {{$t('editor.to')}}
-            <input class="eui input" type="number" v-model.number="params.to" />
-          </div>
+          <input v-if="typeof params == 'number'" class="eui input" type="number"
+            v-model.number="(requiredStats as any)[stat]" />
 
-          <div class="range" v-else-if="typeof params == 'object' && params.type == 'tags'">
-            <editor-tag-list :tags="params.value" />
+          <div class="range" v-else-if="isArray(params)">
+            <editor-tag-list :tags="params" />
           </div>
 
         </div>
@@ -60,29 +57,30 @@ import EventIcon from "../EventIcon.vue";
 
 import EditorCheckbox from "../../ui/EditorCheckbox.vue";
 
-import { RoomStatsCheckEvent } from "@/core/classes/game/sub/room/RoomStatsCheckEvent";
+import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChangeEvent";
 import EditorLinkList from "../../ui/EditorLinkList.vue";
 import EditorTagList from "../../ui/EditorTagList.vue";
+import { isArray } from "@vue/shared";
 
 export default defineComponent({
-  name: "StatscheckEventEditor",
+  name: "StatschangeEventEditor",
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,
     EventIcon,
     EditorCheckbox,
-    EditorLinkList,
     EditorTagList
+    //EditorLinkList
 },
   props: {
     event: {
-      type: Object as PropType<RoomStatsCheckEvent>,
+      type: Object as PropType<RoomStatsChangeEvent>,
       required: true
     }
   },
   setup(props) {
 
-    const requiredStats = reactive(props.event.requiredStats);
+    const requiredStats = reactive(props.event.stats);
 
     const changeParam = (param: string, value: any) => {
       (requiredStats as Record<string, any>)[param] = value;
@@ -90,14 +88,15 @@ export default defineComponent({
 
     return {
       requiredStats,
-      changeParam
+      changeParam,
+      isArray
     };
   }
 });
 </script>
 
 <style lang="scss" scoped>
-.checkstats-event-editor {
+.changestats-event-editor {
 
   .title {
     font-size: 21px;
@@ -123,8 +122,8 @@ export default defineComponent({
     display: flex;
     align-items: center;
     gap: 12px;
-    min-height: 48px;
-    padding: 8px;
+    height: 48px;
+    padding: 0 8px;
 
     .range {
       .input {

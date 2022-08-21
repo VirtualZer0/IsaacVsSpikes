@@ -98,11 +98,13 @@ export default defineComponent({
 
 
 <style lang="scss" scoped>
+
 .editor-room {
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding-left: 24px;
+  max-height: 100%;
 }
 
 .content {

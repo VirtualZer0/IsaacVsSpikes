@@ -53,6 +53,7 @@
     "selectFile": "Выберите файл",
 
     "name": "Название",
+    "tags": "Теги",
     "description": "Описание",
     "doorDescription": "Описание двери",
     "weight": "Вес",
@@ -67,11 +68,14 @@
 
     "startDialog": "Стартовый диалог",
     "requiredStats": "Требуемые статы",
+    "requiredItems": "Требуемые предметы",
+    "consumables": "Расходники",
 
     "ghostBlockLBM": "ЛКМ - разместить",
     "ghostBlockRBM": "ПКМ - отменить",
 
     "required": "Требуется",
+    "give": "Выдать",
     "from": "От",
     "to": "До",
     "variants": "Варианты",
@@ -85,6 +89,9 @@
     "regularSlot": "Слот уровня",
     "background": "Фон",
     "overlay": "Оверлей",
+    "musicStart": "Музыка - вступление",
+    "musicLoop": "Музыка - цикл",
+    "sprite": "Спрайт",
 
     "exportFolder": "Папка экспорта",
     "exportName": "Имя при экспорте"
@@ -100,13 +107,27 @@
     "flight": "Полет",
     "devilChance": "Шанс дьявола",
     "angelChance": "Шанс ангела",
+    "tags": "Теги",
 
     "normalRoom": "Обычная комната",
     "bossRoom": "Комната босса",
     "secretRoom": "Секретная комната",
     "treasureRoom": "Сокровищница",
     "shopRoom": "Магазин",
-    "spikesRoom": "Кусачая комната"
+    "spikesRoom": "Кусачая комната",
+
+    "redHearts": "Красные сердца",
+    "blueHearts": "Синие сердца",
+    "blackHearts": "Черные сердца",
+    "goldenHearts": "Золотые сердца",
+    "whiteHearts": "Белые сердца",
+
+    "keys": "Ключи",
+    "coins": "Монеты",
+    "bombs": "Бомбы",
+    "goldenKey": "Золотой ключ",
+    "goldenBomb": "Золотая бомба",
+    "goldenVersion": "Золотая версия"
 
 
   }

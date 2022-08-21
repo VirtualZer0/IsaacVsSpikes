@@ -124,6 +124,8 @@ export default defineComponent({
     StatscheckEventEditor: defineAsyncComponent(() => import("./editors/StatscheckEventEditor.vue")),
     SelectEventEditor: defineAsyncComponent(() => import("./editors/SelectEventEditor.vue")),
     ChanceEventEditor: defineAsyncComponent(() => import("./editors/ChanceEventEditor.vue")),
+    RewardEventEditor: defineAsyncComponent(() => import("./editors/RewardEventEditor.vue")),
+    StatschangeEventEditor: defineAsyncComponent(() => import("./editors/StatschangeEventEditor.vue")),
   },
   props: {
     events: {

@@ -1,0 +1,92 @@
+<template>
+  <div class="screen editor editor-monster">
+
+    <editor-resource-top
+      type="monster"
+      :res="monster"
+      @save="saveMonster"
+      @cancel="router.push('/editor/list/monsters')"/>
+
+    <editor-resource-menu
+      :items="[
+        {name: 'editor.general', value: 'general'},
+      ]"
+      @select="switchMenu"/>
+
+    <router-view :monster="monster" class="eui paper content" />
+
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import {useRoute, useRouter} from 'vue-router'
+import {useEditorStore} from '@/store/editor'
+import { Monster } from '@/core/classes/game/Monster';
+import {v4 as uuid} from 'uuid'
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/helpers/reactiveCopy';
+
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue'
+import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue'
+import { restoreEvents } from '@/core/helpers/restoreEvents';
+
+export default defineComponent({
+  name: 'EditorMonster',
+  components: {
+    EditorResourceTop,
+    EditorResourceMenu
+  },
+  async setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const editor = useEditorStore();
+    const store = useMainStore();
+
+
+    if (route.params.id == 'new') {
+      const monster = new Monster();
+      monster.id = uuid()
+      await editor.createResource('monsters', monster);
+      await router.replace(`/editor/monsters/${monster.id}`);
+    }
+
+    const monster = reactiveCopy<Monster>(
+      editor.monsters.get(route.params.id as string),
+      new Monster()
+    );
+
+    const saveMonster = async () => {
+      if (route.params.id != 'new') {
+
+        await editor.updateResource('monsters', monster);
+      }
+
+      router.push(`/editor/list/monsters`);
+    }
+
+    const switchMenu = (item: {name: string, value: string}) => {
+      router.push(`/editor/monsters/${monster.id}/${item.value}`);
+    }
+
+    return {
+      editor, monster, store, router,
+      saveMonster, switchMenu
+    }
+  },
+})
+</script>
+
+
+<style lang="scss" scoped>
+.editor-monster {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 24px;
+}
+
+.content {
+  flex-grow: 1;
+}
+</style>

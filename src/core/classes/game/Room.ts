@@ -4,6 +4,7 @@ import { LocaleText } from "../base/LocaleText";
 import { Monster } from "./Monster";
 import { RoomDrop } from "./sub/room/RoomDrop";
 import { RoomEvent } from "./sub/room/RoomEvent";
+import { ResourceLink } from "../base/ResourceLink";
 
 export class Room extends Resource {
   /** Шанс появления комнаты */
@@ -16,10 +17,13 @@ export class Room extends Resource {
   doorDesc: LocaleText = {};
 
   /** Спрайт комнаты, если не определен - используется спрайт уровня */
-  background: Nullable<SpriteSource> = null;
+  background: SpriteSource[] = [];
 
   /** Оверлей комнаты, если не определен - используется оверлей уровня */
-  overlay: Nullable<SpriteSource> = null;
+  overlay: SpriteSource[] = [];
+
+  /** Привязанный уровень */
+  level: ResourceLink | null = null;
 
   /** Монстры в комнате */
   monsters: Monster[] = [];

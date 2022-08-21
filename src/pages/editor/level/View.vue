@@ -1,16 +1,16 @@
 <template>
-  <div class="level-editor-view eui edit-form">
+  <div class="level-editor-view edit-form">
     <div v-for="roomType in roomTypes" :key="roomType" class="room">
       <div class="title">{{$t(`game.${roomType}Room`)}}</div>
       <div class="room-split">
         <div class="vertical-line">
           <label class="eui label">{{$t(`editor.background`)}}</label>
-          <editor-link-list type="assets" :links="level.sprites[roomType]" />
+          <editor-link-list type="assets" :links="level.sprites[roomType]" spriteMode/>
         </div>
         <div class="vertical-split" />
         <div class="vertical-line">
           <label class="eui label">{{$t(`editor.overlay`)}}</label>
-          <editor-link-list type="assets" :links="level.overlays[roomType]" />
+          <editor-link-list type="assets" :links="level.overlays[roomType]" spriteMode/>
         </div>
       </div>
 

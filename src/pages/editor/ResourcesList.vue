@@ -18,7 +18,17 @@
           <div class="group-title">{{$t('editor.builtin')}}</div>
         </div>
         <div class="eui card shadow-l1 item" v-for="[id,res] in (library as any)[resource]" :key="id"
-          @click="emit('select', res)">
+          @click="emit('select', res)" :title="res.tags.join(', ')">
+          <Suspense>
+            <template #default>
+              <editor-res-preview :res="res" class="preview" />
+            </template>
+            <template #fallback>
+              <svg style="width:24px;height:24px" class="preview-loader" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" />
+              </svg>
+            </template>
+          </Suspense>
           <div class="name">{{res.getDisplayName(store.currentLocale)}}</div>
           <div class="uuid">{{res.id}}</div>
         </div>
@@ -30,7 +40,8 @@
           <div class="group-title">{{$t('editor.custom')}}</div>
         </div>
         <div class="eui card shadow-l1 item" v-for="[id,res] in filteredItems" :key="id"
-          @click="selectMode ? emit('select', res) : router.push(`/editor/${resource}/${id}`)">
+          @click="selectMode ? emit('select', res) : router.push(`/editor/${resource}/${id}`)"
+          :title="res.tags.join(', ')">
           <Suspense>
             <template #default>
               <editor-res-preview :res="res" class="preview" />

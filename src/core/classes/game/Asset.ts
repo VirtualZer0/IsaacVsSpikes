@@ -17,6 +17,7 @@ export class Asset extends Resource {
   file?: Nullable<IFile> = null;
 
   async getPreview(): Promise<string> {
+
     const editor = useEditorStore();
     if (!editor.fs) {
       return '';
