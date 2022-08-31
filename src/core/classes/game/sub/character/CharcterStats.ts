@@ -10,7 +10,6 @@ export class CharacterStats {
 
   devilChance: number = 0;
   angelChance: number = 0;
-  tags: string[] = [];
 
 }
 

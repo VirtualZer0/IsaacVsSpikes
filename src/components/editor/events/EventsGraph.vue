@@ -89,6 +89,7 @@ import { v4 as uuid, NIL as nilUUid } from 'uuid'
 import EventElement from "./EventElement.vue";
 import EventIcon from "./EventIcon.vue";
 import { useEditorStore } from "@/store/editor";
+import { RoomSoundEvent } from "@/core/classes/game/sub/room/RoomSoundEvent";
 
 /** Нода графа */
 type Node = {
@@ -126,6 +127,7 @@ export default defineComponent({
     ChanceEventEditor: defineAsyncComponent(() => import("./editors/ChanceEventEditor.vue")),
     RewardEventEditor: defineAsyncComponent(() => import("./editors/RewardEventEditor.vue")),
     StatschangeEventEditor: defineAsyncComponent(() => import("./editors/StatschangeEventEditor.vue")),
+    SoundEventEditor: defineAsyncComponent(() => import("./editors/SoundEventEditor.vue")),
   },
   props: {
     events: {
@@ -352,6 +354,7 @@ export default defineComponent({
           case RoomEventType.SELECT: (newEvent = new RoomSelectEvent()).id = uuid(); break;
           case RoomEventType.TEXT : (newEvent = new RoomTextEvent()).id = uuid(); break;
           case RoomEventType.CHANCE : (newEvent = new RoomChanceEvent()).id = uuid(); break;
+          case RoomEventType.SOUND: (newEvent = new RoomSoundEvent()).id = uuid(); break;
           default: return;
         }
 
@@ -485,6 +488,7 @@ export default defineComponent({
       &.reward { background: #673AB7; }
       &.statschange { background: #F4511E; }
       &.chance { background: #FBC02D; }
+      &.sound { background: #D81B60; }
     }
   }
 

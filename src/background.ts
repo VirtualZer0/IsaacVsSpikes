@@ -10,6 +10,9 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+// Bugfix
+// LINK: https://github.com/electron/electron/issues/28422
+app.commandLine.appendSwitch('enable-experimental-web-platform-features');
 
 async function createWindow() {
   // Create the browser window.
@@ -17,6 +20,7 @@ async function createWindow() {
     width: 800,
     height: 600,
     title: "Isaac VS Spikes",
+
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -26,7 +30,10 @@ async function createWindow() {
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
       experimentalFeatures: true
     }
-  })
+  });
+
+  win.setMenuBarVisibility(false);
+  win.maximize();
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

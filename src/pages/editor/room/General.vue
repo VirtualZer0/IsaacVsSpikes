@@ -6,6 +6,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.type`)}}</label>
+      <editor-combobox :items="roomTypes" :value="curRoom.type" @change="curRoom.type = $event"/>
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{$t(`editor.tags`)}}</label>
       <editor-tag-list :tags="room.tags" />
     </div>
@@ -26,8 +31,8 @@
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.doorDescription`)}}</label>
-      <editor-locale-text class="input" :text="room.doorDesc" />
+      <label class="eui label">{{$t(`editor.doorDescs`)}}</label>
+      <editor-weighted-link-list :links="room.doorDescs" type="doorDescs"/>
     </div>
 
     <div class="room-split">
@@ -46,16 +51,19 @@
 
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
-import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
 import { Room } from '@/core/classes/game/Room'
-import { defineComponent, PropType, reactive } from 'vue'
+import { computed, defineComponent, PropType, reactive } from 'vue'
 import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
 import EditorLink from '@/components/editor/ui/EditorLink.vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
+import EditorCombobox from '@/components/editor/ui/EditorCombobox.vue';
+import { RoomType } from '@/core/classes/game/sub/room/RoomType';
+import i18n from '@/i18n';
+import EditorWeightedLinkList from '@/components/editor/ui/EditorWeightedLinkList.vue';
 
 export default defineComponent({
-  components: { EditorLocaleInput, EditorLocaleText, EditorLocaleMultiText, EditorLinkList, EditorLink, EditorTagList },
+  components: { EditorLocaleInput, EditorLocaleMultiText, EditorLinkList, EditorLink, EditorTagList, EditorCombobox, EditorWeightedLinkList },
   name: 'EditorRoomGeneral',
   props: {
     room: {
@@ -65,11 +73,23 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-
+    const { t } = i18n.global;
     const curRoom = reactive(props.room);
+    const roomTypes = computed(() => {
+
+      const types: {name: string, value: string}[] = [];
+      Object.values(RoomType).forEach(type => {
+        types.push({
+          value: type,
+          name: t(`game.${type}Room`)
+        })
+      })
+      return types;
+    })
 
     return {
       curRoom,
+      roomTypes,
       emit
     }
   },

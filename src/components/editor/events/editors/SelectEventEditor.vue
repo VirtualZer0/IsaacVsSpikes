@@ -1,18 +1,18 @@
 <template>
   <div class="select-event-editor eui edit-form">
     <div class="title">
-      <event-icon :type="event.type" class="icon"/>
+      <event-icon :type="event.type" class="icon" />
       {{$t('editor.selectEvent')}}
     </div>
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.name`)}}</label>
-      <editor-locale-input class="input" :text="event.name"/>
+      <editor-locale-input class="input" :text="event.name" />
     </div>
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.startDialog`)}}</label>
-      <editor-locale-multi-text class="input" :text="event.startDialog"/>
+      <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
     <div class="vertical-line">
@@ -23,14 +23,25 @@
           <div class="variant-out">
             <button class="eui button remove" @click="removeVariant(num)">
               <svg style="width:18px;height:18px" viewBox="0 0 24 24">
-                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                <path
+                  d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
               </svg>
             </button>
             {{$t(`editor.out`)}} {{variant.key}}
           </div>
 
           <div class="variant-line">
-            <editor-locale-text class="input" :text="variant.text"/>
+            <editor-locale-text class="input" :text="variant.text" />
+          </div>
+
+          <div class="horizontal-line">
+            <editor-checkbox v-model="variant.showFuture" />
+            Показывать будущее
+          </div>
+
+          <div class="horizontal-line">
+            <editor-checkbox v-model="variant.requirment" />
+            Следующая проверка как требование
           </div>
 
         </div>
@@ -38,7 +49,7 @@
 
       <div class="add-variant">
         {{$t(`editor.newOutKey`)}}
-        <input class="eui input" type="text" v-model="newVariantKey"/>
+        <input class="eui input" type="text" v-model="newVariantKey" />
         <button class="eui button" @click="addVariant">{{$t(`editor.addVariant`)}}</button>
       </div>
 
@@ -56,6 +67,7 @@ import EventIcon from "../EventIcon.vue";
 import { NIL as nilUUid } from 'uuid'
 import EditorLocaleText from "../../ui/EditorLocaleText.vue";
 import { useI18n } from "vue-i18n";
+import EditorCheckbox from "../../ui/EditorCheckbox.vue";
 
 export default defineComponent({
   name: "SelectEventEditor",
@@ -63,7 +75,8 @@ export default defineComponent({
     EditorLocaleInput,
     EditorLocaleMultiText,
     EventIcon,
-    EditorLocaleText
+    EditorLocaleText,
+    EditorCheckbox
 },
   props: {
     event: {
@@ -86,6 +99,8 @@ export default defineComponent({
       curEvent.value.variants.push({
         text: {},
         key: newVariantKey.value,
+        showFuture: false,
+        requirment: false
       });
 
       curEvent.value.outputEvents[newVariantKey.value] = nilUUid;
@@ -108,6 +123,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+
 .select-event-editor {
   .title {
     font-size: 21px;
@@ -133,11 +149,18 @@ export default defineComponent({
         background: $editorBgInvariant;
       }
 
-      .variant-line {
+      &-line {
         margin-bottom: 4px;
       }
 
-      .variant-out {
+      .horizontal-line {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 8px 0;
+      }
+
+      &-out {
         display: flex;
         gap: 8px;
         align-items: center;

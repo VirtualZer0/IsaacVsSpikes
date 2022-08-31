@@ -20,6 +20,9 @@ export class RoomStatsCheckEvent extends RoomEvent {
   /** Требуемые для прохождения статы */
   requiredStats: CharacterStatsCheckData = new CharacterStatsCheckData();
 
+  /** Требуемые теги */
+  tags: string[] = [];
+
   /** Выходные ивенты при успехе/поражении */
   outputEvents: { [key: string]: string; } = {
     success: nilUUid,

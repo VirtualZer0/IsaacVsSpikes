@@ -1,6 +1,7 @@
 import { Game } from "./classes/game/Game";
 import { SpriteManager } from "./gfx/SpriteManager";
 
+/** Основной класс игры */
 class Core {
 
   spriteManager: SpriteManager = new SpriteManager();

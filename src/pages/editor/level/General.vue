@@ -81,8 +81,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-
-
 .checkbox {
   margin-right: 12px;
 }

@@ -7,6 +7,7 @@
     "openProject": "Открыть проект",
     "sidebarNoProject": "Выберите существующий проект или создайте новый, чтобы приступить к работе",
     "language": "Язык",
+    "type": "Тип",
 
     "levels": "Уровни",
     "rooms": "Комнаты",
@@ -18,6 +19,7 @@
     "resources": "Ресурсы",
     "assets": "Ресурсы",
     "scripts": "Скрипты",
+    "doorDescs": "Описания дверей",
 
     "builtin": "Встроенные",
     "custom": "Пользовательские",
@@ -32,6 +34,8 @@
     "resource": "Ресурс",
     "asset": "Ресурс",
     "script": "Скрипт",
+    "doorDesc": "Описание двери",
+    "sound": "Звук",
 
     "general": "Общие",
     "view": "Вид",
@@ -55,8 +59,8 @@
     "name": "Название",
     "tags": "Теги",
     "description": "Описание",
-    "doorDescription": "Описание двери",
     "weight": "Вес",
+    "animation": "Анимация",
 
     "baseEvent": "Событие",
     "textEvent": "Текст",
@@ -65,10 +69,12 @@
     "rewardEvent": "Награда",
     "statschangeEvent": "Изменение статов",
     "chanceEvent": "Случайность",
+    "soundEvent": "Звуковой эффект",
 
     "startDialog": "Стартовый диалог",
     "requiredStats": "Требуемые статы",
     "requiredItems": "Требуемые предметы",
+    "changedStats": "Изменяемые статы",
     "consumables": "Расходники",
 
     "ghostBlockLBM": "ЛКМ - разместить",
@@ -108,6 +114,8 @@
     "devilChance": "Шанс дьявола",
     "angelChance": "Шанс ангела",
     "tags": "Теги",
+    "addTags": "Добавить теги",
+    "removeTags": "Удалить теги",
 
     "normalRoom": "Обычная комната",
     "bossRoom": "Комната босса",

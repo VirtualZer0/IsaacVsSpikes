@@ -10,6 +10,12 @@ export class RoomStatsChangeEvent extends RoomEvent {
   /** Статы игрока */
   stats: CharacterStats = new CharacterStats();
 
+  /** Теги для добавления */
+  addedTags: string[] = [];
+
+  /** Теги для удаления */
+  removedTags: string[] = [];
+
   /** Выходные ивенты при успехе/поражении */
   outputEvents: { [key: string]: string; } = {
     next: nilUUid,

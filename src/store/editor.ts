@@ -14,6 +14,7 @@ import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
 import { restoreClass } from '@/core/helpers/restoreClass';
 import { restoreMap } from '@/core/helpers/restoreMap';
 import { restoreEvents } from '@/core/helpers/restoreEvents';
+import { DoorDesc } from '@/core/classes/game/DoorDesc';
 
 export const useEditorStore = defineStore('editor', {
   state: () => ({
@@ -21,6 +22,7 @@ export const useEditorStore = defineStore('editor', {
     name: '',
     dir: '',
     uuid: '',
+    version: 1,
 
     isOpen: false,
     bosses: new Map<string, Resource>(),
@@ -32,12 +34,13 @@ export const useEditorStore = defineStore('editor', {
     assets: new Map<string, Asset>(),
     rooms: new Map<string, Room>(),
     scripts: new Map<string, Resource>(),
+    doorDescs: new Map<string, DoorDesc>(),
 
     eventNodes: new Map<string, Map<string, number[]>>(),
     temporaryNodemap: [] as {
       event: RoomEvent;
       x: number;
-      y: number;}[]
+      y: number;}[],
   }),
 
   actions: {
@@ -69,12 +72,14 @@ export const useEditorStore = defineStore('editor', {
         fs.createDirectory('items'),
         fs.createDirectory('characters'),
         fs.createDirectory('scripts'),
+        fs.createDirectory('doorDescs'),
         (await fs.createFile('project.json')).writeAllText(JSON.stringify({
           name,
           uuid: this.uuid,
+          version: this.version
         })),
 
-        (await fs.createFile('eventNodes.json')).writeAllText(JSON.stringify(this.eventNodes))
+        (await fs.createFile('eventNodes.json')).writeAllText(JSON.stringify(this.eventNodes)),
       ])
 
       const assets = await fs.createDirectory('assets');
@@ -108,6 +113,7 @@ export const useEditorStore = defineStore('editor', {
 
       this.name = meta.name;
       this.uuid = meta.uuid;
+      this.version = meta.version ?? 1;
       this.dir = fs.name;
 
       (await fs.getDirectories()).forEach(async (dir) => {
@@ -137,6 +143,7 @@ export const useEditorStore = defineStore('editor', {
             case 'items': res = restoreClass<Item>(await file.readAllText(), Item); break;
             case 'characters': res = restoreClass<Resource>(await file.readAllText(), Resource); break;
             case 'scripts': res = restoreClass<Resource>(await file.readAllText(), Resource); break;
+            case 'doorDescs': res = restoreClass<DoorDesc>(await file.readAllText(), DoorDesc); break;
             default: res = restoreClass<Resource>(await file.readAllText(), Resource); break;
           }
 
@@ -275,7 +282,7 @@ export const useEditorStore = defineStore('editor', {
       }
 
       await (await this.fs.createFile('eventNodes.json')).writeAllText(JSON.stringify(objNodes));
-    }
+    },
   }
 });
 

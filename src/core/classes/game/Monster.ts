@@ -5,10 +5,11 @@ import { MonsterEffect } from "./sub/MonsterEffect";
 import { ResourceLink } from "../base/ResourceLink";
 import { useEditorStore } from "@/store/editor";
 import { library } from "@/core/Core";
+import { MonsterAnimation } from "./sub/monster/MonsterAnimation";
 
 export class Monster extends Resource {
-  /** Спрайт монстра */
-  sprite: SpriteSource | null = null;
+  /** Анимации */
+  animations: MonsterAnimation = new MonsterAnimation();
 
   /** Описание монстра */
   desc: LocaleText = {};
@@ -17,11 +18,11 @@ export class Monster extends Resource {
   effects: MonsterEffect[] = [];
 
   override getPreview(): Promise<string> {
-    if (this.sprite && 'src' in this.sprite) {
-      const sprite = this.sprite as SpriteSource;
+    if (this.animations?.idle?.spritesheet && 'src' in this.animations.idle.spritesheet) {
+      const sprite = this.animations.idle.spritesheet as SpriteSource;
 
       if (typeof sprite.src !== 'string') {
-        const resLink = (this.sprite as SpriteSource).src as ResourceLink;
+        const resLink = (this.animations.idle.spritesheet as SpriteSource).src as ResourceLink;
         const editor = useEditorStore();
 
         const res = editor.assets.get(resLink.id);
@@ -34,7 +35,7 @@ export class Monster extends Resource {
         }
       }
       else {
-        return Promise.resolve(`<img lazy src="/assets/${(this.sprite as SpriteSource).src}"/>`);
+        return Promise.resolve(`<img lazy src="/assets/${(this.animations.idle.spritesheet as SpriteSource).src}"/>`);
       }
     }
     else return super.getPreview();

@@ -305,6 +305,7 @@ export default defineComponent({
   .name {
     word-wrap: break-word;
     max-width: 100%;
+    text-align: center;
   }
 
   &-controls {

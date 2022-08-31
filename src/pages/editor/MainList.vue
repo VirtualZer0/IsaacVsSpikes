@@ -11,6 +11,7 @@
         <div class="eui card item shadow-l1">{{$t('editor.characters')}} <span class="count">0</span></div>
         <router-link to="/editor/list/assets" class="eui card item shadow-l1">{{$t('editor.assets')}} <span class="count">{{editor.assets.size}}</span></router-link>
         <div class="eui card item shadow-l1">{{$t('editor.scripts')}} <span class="count">0</span></div>
+        <router-link to="/editor/list/doorDescs" class="eui card item shadow-l1">{{$t('editor.doorDescs')}} <span class="count">{{editor.doorDescs.size}}</span></router-link>
       </div>
     </div>
   </div>
@@ -58,7 +59,8 @@ export default defineComponent({
 .item {
   @include center;
   flex-direction: column-reverse;
-  padding: 16px;
+  justify-content: flex-end;
+  padding: 12px;
   width: 180px;
   height: 140px;
   cursor: pointer;

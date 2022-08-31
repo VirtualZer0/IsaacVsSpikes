@@ -28,6 +28,7 @@
         <router-link to="/editor/indev">{{$t('editor.characters')}} <span class="count">{{editor.characters.size}}</span></router-link>
         <router-link to="/editor/list/assets">{{$t('editor.resources')}} <span class="count">{{editor.assets.size}}</span></router-link>
         <router-link to="/editor/indev">{{$t('editor.scripts')}} <span class="count">{{editor.scripts.size}}</span></router-link>
+        <router-link to="/editor/list/doorDescs">{{$t('editor.doorDescs')}} <span class="count">{{editor.doorDescs.size}}</span></router-link>
       </div>
 
     </div>

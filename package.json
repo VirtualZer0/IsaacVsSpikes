@@ -14,7 +14,6 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
-  "main": "background.js",
   "dependencies": {
     "@vueup/vue-quill": "^1.0.0-beta.8",
     "core-js": "^3.22.2",
@@ -46,7 +45,7 @@
     "@vue/cli-service": "~5.0.4",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",
-    "electron": "^18.1.0",
+    "electron": "^20.1.0",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^8.9.0",
     "eslint-plugin-vue": "^8.0.3",

@@ -96,4 +96,17 @@ export const EditorRoutes = [
     component: () => import(/* webpackChunkName: "editorasset" */ '../pages/editor/asset/Main.vue'),
     children: []
   },
+
+  {
+    path: 'doorDescs/:id',
+    name: 'EditorDoorDescMain',
+    component: () => import(/* webpackChunkName: "editordoordesc" */ '../pages/editor/doorDesc/Main.vue'),
+    children: [
+      {
+        path: 'general',
+        name: 'EditorDoorDescGeneral',
+        component: () => import(/* webpackChunkName: "editordoordesc" */ '../pages/editor/doorDesc/General.vue'),
+      },
+    ]
+  },
 ]

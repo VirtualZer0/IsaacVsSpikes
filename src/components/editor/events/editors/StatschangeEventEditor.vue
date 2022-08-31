@@ -23,7 +23,7 @@
     -->
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.requiredStats`)}}</label>
+      <label class="eui label">{{$t(`editor.changedStats`)}}</label>
 
       <div class="nth-format">
         <div class="stat-line" v-for="[stat, params] of Object.entries(requiredStats)" :key="stat">
@@ -38,10 +38,18 @@
           <input v-if="typeof params == 'number'" class="eui input" type="number"
             v-model.number="(requiredStats as any)[stat]" />
 
-          <div class="range" v-else-if="isArray(params)">
-            <editor-tag-list :tags="params" />
+        </div>
+        <div class="stat-line">
+          <div class="name">{{$t(`game.addTags`)}}</div>
+          <div class="range">
+            <editor-tag-list :tags="event.addedTags" />
           </div>
-
+        </div>
+        <div class="stat-line">
+          <div class="name">{{$t(`game.removeTags`)}}</div>
+          <div class="range">
+            <editor-tag-list :tags="event.removedTags" />
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +66,6 @@ import EventIcon from "../EventIcon.vue";
 import EditorCheckbox from "../../ui/EditorCheckbox.vue";
 
 import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChangeEvent";
-import EditorLinkList from "../../ui/EditorLinkList.vue";
 import EditorTagList from "../../ui/EditorTagList.vue";
 import { isArray } from "@vue/shared";
 
@@ -70,7 +77,6 @@ export default defineComponent({
     EventIcon,
     EditorCheckbox,
     EditorTagList
-    //EditorLinkList
 },
   props: {
     event: {

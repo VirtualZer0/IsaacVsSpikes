@@ -5,3 +5,7 @@ export type SpriteSource = {
   height?: number,
   src?: ResourceLink | string,
 }
+
+export type WeightedSpriteSource = SpriteSource & {
+  weight?: number
+}
