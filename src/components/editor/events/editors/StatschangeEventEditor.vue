@@ -35,8 +35,8 @@
             <div class="sub">{{$t(`editor.give`)}}</div>
           </div>
 
-          <input v-if="typeof params == 'number'" class="eui input" type="number"
-            v-model.number="(requiredStats as any)[stat]" />
+          <input v-else class="eui input" type="number"
+            v-model.number="(requiredStats as any)[stat]"/>
 
         </div>
         <div class="stat-line">

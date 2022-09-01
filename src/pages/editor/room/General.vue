@@ -7,12 +7,17 @@
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.type`)}}</label>
-      <editor-combobox :items="roomTypes" :value="curRoom.type" @change="curRoom.type = $event"/>
+      <editor-combobox :items="roomTypes" :value="curRoom.type" @change="curRoom.type = $event" />
     </div>
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.tags`)}}</label>
       <editor-tag-list :tags="room.tags" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.note`)}}</label>
+      <textarea v-model="curRoom.note" class="eui textarea small" />
     </div>
 
     <div class="vertical-line">
@@ -22,7 +27,12 @@
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.weight`)}}</label>
-      <input type="number" class="eui input small" v-model.number="curRoom.weight" min="0" step=".1" />
+      <input type="number" class="eui input small" v-model.number="curRoom.weight" min="0" step=".05" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.dropChance`)}}</label>
+      <input type="number" class="eui input small" v-model.number="curRoom.dropChance" min="0" step=".05" />
     </div>
 
     <div class="vertical-line">
@@ -32,7 +42,7 @@
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.doorDescs`)}}</label>
-      <editor-weighted-link-list :links="room.doorDescs" type="doorDescs"/>
+      <editor-weighted-link-list :links="room.doorDescs" type="doorDescs" />
     </div>
 
     <div class="room-split">

@@ -7,7 +7,10 @@ import { RoomStatsChangeEvent } from "../classes/game/sub/room/RoomStatsChangeEv
 import { RoomStatsCheckEvent } from "../classes/game/sub/room/RoomStatsCheckEvent";
 import { RoomTextEvent } from "../classes/game/sub/room/RoomTextEvent";
 import { restoreClass } from "./restoreClass";
+import { RoomSoundEvent } from "../classes/game/sub/room/RoomSoundEvent";
+import { RoomOrEvent } from "../classes/game/sub/room/RoomOrEvent";
 
+/** Восстанавливает типы событий комнат */
 export function restoreEvents (events: RoomEvent[]): RoomEvent[] {
   return events.map(event => {
     switch (event.type) {
@@ -17,6 +20,8 @@ export function restoreEvents (events: RoomEvent[]): RoomEvent[] {
       case RoomEventType.STATSCHANGE: return restoreClass<RoomStatsChangeEvent>(event, RoomStatsChangeEvent);
       case RoomEventType.REWARD: return restoreClass<RoomRewardEvent>(event, RoomRewardEvent);
       case RoomEventType.CHANCE: return restoreClass<RoomChanceEvent>(event, RoomChanceEvent);
+      case RoomEventType.SOUND: return restoreClass<RoomSoundEvent>(event, RoomSoundEvent);
+      case RoomEventType.OR: return restoreClass<RoomOrEvent>(event, RoomOrEvent);
       default: return restoreClass<RoomEvent>(event, RoomEvent);
     }
   });

@@ -12,6 +12,9 @@ export class Resource {
   /** Имя ресурса */
   name: LocaleText = {};
 
+  /** Примечание */
+  note: string = '';
+
   /** Теги ресурса */
   tags: string[] = [];
 

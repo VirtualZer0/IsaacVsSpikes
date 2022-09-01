@@ -7,4 +7,5 @@ export enum RoomEventType {
   STATSCHANGE = 'statschange',
   SOUND = 'sound',
   CHANCE = 'chance',
+  OR = 'or',
 }

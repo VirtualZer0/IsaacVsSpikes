@@ -1,15 +1,20 @@
 <template>
   <div class="monster-editor-general eui edit-form">
 
-    <div class="vertical-line">
+    <!--<div class="vertical-line">
       <label class="eui label">{{$t(`editor.sprite`)}}</label>
       <editor-link type="assets" :res="monster.sprite" @select="curMonster.sprite = $event"
         @remove="curMonster.sprite = null" spriteMode />
-    </div>
+    </div>-->
 
     <div class="vertical-line">
       <label class="eui label">{{$t(`editor.tags`)}}</label>
       <editor-tag-list :tags="monster.tags" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.note`)}}</label>
+      <textarea v-model="curMonster.note" class="eui textarea small" />
     </div>
 
     <div class="vertical-line">
@@ -29,11 +34,10 @@ import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import { Monster } from '@/core/classes/game/Monster'
 import { defineComponent, PropType, reactive } from 'vue'
-import EditorLink from '@/components/editor/ui/EditorLink.vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 
 export default defineComponent({
-  components: { EditorLocaleInput, EditorLocaleText, EditorLink, EditorTagList },
+  components: { EditorLocaleInput, EditorLocaleText, EditorTagList },
   name: 'EditorMonsterGeneral',
   props: {
     monster: {

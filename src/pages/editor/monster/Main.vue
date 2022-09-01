@@ -42,16 +42,17 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
+    let monster: Monster;
 
 
     if (route.params.id == 'new') {
-      const monster = new Monster();
+      monster = new Monster();
       monster.id = uuid()
       await editor.createResource('monsters', monster);
       await router.replace(`/editor/monsters/${monster.id}`);
     }
 
-    const monster = reactiveCopy<Monster>(
+    monster = reactiveCopy<Monster>(
       editor.monsters.get(route.params.id as string),
       new Monster()
     );

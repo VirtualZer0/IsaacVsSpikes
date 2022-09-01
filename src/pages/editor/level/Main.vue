@@ -36,16 +36,16 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
-
+    let level: Level;
 
     if (route.params.id == 'new') {
-      const level = new Level();
+      level = new Level();
       level.id = uuid()
       await editor.createResource('levels', level);
       await router.replace(`/editor/levels/${level.id}`);
     }
 
-    const level = reactiveCopy<Level>(
+    level = reactiveCopy<Level>(
       editor.levels.get(route.params.id as string),
       new Level()
     );

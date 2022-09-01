@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-locale-input quill">
+  <div class="editor-locale-input quill" :key="updateKey.toString()">
     <!-- TODO: Переписать при первой же возможности. Создавать на каждый редактор свой тулбар это жопа. -->
     <div :id="customToolbarId+num" class="quill-custom-toolbar eui" v-for="(_b, num) in text" :key="num" v-show="activeEditor == num">
       <div>
@@ -26,10 +26,10 @@
       </div>
     </div>
 
-    <div class="text-block" v-for="(blocks, num) in text" :key="num">
+    <div class="text-block" v-for="(blocks, num) in copyText" :key="num">
 
       <div class="text-block-controls">
-        <svg style="width:24px;height:24px" viewBox="0 0 24 24" @click="activeEditor = num - 1; num == 0 || removeBlock(num)">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24" @click="removeBlock(num)">
           <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
         </svg>
       </div>
@@ -80,6 +80,7 @@ export default defineComponent({
     const editors = ref<Quill[]>([]);
     const customToolbarId = `custom-toolbar-${uuid()}`;
     const activeEditor = ref(0);
+    const updateKey = ref(false);
 
     const setEditor = (ref: Quill) => {
       editors.value.push(ref);
@@ -96,10 +97,21 @@ export default defineComponent({
 
     const addBlock = () => {
       copyText.push({})
+      updateKey.value = !updateKey.value;
     }
 
     const removeBlock = (num: number) => {
+      if (copyText.length == 1) {
+        return;
+      }
+
       copyText.splice(num, 1)
+
+      if (num != 0) {
+        activeEditor.value = num - 1;
+      }
+
+      updateKey.value = !updateKey.value;
     }
 
     onBeforeUpdate(() => {
@@ -125,7 +137,8 @@ export default defineComponent({
       activeEditor,
       addBlock,
       removeBlock,
-      customToolbarId
+      customToolbarId,
+      updateKey
     }
   },
 })

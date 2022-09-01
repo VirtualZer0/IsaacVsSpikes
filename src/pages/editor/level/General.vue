@@ -12,6 +12,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.note`)}}</label>
+      <textarea v-model="curLevel.note" class="eui textarea small" />
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{$t(`editor.description`)}}</label>
       <editor-locale-text class="input" :text="level.desc" />
     </div>

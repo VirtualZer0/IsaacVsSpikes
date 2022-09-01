@@ -80,9 +80,10 @@ import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChan
 import { RoomRewardEvent } from "@/core/classes/game/sub/room/RoomRewardEvent";
 import { RoomTextEvent } from "@/core/classes/game/sub/room/RoomTextEvent";
 import { RoomChanceEvent } from "@/core/classes/game/sub/room/RoomChanceEvent";
+import { RoomOrEvent } from "@/core/classes/game/sub/room/RoomOrEvent";
 
 import { reactive, ref } from "@vue/reactivity";
-import { defineAsyncComponent, defineComponent, PropType,  watch } from "vue";
+import { defineAsyncComponent, defineComponent, PropType} from "vue";
 import { Coords } from "@/core/classes/base/Coords";
 import { v4 as uuid, NIL as nilUUid } from 'uuid'
 
@@ -128,6 +129,7 @@ export default defineComponent({
     RewardEventEditor: defineAsyncComponent(() => import("./editors/RewardEventEditor.vue")),
     StatschangeEventEditor: defineAsyncComponent(() => import("./editors/StatschangeEventEditor.vue")),
     SoundEventEditor: defineAsyncComponent(() => import("./editors/SoundEventEditor.vue")),
+    OrEventEditor: defineAsyncComponent(() => import("./editors/OrEventEditor.vue")),
   },
   props: {
     events: {
@@ -193,6 +195,14 @@ export default defineComponent({
 
       const inputNode = nodemap.find(node => node.event.id === newLink.inputId);
       const outputNode = nodemap.find(node => node.event.id === newLink.outputId);
+
+      if (outputNode?.event.type == RoomEventType.OR && inputNode?.event.type != RoomEventType.STATSCHECK) {
+        alert('Комбинатор может подключаться только к блокам проверок');
+        newLink.outputId = '';
+        newLink.inputId = '';
+        newLink.visible = false;
+        return;
+      }
 
       const oldLink = links.find(link => link.outputId === newLink.outputId && link.outputKey === newLink.outputKey);
 
@@ -285,8 +295,8 @@ export default defineComponent({
       }
 
       const rect = canvas.value.getBoundingClientRect();
-      curPos.x = e.clientX - rect.left + canvas.value.scrollLeft;
-      curPos.y = e.clientY - rect.top + canvas.value.scrollTop;
+      curPos.x = Math.round(e.clientX - rect.left + canvas.value.scrollLeft);
+      curPos.y = Math.round(e.clientY - rect.top + canvas.value.scrollTop);
 
       if (currentDraggable.value) {
         currentDraggable.value.x = curPos.x - 15;
@@ -355,6 +365,7 @@ export default defineComponent({
           case RoomEventType.TEXT : (newEvent = new RoomTextEvent()).id = uuid(); break;
           case RoomEventType.CHANCE : (newEvent = new RoomChanceEvent()).id = uuid(); break;
           case RoomEventType.SOUND: (newEvent = new RoomSoundEvent()).id = uuid(); break;
+          case RoomEventType.OR: (newEvent = new RoomOrEvent()).id = uuid(); break;
           default: return;
         }
 
@@ -438,6 +449,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+
 .events-graph {
   width: 100%;
   height: 100%;
@@ -489,6 +501,7 @@ export default defineComponent({
       &.statschange { background: #F4511E; }
       &.chance { background: #FBC02D; }
       &.sound { background: #D81B60; }
+      &.or { background: #757575 }
     }
   }
 

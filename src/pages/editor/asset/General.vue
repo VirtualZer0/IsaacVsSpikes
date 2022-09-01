@@ -20,6 +20,10 @@
       <label class="eui label">{{$t(`editor.tags`)}}</label>
       <editor-tag-list :tags="curAsset.tags" />
     </div>
+    <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.note`)}}</label>
+      <textarea v-model="curAsset.note" class="eui textarea small" />
+    </div>
     <div class="line">
       <label class="eui label">{{$t(`editor.exportFolder`)}}</label>
       <input class="eui input" autocomplete="on" name="exportFolder" v-model="curAsset.exportFolder" />

@@ -17,6 +17,9 @@ export class Room extends Resource {
   /** Тип комнаты */
   type: RoomType = RoomType.NORMAL;
 
+  /** Шанс дропа после прохождения */
+  dropChance: number = 0.5;
+
   /** Описания двери */
   doorDescs: WeightedResourceLink[] = [];
 

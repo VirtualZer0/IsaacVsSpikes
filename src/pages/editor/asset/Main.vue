@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, Ref, ref } from 'vue'
 
 import {useRoute, useRouter} from 'vue-router'
 import {useEditorStore} from '@/store/editor'
@@ -42,8 +42,9 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
+    let asset: Ref<Asset|null>;
 
-    const asset = ref(
+    asset = ref(
       route.params.id != 'new' ? reactiveCopy<Asset>(
       editor.assets.get(route.params.id as string),
       new Asset()

@@ -129,6 +129,10 @@
     resize: none;
     border: 2px solid $editorFg;
     outline: none;
+
+    &.small {
+      min-height: 65px;
+    }
   }
 
   &.card {

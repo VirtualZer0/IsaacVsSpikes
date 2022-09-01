@@ -35,16 +35,16 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
-
+    let item: Item;
 
     if (route.params.id == 'new') {
-      const item = new Item();
+      item = new Item();
       item.id = uuid()
       await editor.createResource('items', item);
       await router.replace(`/editor/items/${item.id}`);
     }
 
-    const item = reactiveCopy<Item>(
+    item = reactiveCopy<Item>(
       editor.items.get(route.params.id as string),
       new Item()
     );

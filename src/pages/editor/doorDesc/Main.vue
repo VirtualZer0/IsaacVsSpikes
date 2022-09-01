@@ -35,16 +35,17 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
+    let doorDesc: DoorDesc;
 
 
     if (route.params.id == 'new') {
-      const doorDesc = new DoorDesc();
+      doorDesc = new DoorDesc();
       doorDesc.id = uuid()
       await editor.createResource('doorDescs', doorDesc);
       await router.replace(`/editor/doorDescs/${doorDesc.id}`);
     }
 
-    const doorDesc = reactiveCopy<DoorDesc>(
+    doorDesc = reactiveCopy<DoorDesc>(
       editor.doorDescs.get(route.params.id as string),
       new DoorDesc()
     );

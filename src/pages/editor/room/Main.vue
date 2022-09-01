@@ -45,16 +45,16 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
-
+    let room: Room;
 
     if (route.params.id == 'new') {
-      const room = new Room();
+      room = new Room();
       room.id = uuid()
       await editor.createResource('rooms', room);
       await router.replace(`/editor/rooms/${room.id}`);
     }
 
-    const room = reactiveCopy<Room>(
+    room = reactiveCopy<Room>(
       editor.rooms.get(route.params.id as string),
       new Room()
     );

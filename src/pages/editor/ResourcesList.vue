@@ -41,7 +41,7 @@
         </div>
         <div class="eui card shadow-l1 item" v-for="[id,res] in filteredItems" :key="id"
           @click="selectMode ? emit('select', res) : router.push(`/editor/${resource}/${id}`)"
-          :title="res.tags.join(', ')">
+          :title="`${res.tags.join(', ')}\n${res.note}`">
           <Suspense>
             <template #default>
               <editor-res-preview :res="res" class="preview" />
@@ -175,6 +175,10 @@ export default defineComponent({
 
     const deleteResource = async (res: Resource) => {
       if (resource != 'assets') {
+        if (resource === 'rooms') {
+          await editor.eventNodes.delete(res.id);
+          await editor.saveEventNodes();
+        }
         await editor.deleteResource(resource, res.id);
       }
       else {

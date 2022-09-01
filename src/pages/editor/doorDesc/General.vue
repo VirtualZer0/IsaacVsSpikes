@@ -12,6 +12,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{$t(`editor.note`)}}</label>
+      <textarea v-model="curDoorDesc.note" class="eui textarea small" />
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{$t(`editor.description`)}}</label>
       <editor-locale-text class="input" :text="doorDesc.text" />
     </div>
@@ -20,7 +25,7 @@
 
 <script lang="ts">
 import { DoorDesc } from '@/core/classes/game/DoorDesc';
-import { defineComponent, PropType} from 'vue';
+import { defineComponent, PropType, ref} from 'vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
@@ -36,7 +41,9 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const curDoorDesc = ref(props.doorDesc);
     return {
+      curDoorDesc,
       emit
     }
   },
