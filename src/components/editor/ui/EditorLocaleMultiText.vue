@@ -1,7 +1,7 @@
 <template>
   <div class="editor-locale-input quill" :key="updateKey.toString()">
     <!-- TODO: Переписать при первой же возможности. Создавать на каждый редактор свой тулбар это жопа. -->
-    <div :id="customToolbarId+num" class="quill-custom-toolbar eui" v-for="(_b, num) in text" :key="num" v-show="activeEditor == num">
+    <div :id="customToolbarId+num" class="quill-custom-toolbar eui" v-for="(_b, num) in text" :key="`${num}-${updateKey.toString()}`" v-show="activeEditor == num">
       <div>
         <button class="ql-bold"/>
         <button class="ql-italic"/>
@@ -87,7 +87,9 @@ export default defineComponent({
     }
 
     const textChange = (num: number) => {
+      editors.value = editors.value.filter(item => item);
       if (!editors.value[num]) {
+        console.log('Err', num, editors.value);
         return;
       }
 
@@ -105,7 +107,8 @@ export default defineComponent({
         return;
       }
 
-      copyText.splice(num, 1)
+      copyText.splice(num, 1);
+      editors.value = editors.value.filter(item => item);
 
       if (num != 0) {
         activeEditor.value = num - 1;

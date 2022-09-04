@@ -100,6 +100,7 @@ import { Item } from '@/core/classes/game/Item';
 import EditorResPreview from '@/components/editor/ui/EditorResPreview.vue';
 
 import { library } from '@/core/Core';
+import { restoreEvents } from '@/core/helpers/restoreEvents';
 
 export default defineComponent({
   name: 'EditorResourcesListScreen',
@@ -142,23 +143,9 @@ export default defineComponent({
       switch(resource) {
         case 'levels': duplicatedItem = restoreClass<Level>(duplicatedItem, Level); break;
         case 'rooms': {
-          // Для комнаты дополнительно копируем положение нод
+          // Для комнаты дополнительно копируем ноды
           duplicatedItem = restoreClass<Room>(duplicatedItem, Room);
-          const origNode = editor.eventNodes.get(res.id);
-          const copyNode = new Map<string, number[]>();
-
-          if (!origNode) {
-            break;
-          }
-
-          // Copy nodes
-          for(const [nodeId, node] of origNode) {
-            const newNode = [...node];
-            copyNode.set(nodeId, newNode);
-          }
-
-
-          editor.eventNodes.set(duplicatedItem.id, copyNode);
+          duplicatedItem.events = restoreEvents(duplicatedItem.events);
           break;
         }
         case 'items': duplicatedItem = restoreClass<Item>(duplicatedItem, Item); break;
@@ -167,18 +154,10 @@ export default defineComponent({
       }
 
       await editor.createResource(resource, duplicatedItem);
-
-      if (resource === 'rooms') {
-        await editor.saveEventNodes();
-      }
     }
 
     const deleteResource = async (res: Resource) => {
       if (resource != 'assets') {
-        if (resource === 'rooms') {
-          await editor.eventNodes.delete(res.id);
-          await editor.saveEventNodes();
-        }
         await editor.deleteResource(resource, res.id);
       }
       else {

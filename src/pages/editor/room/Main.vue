@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onBeforeUnmount } from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useEditorStore} from '@/store/editor'
 import { Room } from '@/core/classes/game/Room';
@@ -63,22 +63,7 @@ export default defineComponent({
 
     const saveRoom = async () => {
       if (route.params.id != 'new') {
-
-        const events: RoomEvent[] = [];
-        const nodes: Map<string, number[]> = new Map();
-
-        editor.temporaryNodemap.forEach(node => {
-          events.push(node.event);
-          nodes.set(node.event.id, [node.x, node.y]);
-        });
-
-        room.events = events;
-        editor.eventNodes.set(room.id, nodes);
-
-        await Promise.all([
-          editor.updateResource('rooms', room),
-          editor.saveEventNodes()
-        ]);
+        await editor.updateResource('rooms', room);
       }
 
       router.push(`/editor/list/rooms`);

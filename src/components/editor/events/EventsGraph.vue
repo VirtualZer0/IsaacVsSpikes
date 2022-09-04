@@ -29,17 +29,17 @@
       <div class="events">
 
         <event-element
-          v-for="node in nodemap"
-          :key="node.event.id"
-          :event="node.event"
-          :x="node.x"
-          :y="node.y"
+          v-for="node in curEvents"
+          :key="node.id"
+          :event="node"
+          :x="node.pos.x"
+          :y="node.pos.y"
           @start-move="currentDraggable = node"
           @stop-move="currentDraggable = null"
           @input="setPin(node, 'input', $event)"
           @output="setPin(node, 'output', $event)"
           @update-links="updateLinks(node, $event)"
-          @edit="editEvent = node.event"
+          @edit="editEvent = node"
           @remove="removeNode(node)"/>
 
       </div>
@@ -80,6 +80,7 @@ import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChan
 import { RoomRewardEvent } from "@/core/classes/game/sub/room/RoomRewardEvent";
 import { RoomTextEvent } from "@/core/classes/game/sub/room/RoomTextEvent";
 import { RoomChanceEvent } from "@/core/classes/game/sub/room/RoomChanceEvent";
+import { RoomSoundEvent } from "@/core/classes/game/sub/room/RoomSoundEvent";
 import { RoomOrEvent } from "@/core/classes/game/sub/room/RoomOrEvent";
 
 import { reactive, ref } from "@vue/reactivity";
@@ -89,15 +90,6 @@ import { v4 as uuid, NIL as nilUUid } from 'uuid'
 
 import EventElement from "./EventElement.vue";
 import EventIcon from "./EventIcon.vue";
-import { useEditorStore } from "@/store/editor";
-import { RoomSoundEvent } from "@/core/classes/game/sub/room/RoomSoundEvent";
-
-/** Нода графа */
-type Node = {
-  event: RoomEvent;
-  x: number;
-  y: number;
-};
 
 /** Событие создания подключения */
 type ConnectionEvent = {
@@ -136,35 +128,19 @@ export default defineComponent({
       type: Array as PropType<RoomEvent[]>,
       required: true,
       default: () => []
-    },
-
-    nodes: {
-      type: Object as PropType<Map<string, number[]>>,
-      required: true,
-      default: () => new Map()
     }
   },
 
   setup(props) {
-    const editor = useEditorStore();
     const editEvent = ref<RoomEvent | null>(null);
+    const curEvents = ref<RoomEvent[]>(props.events);
 
     /** Полотно */
     const canvas = ref<Nullable<HTMLElement>>(null);
-    const currentDraggable = ref<Nullable<Node>>(null);
+    const currentDraggable = ref<Nullable<RoomEvent>>(null);
 
     /** Список связей */
     const links = reactive<Link[]>([]);
-
-    /** Список нод */
-    const nodemap = editor.temporaryNodemap = reactive(props.events.map(event => {
-      const pos = props.nodes.get(event.id);
-      return {
-        event: event,
-        x: pos ? pos[0] : 0,
-        y: pos ? pos[1] : 0
-      }
-    }));
 
     /** Текущая позиция мыши */
     const curPos = reactive({
@@ -193,10 +169,10 @@ export default defineComponent({
     /** Создание связи между двумя блоками */
     const establishConnection = () => {
 
-      const inputNode = nodemap.find(node => node.event.id === newLink.inputId);
-      const outputNode = nodemap.find(node => node.event.id === newLink.outputId);
+      const inputNode = curEvents.value.find(node => node.id === newLink.inputId);
+      const outputNode = curEvents.value.find(node => node.id === newLink.outputId);
 
-      if (outputNode?.event.type == RoomEventType.OR && inputNode?.event.type != RoomEventType.STATSCHECK) {
+      if (outputNode?.type == RoomEventType.OR && inputNode?.type != RoomEventType.STATSCHECK) {
         alert('Комбинатор может подключаться только к блокам проверок');
         newLink.outputId = '';
         newLink.inputId = '';
@@ -207,12 +183,12 @@ export default defineComponent({
       const oldLink = links.find(link => link.outputId === newLink.outputId && link.outputKey === newLink.outputKey);
 
       if (oldLink) {
-        const oldOutputNode = nodemap.find(node => node.event.id === oldLink.outputId);
-        const oldInputNode = nodemap.find(node => node.event.id === oldLink.inputId);
+        const oldOutputNode = curEvents.value.find(node => node.id === oldLink.outputId);
+        const oldInputNode = curEvents.value.find(node => node.id === oldLink.inputId);
 
         if (oldOutputNode && oldInputNode) {
-          oldOutputNode.event.outputEvents[oldLink.outputKey] = nilUUid;
-          oldInputNode.event.inputEvents = oldInputNode.event.inputEvents
+          oldOutputNode.outputEvents[oldLink.outputKey] = nilUUid;
+          oldInputNode.inputEvents = oldInputNode.inputEvents
             .filter(event => event.id !== oldLink.inputId && event.key !== oldLink.outputKey);
         }
 
@@ -221,8 +197,8 @@ export default defineComponent({
       }
 
       if (inputNode && outputNode) {
-        inputNode.event.inputEvents.push({id: outputNode.event.id, key: newLink.outputKey});
-        outputNode.event.outputEvents[newLink.outputKey] = inputNode.event.id;
+        inputNode.inputEvents.push({id: outputNode.id, key: newLink.outputKey});
+        outputNode.outputEvents[newLink.outputKey] = inputNode.id;
       }
 
       links.push({
@@ -241,28 +217,28 @@ export default defineComponent({
     };
 
     /** Удаление события */
-    const removeNode = (delNode: Node) => {
-      const index = nodemap.indexOf(delNode);
+    const removeNode = (delNode: RoomEvent) => {
+      const index = curEvents.value.indexOf(delNode);
 
       if (index > -1) {
-        nodemap.forEach(node => {
-          node.event.inputEvents = node.event.inputEvents.filter(ev => ev.id !== delNode.event.id);
+        curEvents.value.forEach(node => {
+          node.inputEvents = node.inputEvents.filter(ev => ev.id !== delNode.id);
 
-          for (const [key, outputId] of Object.entries(node.event.outputEvents)) {
-            if (outputId === delNode.event.id) {
-              node.event.outputEvents[key] = nilUUid;
+          for (const [key, outputId] of Object.entries(node.outputEvents)) {
+            if (outputId === delNode.id) {
+              node.outputEvents[key] = nilUUid;
             }
           }
 
         });
 
-        nodemap.splice(index, 1)
+        curEvents.value.splice(index, 1)
       }
 
       const linksForRemove = [];
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
-        if (link.inputId === delNode.event.id || link.outputId === delNode.event.id) {
+        if (link.inputId === delNode.id || link.outputId === delNode.id) {
           linksForRemove.push(i);
         }
       }
@@ -274,12 +250,12 @@ export default defineComponent({
 
     /** Удаление связи */
     const breakLink = (link: Link) => {
-      const inputNode = nodemap.find(node => node.event.id === link.inputId);
-      const outputNode = nodemap.find(node => node.event.id === link.outputId);
+      const inputNode = curEvents.value.find(node => node.id === link.inputId);
+      const outputNode = curEvents.value.find(node => node.id === link.outputId);
 
       if (inputNode && outputNode) {
-        inputNode.event.inputEvents = inputNode.event.inputEvents.filter(ev => ev.id !== link.outputId || ev.key !== link.outputKey);
-        outputNode.event.outputEvents[link.outputKey] = nilUUid;
+        inputNode.inputEvents = inputNode.inputEvents.filter(ev => ev.id !== link.outputId || ev.key !== link.outputKey);
+        outputNode.outputEvents[link.outputKey] = nilUUid;
       }
 
       const index = links.indexOf(link);
@@ -299,8 +275,8 @@ export default defineComponent({
       curPos.y = Math.round(e.clientY - rect.top + canvas.value.scrollTop);
 
       if (currentDraggable.value) {
-        currentDraggable.value.x = curPos.x - 15;
-        currentDraggable.value.y = curPos.y + 15;
+        currentDraggable.value.pos.x = curPos.x - 15;
+        currentDraggable.value.pos.y = curPos.y + 15;
       }
 
       if (!newLink.visible) {
@@ -318,24 +294,24 @@ export default defineComponent({
     }
 
     /** Обновление положения связей */
-    const updateLinks = (node: Node, pins: {input: Coords, outputs: {key: string, x: number, y: number}[]}) => {
+    const updateLinks = (node: RoomEvent, pins: {input: Coords, outputs: {key: string, x: number, y: number}[]}) => {
       if (!canvas.value) {
         return;
       }
 
-      const inputLinks = links.filter(link => link.inputId === node.event.id);
-      const outputLinks = links.filter(link => link.outputId === node.event.id);
+      const inputLinks = links.filter(link => link.inputId === node.id);
+      const outputLinks = links.filter(link => link.outputId === node.id);
 
       inputLinks.forEach(link => {
-        link.inputX = pins.input.x + node.x;
-        link.inputY = pins.input.y + node.y;
+        link.inputX = pins.input.x + node.pos.x;
+        link.inputY = pins.input.y + node.pos.y;
       });
 
       outputLinks.forEach(link => {
         pins.outputs.forEach(output => {
           if (link.outputKey === output.key) {
-            link.outputX = output.x + node.x;
-            link.outputY = output.y + node.y;
+            link.outputX = output.x + node.pos.x;
+            link.outputY = output.y + node.pos.y;
           }
         });
       });
@@ -369,11 +345,8 @@ export default defineComponent({
           default: return;
         }
 
-        nodemap.push({
-          event: newEvent,
-          x: curPos.x,
-          y: curPos.y
-        });
+        newEvent.pos = {...curPos};
+        curEvents.value.push(newEvent);
 
         ghostBlock.type = null;
       }
@@ -383,7 +356,7 @@ export default defineComponent({
     }
 
     /** Обработка процесса создания новой связи */
-    const setPin = (node: Node, pin: 'input' | 'output', ev: ConnectionEvent) => {
+    const setPin = (node: RoomEvent, pin: 'input' | 'output', ev: ConnectionEvent) => {
 
       if (!canvas.value) {
         return;
@@ -392,7 +365,7 @@ export default defineComponent({
       const rect = canvas.value.getBoundingClientRect();
 
       newLink.visible = true;
-      newLink[`${pin}Id`] = node.event.id;
+      newLink[`${pin}Id`] = node.id;
       newLink[`${pin}X`] = ev.pos[0] - rect.left + canvas.value.scrollLeft;
       newLink[`${pin}Y`] = ev.pos[1] - rect.top + canvas.value.scrollTop;
 
@@ -404,7 +377,7 @@ export default defineComponent({
 
       if(newLink[`${nPin}Id`]) {
 
-        const event = nodemap.find(node => node.event.id === newLink[`${nPin}Id`])?.event;
+        const event = curEvents.value.find(node => node.id === newLink[`${nPin}Id`]);
 
         if(!event) {
           return;
@@ -420,13 +393,13 @@ export default defineComponent({
     }
 
     /** Восстановление сохраненных связей */
-    nodemap.forEach(outputNode => {
-      for(const [key, value] of Object.entries(outputNode.event.outputEvents)) {
-        const inputNode = nodemap.find(node => node.event.id === value);
+    curEvents.value.forEach(outputNode => {
+      for(const [key, value] of Object.entries(outputNode.outputEvents)) {
+        const inputNode = curEvents.value.find(node => node.id === value);
         if (inputNode) {
           links.push({
-            inputId: inputNode.event.id,
-            outputId: outputNode.event.id,
+            inputId: inputNode.id,
+            outputId: outputNode.id,
             outputKey: key,
             inputX: 0,
             inputY: 0,
@@ -438,11 +411,11 @@ export default defineComponent({
     });
 
     return {
-      canvas, nodemap, links, RoomEventType,
+      canvas, links, RoomEventType,
       newLink, ghostBlock, currentDraggable,
       mouseMove, stopAction, acceptAction,
       setPin, updateLinks, removeNode, breakLink,
-      editEvent,
+      editEvent, curEvents
     }
   }
 })

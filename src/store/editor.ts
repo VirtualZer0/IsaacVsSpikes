@@ -9,20 +9,23 @@ import { v4 as uuid } from 'uuid';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 import { createFS } from '@/utils/uniFS/createFS';
 import { Asset } from '@/core/classes/game/Asset';
-import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
 
 import { restoreClass } from '@/core/helpers/restoreClass';
-import { restoreMap } from '@/core/helpers/restoreMap';
 import { restoreEvents } from '@/core/helpers/restoreEvents';
 import { DoorDesc } from '@/core/classes/game/DoorDesc';
+import { runMigration } from '@/core/helpers/migrateProject';
 
+/** Текущая версия проекта */
+const CURRENT_VERSION = 2;
+
+/** Хранилище редактора контента */
 export const useEditorStore = defineStore('editor', {
   state: () => ({
     fs: null as Nullable<IBaseFS>,
     name: '',
     dir: '',
     uuid: '',
-    version: 1,
+    version: CURRENT_VERSION,
 
     isOpen: false,
     bosses: new Map<string, Resource>(),
@@ -35,12 +38,6 @@ export const useEditorStore = defineStore('editor', {
     rooms: new Map<string, Room>(),
     scripts: new Map<string, Resource>(),
     doorDescs: new Map<string, DoorDesc>(),
-
-    eventNodes: new Map<string, Map<string, number[]>>(),
-    temporaryNodemap: [] as {
-      event: RoomEvent;
-      x: number;
-      y: number;}[],
   }),
 
   actions: {
@@ -78,8 +75,6 @@ export const useEditorStore = defineStore('editor', {
           uuid: this.uuid,
           version: this.version
         })),
-
-        (await fs.createFile('eventNodes.json')).writeAllText(JSON.stringify(this.eventNodes)),
       ])
 
       const assets = await fs.createDirectory('assets');
@@ -107,14 +102,14 @@ export const useEditorStore = defineStore('editor', {
 
       const meta = JSON.parse(await (await fs.getFile('project.json')).readAllText());
 
-      this.eventNodes = restoreMap(
-        JSON.parse(await (await fs.getFile('eventNodes.json')).readAllText())
-      ) as Map<string, Map<string, number[]>>;
-
       this.name = meta.name;
       this.uuid = meta.uuid;
       this.version = meta.version ?? 1;
       this.dir = fs.name;
+
+      if (meta.version !== CURRENT_VERSION) {
+        await runMigration(this.version, CURRENT_VERSION, fs);
+      }
 
       (await fs.getDirectories()).forEach(async (dir) => {
 
@@ -264,24 +259,6 @@ export const useEditorStore = defineStore('editor', {
 
       await (await assetsDir.getFile(`index.json`))
         .writeAllText(JSON.stringify(indexCopy));
-    },
-
-    /** Сохранить текущий набор нод для событий на диск */
-    async saveEventNodes() {
-      if (!this.fs) {
-        return;
-      }
-
-      const objNodes: Record<string, Record<string, number[]>> = {};
-
-      for (const [key, value] of this.eventNodes.entries()) {
-        objNodes[key] = {};
-        for (const [key2, value2] of value.entries()) {
-          objNodes[key][key2] = value2;
-        }
-      }
-
-      await (await this.fs.createFile('eventNodes.json')).writeAllText(JSON.stringify(objNodes));
     },
   }
 });

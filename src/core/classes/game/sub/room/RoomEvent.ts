@@ -20,6 +20,9 @@ export class RoomEvent extends Resource {
   /** Тип ивента */
   type: RoomEventType = RoomEventType.BASE;
 
+  /** Координаты ноды */
+  pos: {x: number, y: number} = {x: 100, y: 100};
+
   override getDisplayName(locale?: string): string {
     if (locale && this.name[locale]) {
       return this.name[locale];
