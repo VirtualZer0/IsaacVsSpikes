@@ -166,15 +166,21 @@ export default defineComponent({
     }
 
     const filteredItems = computed(() => {
-      if(!filter.value) return items;
+      let filtered : Map<string, Resource> = new Map();
 
-      const filtered : Map<string, Resource> = new Map();
-
-      for(const [id, res] of items) {
-        res.isMatch(filter.value) && filtered.set(id, res);
+      if (filter.value) {
+        for(const [id, res] of items) {
+          res.isMatch(filter.value) && filtered.set(id, res);
+        }
+      }
+      else {
+        filtered = items;
       }
 
-      return filtered;
+      return new Map([...filtered.entries()]
+        .sort((a, b) =>
+          a[1].getDisplayName(store.currentLocale).localeCompare(b[1].getDisplayName(store.currentLocale))
+        ));
     })
 
     return {
