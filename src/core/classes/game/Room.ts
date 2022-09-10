@@ -5,11 +5,11 @@ import { Monster } from "./Monster";
 import { RoomDrop } from "./sub/room/RoomDrop";
 import { RoomEvent } from "./sub/room/RoomEvent";
 import { ResourceLink, WeightedResourceLink } from "../base/ResourceLink";
-import { RoomType } from "./sub/room/RoomType";
+import { RoomType } from "../../types/game/RoomType";
 
 export class Room extends Resource {
   /** Шанс появления комнаты */
-  weight: number = 1;
+  weight = 1;
 
   /** Описание комнаты */
   desc: LocaleText[] = [{}];
@@ -18,7 +18,7 @@ export class Room extends Resource {
   type: RoomType = RoomType.NORMAL;
 
   /** Шанс дропа после прохождения */
-  dropChance: number = 0.5;
+  dropChance = 0.5;
 
   /** Описания двери */
   doorDescs: WeightedResourceLink[] = [];

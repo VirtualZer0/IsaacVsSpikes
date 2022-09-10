@@ -1,0 +1,15 @@
+export enum HeartType {
+  RED = "red",
+  BLUE = "blue",
+  BLACK = "black",
+  GOLDEN = "golden",
+  ROTTEN = "rotten",
+  WHITE = "white",
+  HALF_RED = "half_red",
+  HALF_BLUE = "half_blue",
+  HALF_BLACK = "half_black",
+  ADDITIONAL_RED = "additional_red",
+  ADDITIONAL_HALF_RED = "additional_half_red",
+  ADDITIONAL_WHITE = "additional_white",
+  ADDITIONAL_GOLDEN = "additional_golden",
+}

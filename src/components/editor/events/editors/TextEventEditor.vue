@@ -1,18 +1,18 @@
 <template>
   <div class="text-event-editor eui edit-form">
     <div class="title">
-      <event-icon :type="event.type" class="icon"/>
-      {{$t('editor.textEvent')}}
+      <event-icon :type="event.type" class="icon" />
+      {{ $t("editor.textEvent") }}
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.name`)}}</label>
-      <editor-locale-input class="input" :text="event.name"/>
+      <label class="eui label">{{ $t(`editor.name`) }}</label>
+      <editor-locale-input class="input" :text="event.name" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.startDialog`)}}</label>
-      <editor-locale-multi-text class="input" :text="event.startDialog"/>
+      <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
+      <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
   </div>
 </template>
@@ -30,17 +30,17 @@ export default defineComponent({
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,
-    EventIcon
-},
+    EventIcon,
+  },
   props: {
     event: {
       type: Object as PropType<RoomTextEvent>,
-      required: true
-    }
+      required: true,
+    },
   },
   setup() {
     return {};
-  }
+  },
 });
 </script>
 

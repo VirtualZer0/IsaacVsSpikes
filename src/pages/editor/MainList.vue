@@ -2,44 +2,67 @@
   <div class="screen editor editor-main-list">
     <div class="eui paper">
       <div class="eui items">
-        <router-link to="/editor/list/levels" class="eui card item shadow-l1">{{$t('editor.levels')}} <span class="count">{{editor.levels.size}}</span></router-link>
-        <router-link to="/editor/list/rooms" class="eui card item shadow-l1">{{$t('editor.rooms')}} <span class="count">{{editor.rooms.size}}</span></router-link>
-        <router-link to="/editor/list/monsters" class="eui card item shadow-l1">{{$t('editor.monsters')}} <span class="count">{{editor.monsters.size}}</span></router-link>
-        <div class="eui card item shadow-l1">{{$t('editor.bosses')}} <span class="count">0</span></div>
-        <div class="eui card item shadow-l1">{{$t('editor.objects')}} <span class="count">0</span></div>
-        <div class="eui card item shadow-l1">{{$t('editor.items')}} <span class="count">0</span></div>
-        <div class="eui card item shadow-l1">{{$t('editor.characters')}} <span class="count">0</span></div>
-        <router-link to="/editor/list/assets" class="eui card item shadow-l1">{{$t('editor.assets')}} <span class="count">{{editor.assets.size}}</span></router-link>
-        <div class="eui card item shadow-l1">{{$t('editor.scripts')}} <span class="count">0</span></div>
-        <router-link to="/editor/list/doorDescs" class="eui card item shadow-l1">{{$t('editor.doorDescs')}} <span class="count">{{editor.doorDescs.size}}</span></router-link>
+        <router-link to="/editor/list/levels" class="eui card item shadow-l1"
+          >{{ $t("editor.levels") }}
+          <span class="count">{{ editor.levels.size }}</span></router-link
+        >
+        <router-link to="/editor/list/rooms" class="eui card item shadow-l1"
+          >{{ $t("editor.rooms") }}
+          <span class="count">{{ editor.rooms.size }}</span></router-link
+        >
+        <router-link to="/editor/list/monsters" class="eui card item shadow-l1"
+          >{{ $t("editor.monsters") }}
+          <span class="count">{{ editor.monsters.size }}</span></router-link
+        >
+        <div class="eui card item shadow-l1">
+          {{ $t("editor.bosses") }} <span class="count">0</span>
+        </div>
+        <div class="eui card item shadow-l1">
+          {{ $t("editor.objects") }} <span class="count">0</span>
+        </div>
+        <div class="eui card item shadow-l1">
+          {{ $t("editor.items") }} <span class="count">0</span>
+        </div>
+        <div class="eui card item shadow-l1">
+          {{ $t("editor.characters") }} <span class="count">0</span>
+        </div>
+        <router-link to="/editor/list/assets" class="eui card item shadow-l1"
+          >{{ $t("editor.assets") }}
+          <span class="count">{{ editor.assets.size }}</span></router-link
+        >
+        <div class="eui card item shadow-l1">
+          {{ $t("editor.scripts") }} <span class="count">0</span>
+        </div>
+        <router-link to="/editor/list/doorDescs" class="eui card item shadow-l1"
+          >{{ $t("editor.doorDescs") }}
+          <span class="count">{{ editor.doorDescs.size }}</span></router-link
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { useEditorStore } from '@/store/editor';
-import { defineComponent } from 'vue'
+import { useEditorStore } from "@/store/editor";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'EditorMainListScreen',
+  name: "EditorMainListScreen",
   setup() {
     const editor = useEditorStore();
 
     return {
-      editor
-    }
-  }
-})
+      editor,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 .editor-main-list {
-
   @include center;
   flex-grow: 1;
   height: 100%;
-
 }
 .paper {
   height: 100%;
@@ -53,7 +76,6 @@ export default defineComponent({
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
-
 }
 
 .item {
@@ -64,7 +86,7 @@ export default defineComponent({
   width: 180px;
   height: 140px;
   cursor: pointer;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
   font-size: 21px;
   text-decoration: none;
 

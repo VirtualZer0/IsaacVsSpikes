@@ -1,1 +1,1 @@
-export type LocaleText = { [key: string]: string; };
+export type LocaleText = { [key: string]: string };

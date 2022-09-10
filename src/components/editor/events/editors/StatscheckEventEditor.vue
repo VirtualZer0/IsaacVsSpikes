@@ -2,49 +2,66 @@
   <div class="checkstats-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{$t('editor.statscheckEvent')}}
+      {{ $t("editor.statscheckEvent") }}
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.name`)}}</label>
+      <label class="eui label">{{ $t(`editor.name`) }}</label>
       <editor-locale-input class="input" :text="event.name" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.startDialog`)}}</label>
+      <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.requiredItems`)}}</label>
+      <label class="eui label">{{ $t(`editor.requiredItems`) }}</label>
       <editor-link-list :links="event.requiredItems" type="items" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.requiredStats`)}}</label>
+      <label class="eui label">{{ $t(`game.health`) }}</label>
+      <editor-hearts class="input" :health="event.hearts" />
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.requiredStats`) }}</label>
 
       <div class="nth-format">
-        <div class="stat-line" v-for="[stat, params] of Object.entries(requiredStats)" :key="stat">
-
+        <div
+          class="stat-line"
+          v-for="[stat, params] of Object.entries(requiredStats)"
+          :key="stat"
+        >
           <editor-checkbox v-model="params.enabled" />
-          <div class="name">{{$t(`game.${stat}`)}}</div>
+          <div class="name">{{ $t(`game.${stat}`) }}</div>
 
           <div class="checkbox" v-if="params.type == 'boolean'">
             <editor-checkbox v-model="params.value" />
-            <div class="sub">{{$t(`editor.required`)}}</div>
+            <div class="sub">{{ $t(`editor.required`) }}</div>
           </div>
 
-          <div class="range" v-else-if="typeof params == 'object' && params.type == 'number'">
-            {{$t('editor.from')}}
-            <input class="eui input" type="number" v-model.number="params.from" />
-            {{$t('editor.to')}}
+          <div
+            class="range"
+            v-else-if="typeof params == 'object' && params.type == 'number'"
+          >
+            {{ $t("editor.from") }}
+            <input
+              class="eui input"
+              type="number"
+              v-model.number="params.from"
+            />
+            {{ $t("editor.to") }}
             <input class="eui input" type="number" v-model.number="params.to" />
           </div>
 
-          <div class="range" v-else-if="typeof params == 'object' && params.type == 'tags'">
+          <div
+            class="range"
+            v-else-if="typeof params == 'object' && params.type == 'tags'"
+          >
             <editor-tag-list :tags="params.value" />
           </div>
-
         </div>
       </div>
     </div>
@@ -63,6 +80,7 @@ import EditorCheckbox from "../../ui/EditorCheckbox.vue";
 import { RoomStatsCheckEvent } from "@/core/classes/game/sub/room/RoomStatsCheckEvent";
 import EditorLinkList from "../../ui/EditorLinkList.vue";
 import EditorTagList from "../../ui/EditorTagList.vue";
+import EditorHearts from "../../ui/EditorHearts.vue";
 
 export default defineComponent({
   name: "StatscheckEventEditor",
@@ -72,33 +90,32 @@ export default defineComponent({
     EventIcon,
     EditorCheckbox,
     EditorLinkList,
-    EditorTagList
-},
+    EditorTagList,
+    EditorHearts,
+  },
   props: {
     event: {
       type: Object as PropType<RoomStatsCheckEvent>,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
-
     const requiredStats = reactive(props.event.requiredStats);
 
     const changeParam = (param: string, value: any) => {
       (requiredStats as Record<string, any>)[param] = value;
-    }
+    };
 
     return {
       requiredStats,
-      changeParam
+      changeParam,
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 .checkstats-event-editor {
-
   .title {
     font-size: 21px;
     font-weight: bold;
@@ -113,13 +130,12 @@ export default defineComponent({
   }
 
   .nth-format {
-    .stat-line:nth-child(2n+1) {
+    .stat-line:nth-child(2n + 1) {
       background-color: $editorBgInvariant;
     }
   }
 
   .stat-line {
-
     display: flex;
     align-items: center;
     gap: 12px;
@@ -141,7 +157,7 @@ export default defineComponent({
 
     .name {
       font-weight: bold;
-      width: 150px;
+      min-width: 150px;
       text-align: left;
     }
 

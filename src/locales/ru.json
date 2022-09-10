@@ -71,8 +71,9 @@
     "rewardEvent": "Награда",
     "statschangeEvent": "Изменение статов",
     "chanceEvent": "Случайность",
-    "soundEvent": "Звуковой эффект",
+    "effectEvent": "Эффект",
     "orEvent": "Комбинатор",
+    "counterEvent": "Счетчик",
 
     "startDialog": "Стартовый диалог",
     "requiredStats": "Требуемые статы",
@@ -92,6 +93,29 @@
     "out": "Выход",
     "newOutKey": "Ключ нового выхода",
     "keyAlreadyExists": "Такой ключ уже существует",
+    "addHealth": "Добавить здоровье",
+    "removeHealth": "Убрать здоровье",
+
+    "enableDamage": "Нанести урон",
+    "damage": "Урон",
+    "count": "Количество",
+    "damageTags": "Теги урона",
+    "damageType": {
+      "main": "Тип урона",
+      "default": "Стандартный",
+      "ignore_defence": "Игнорировать защиту",
+      "red_hearts":"По красным сердцам"
+    },
+
+    "counterEventMode": {
+      "main": "Режим счетчика",
+      "check": "Проверка",
+      "add": "Добавить",
+      "sub": "Вычесть",
+      "set": "Установить"
+    },
+    "label": "Метка",
+    "value": "Значение",
 
     "levelGen": "Расположение уровня",
     "isRegular": "Обычная генерация",
@@ -126,6 +150,8 @@
     "treasureRoom": "Сокровищница",
     "shopRoom": "Магазин",
     "spikesRoom": "Кусачая комната",
+    "devilRoom": "Комната дьявола",
+    "angelRoom": "Комната ангела",
 
     "redHearts": "Красные сердца",
     "blueHearts": "Синие сердца",

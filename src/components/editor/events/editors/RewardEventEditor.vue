@@ -2,55 +2,66 @@
   <div class="reward-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{$t('editor.rewardEvent')}}
+      {{ $t("editor.rewardEvent") }}
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.name`)}}</label>
+      <label class="eui label">{{ $t(`editor.name`) }}</label>
       <editor-locale-input class="input" :text="event.name" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.startDialog`)}}</label>
+      <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.items`)}}</label>
+      <label class="eui label">{{ $t(`editor.items`) }}</label>
       <editor-link-list :links="event.reward" type="items" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{$t(`editor.consumables`)}}</label>
+      <label class="eui label">{{ $t(`editor.consumables`) }}</label>
 
       <div class="nth-format">
         <div class="stat-line">
-          <div class="name">{{$t('game.coins')}}</div>
-          <input class="eui input" type="number" v-model.number="curEvent.pickups.coins" />
+          <div class="name">{{ $t("game.coins") }}</div>
+          <input
+            class="eui input"
+            type="number"
+            v-model.number="curEvent.pickups.coins"
+          />
         </div>
 
         <div class="stat-line">
-          <div class="name">{{$t('game.bombs')}}</div>
-          <input class="eui input" type="number" v-model.number="curEvent.pickups.bombs" />
+          <div class="name">{{ $t("game.bombs") }}</div>
+          <input
+            class="eui input"
+            type="number"
+            v-model.number="curEvent.pickups.bombs"
+          />
 
           <div class="checkbox">
             <editor-checkbox v-model="curEvent.goldenBomb" />
-            <div class="sub">{{$t(`game.goldenVersion`)}}</div>
+            <div class="sub">{{ $t(`game.goldenVersion`) }}</div>
           </div>
         </div>
 
         <div class="stat-line">
-          <div class="name">{{$t('game.keys')}}</div>
-          <input class="eui input" type="number" v-model.number="curEvent.pickups.keys" />
+          <div class="name">{{ $t("game.keys") }}</div>
+          <input
+            class="eui input"
+            type="number"
+            v-model.number="curEvent.pickups.keys"
+          />
 
           <div class="checkbox">
             <editor-checkbox v-model="curEvent.goldenKey" />
-            <div class="sub">{{$t(`game.goldenVersion`)}}</div>
+            <div class="sub">{{ $t(`game.goldenVersion`) }}</div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -73,28 +84,26 @@ export default defineComponent({
     EditorLocaleMultiText,
     EventIcon,
     EditorCheckbox,
-    EditorLinkList
-},
+    EditorLinkList,
+  },
   props: {
     event: {
       type: Object as PropType<RoomRewardEvent>,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
-
     const curEvent = ref(props.event);
 
     return {
       curEvent,
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 .reward-event-editor {
-
   .title {
     font-size: 21px;
     font-weight: bold;
@@ -109,13 +118,12 @@ export default defineComponent({
   }
 
   .nth-format {
-    .stat-line:nth-child(2n+1) {
+    .stat-line:nth-child(2n + 1) {
       background-color: $editorBgInvariant;
     }
   }
 
   .stat-line {
-
     display: flex;
     align-items: center;
     gap: 12px;

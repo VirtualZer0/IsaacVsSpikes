@@ -1,75 +1,80 @@
 <template>
   <div class="editor-locale-input quill">
-      <QuillEditor
-        class="eui quill-editor"
-        ref="textEditor"
-        theme="snow"
-        :content="currentText"
-        :toolbar="`#${customToolbarId}`"
-        contentType="html"
-        @textChange="textChange">
+    <QuillEditor
+      class="eui quill-editor"
+      ref="textEditor"
+      theme="snow"
+      :content="currentText"
+      :toolbar="`#${customToolbarId}`"
+      contentType="html"
+      @textChange="textChange"
+    >
+      <template #toolbar>
+        <div :id="customToolbarId" class="quill-custom-toolbar eui">
+          <div>
+            <button class="ql-bold" />
+            <button class="ql-italic" />
+            <button class="ql-underline" />
+            <button class="ql-strike" />
+            <button class="ql-blockquote" />
+            <select class="ql-align">
+              <option selected></option>
+              <option value="center"></option>
+              <option value="right"></option>
+              <option value="justify"></option>
+            </select>
 
-        <template #toolbar>
-          <div :id="customToolbarId" class="quill-custom-toolbar eui">
-            <div>
-              <button class="ql-bold"/>
-              <button class="ql-italic"/>
-              <button class="ql-underline"/>
-              <button class="ql-strike"/>
-              <button class="ql-blockquote"/>
-              <select class="ql-align">
-                <option selected></option>
-                <option value="center"></option>
-                <option value="right"></option>
-                <option value="justify"></option>
-              </select>
-
-              <select class="ql-color">
-              </select>
-              <select class="ql-background">
-              </select>
-            </div>
-
-            <div class="language">
-              <editor-combobox class="combobox" :items="allLocales" :value="currentLocale" @change="currentLocale = $event"/>
-            </div>
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
           </div>
-        </template>
 
-      </QuillEditor>
+          <div class="language">
+            <editor-combobox
+              class="combobox"
+              :items="allLocales"
+              :value="currentLocale"
+              @change="currentLocale = $event"
+            />
+          </div>
+        </div>
+      </template>
+    </QuillEditor>
   </div>
 </template>
 
 <script lang="ts">
-import { LocaleText } from '@/core/classes/base/LocaleText'
-import { useMainStore } from '@/store/main'
-import { defineComponent, PropType, ref, reactive, computed, watch } from 'vue'
-import EditorCombobox from './EditorCombobox.vue';
-import { QuillEditor, Quill } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { v4 as uuid } from 'uuid'
+import { LocaleText } from "@/core/classes/base/LocaleText";
+import { useMainStore } from "@/store/main";
+import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
+import EditorCombobox from "./EditorCombobox.vue";
+import { QuillEditor, Quill } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { v4 as uuid } from "uuid";
 
 export default defineComponent({
   components: { EditorCombobox, QuillEditor },
-  name: 'EditorLocaleText',
-  emits: ['change'],
+  name: "EditorLocaleText",
+  emits: ["change"],
   props: {
     text: {
       type: Object as PropType<LocaleText>,
       required: true,
-    }
+    },
   },
   setup(props, { emit }) {
     const store = useMainStore();
     const currentLocale = ref(store.currentLocale);
-    const allLocales = store.allLocales.map(locale => ({name: locale, value: locale}));
-    const copyText = reactive<LocaleText>(props.text)
+    const allLocales = store.allLocales.map((locale) => ({
+      name: locale,
+      value: locale,
+    }));
+    const copyText = reactive<LocaleText>(props.text);
     const textEditor = ref<Quill>(null);
     const customToolbarId = `custom-toolbar-${uuid()}`;
 
     const currentText = computed(() => {
-      return copyText[currentLocale.value] || '';
-    })
+      return copyText[currentLocale.value] || "";
+    });
 
     const textChange = () => {
       if (!textEditor.value) {
@@ -77,16 +82,16 @@ export default defineComponent({
       }
 
       copyText[currentLocale.value] = textEditor.value.getHTML();
-      emit('change', copyText)
-    }
+      emit("change", copyText);
+    };
 
     watch(currentLocale, (newVal, oldVal) => {
       if (newVal === oldVal || !textEditor.value) {
         return;
       }
 
-      textEditor.value.setHTML(copyText[currentLocale.value] || '');
-    })
+      textEditor.value.setHTML(copyText[currentLocale.value] || "");
+    });
 
     return {
       currentLocale,
@@ -95,12 +100,11 @@ export default defineComponent({
       copyText,
       textEditor,
       textChange,
-      customToolbarId
-    }
+      customToolbarId,
+    };
   },
-})
+});
 </script>
-
 
 <style lang="scss" scoped>
 .editor-locale-input {
@@ -128,7 +132,6 @@ export default defineComponent({
     justify-content: space-between;
     gap: 6px;
     border: none;
-
 
     &::after {
       display: none;

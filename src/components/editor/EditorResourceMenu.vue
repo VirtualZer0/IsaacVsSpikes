@@ -1,44 +1,45 @@
 <template>
   <div class="eui paper resource-menu">
-    <button v-for="(item, index) in items"
+    <button
+      v-for="(item, index) in items"
       :key="index"
       class="item"
-      :class="{'active': index == selected}"
-      @click="select(index)">
-      {{$t(item.name)}}
+      :class="{ active: index == selected }"
+      @click="select(index)"
+    >
+      {{ $t(item.name) }}
     </button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref} from 'vue'
+import { defineComponent, PropType, ref } from "vue";
 export default defineComponent({
-  name: 'EditorResourceMenu',
-  emits: ['select'],
+  name: "EditorResourceMenu",
+  emits: ["select"],
   props: {
     items: {
-      type: Array as PropType<{name: string, value: string}[]>,
-      required: true
+      type: Array as PropType<{ name: string; value: string }[]>,
+      required: true,
     },
   },
 
   setup(props, { emit }) {
-
     const selected = ref(0);
 
     const select = (index: number) => {
       selected.value = index;
-      emit('select', props.items[index]);
-    }
+      emit("select", props.items[index]);
+    };
 
-    emit('select', props.items[selected.value]);
+    emit("select", props.items[selected.value]);
 
     return {
       selected,
-      select
-    }
+      select,
+    };
   },
-})
+});
 </script>
 
 <style lang="scss">

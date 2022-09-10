@@ -1,107 +1,106 @@
-import { ICharacterPropsBoolean, ICharacterPropsRange, ICharacterPropsTags } from "./ICharacterRangeProps";
+import {
+  ICharacterPropsBoolean,
+  ICharacterPropsRange,
+  ICharacterPropsTags,
+} from "./ICharacterRangeProps";
 
 export class CharacterStats {
+  countdown = 0;
+  damage = 0;
+  speed = 0;
+  skill = 0;
 
-  countdown: number = 0;
-  health: number = 0;
-  damage: number = 0;
-  speed: number = 0;
-  skill: number = 0;
-
-  devilChance: number = 0;
-  angelChance: number = 0;
-
+  devilChance = 0;
+  angelChance = 0;
 }
 
 export class CharacterStatsCheckData {
-
   countdown: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   damage: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   speed: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   skill: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   devilChance: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   angelChance: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   tags: ICharacterPropsTags = {
-    type: 'tags',
+    type: "tags",
     enabled: false,
     value: [],
   };
 
   health: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
     to: 0,
   };
 
   redHearts: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
-    to: 0
+    to: 0,
   };
 
   blueHearts: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
-    to: 0
+    to: 0,
   };
 
   blackHearts: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
-    to: 0
+    to: 0,
   };
 
   goldenHearts: ICharacterPropsRange = {
-    type: 'number',
+    type: "number",
     enabled: false,
     from: 0,
-    to: 0
+    to: 0,
   };
 
   whiteHearts: ICharacterPropsBoolean = {
-    type: 'boolean',
+    type: "boolean",
     enabled: false,
     value: false,
   };
-
 }

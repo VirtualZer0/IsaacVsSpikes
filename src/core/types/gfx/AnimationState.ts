@@ -1,3 +1,5 @@
 export enum AnimationState {
-  STOP, PLAY, PAUSE
+  STOP,
+  PLAY,
+  PAUSE,
 }

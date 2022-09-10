@@ -1,7 +1,6 @@
 import IFile from "./IFile";
 
 export default interface IDirectory {
-
   name: string;
   path: string;
   parent: Nullable<IDirectory>;
@@ -15,5 +14,4 @@ export default interface IDirectory {
   createDirectory(name: string): Promise<IDirectory>;
   deleteDirectory(name: string): Promise<void>;
   delete(): Promise<void>;
-
 }

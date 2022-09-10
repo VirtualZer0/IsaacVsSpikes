@@ -1,54 +1,57 @@
 <template>
   <div class="screen editor editor-asset">
-
     <editor-resource-top
       type="asset"
       :res="asset"
       @save="saveAsset"
-      @cancel="router.push('/editor/list/assets')"/>
+      @cancel="router.push('/editor/list/assets')"
+    />
 
     <div class="eui paper content">
-      <editor-file-drop v-if="!asset" @select="createAsset"/>
-      <editor-asset-general v-else :asset="asset" @save="saveAsset"/>
+      <editor-file-drop v-if="!asset" @select="createAsset" />
+      <editor-asset-general v-else :asset="asset" @save="saveAsset" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from 'vue'
+import { defineComponent, Ref, ref } from "vue";
 
-import {useRoute, useRouter} from 'vue-router'
-import {useEditorStore} from '@/store/editor'
-import { Asset } from '@/core/classes/game/Asset';
-import {v4 as uuid} from 'uuid'
-import { useMainStore } from '@/store/main';
-import reactiveCopy from '@/core/helpers/reactiveCopy';
-import { restoreClass } from '@/core/helpers/restoreClass';
+import { useRoute, useRouter } from "vue-router";
+import { useEditorStore } from "@/store/editor";
+import { Asset } from "@/core/classes/game/Asset";
+import { v4 as uuid } from "uuid";
+import { useMainStore } from "@/store/main";
+import reactiveCopy from "@/core/helpers/reactiveCopy";
+import { restoreClass } from "@/core/helpers/restoreClass";
 
-import EditorResourceTop from '@/components/editor/EditorResourceTop.vue'
-import EditorFileDrop from '@/components/editor/ui/EditorFileDrop.vue';
-import EditorAssetGeneral from '@/pages/editor/asset/General.vue';
-import { FSAccessFile } from '@/utils/uniFS/FSAccess/FSAccessFile';
+import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
+import EditorFileDrop from "@/components/editor/ui/EditorFileDrop.vue";
+import EditorAssetGeneral from "@/pages/editor/asset/General.vue";
+import { FSAccessFile } from "@/utils/uniFS/FSAccess/FSAccessFile";
 
 export default defineComponent({
-  name: 'EditorAsset',
+  name: "EditorAsset",
   components: {
     EditorResourceTop,
     EditorFileDrop,
-    EditorAssetGeneral
-},
+    EditorAssetGeneral,
+  },
   async setup() {
     const route = useRoute();
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
-    let asset: Ref<Asset|null>;
+    let asset: Ref<Asset | null>;
 
     asset = ref(
-      route.params.id != 'new' ? reactiveCopy<Asset>(
-      editor.assets.get(route.params.id as string),
-      new Asset()
-    ) : null);
+      route.params.id != "new"
+        ? reactiveCopy<Asset>(
+            editor.assets.get(route.params.id as string),
+            new Asset()
+          )
+        : null
+    );
 
     const createAsset = async (ev: File) => {
       if (!editor.fs) {
@@ -58,10 +61,10 @@ export default defineComponent({
       await editor.saveAsset(asset.value);
 
       await router.replace(`/editor/assets/${asset.value.id}`);
-    }
+    };
 
     const saveAsset = async () => {
-      if (route.params.id != 'new' && asset) {
+      if (route.params.id != "new" && asset) {
         editor.$patch(() => {
           if (!asset.value) {
             return;
@@ -70,21 +73,28 @@ export default defineComponent({
           // Восстановление классов ассета и файла
           const restoredAsset = restoreClass<Asset>(asset.value, Asset);
           if (restoredAsset.file) {
-            restoredAsset.file = restoreClass<FSAccessFile>(restoredAsset.file, FSAccessFile);
+            restoredAsset.file = restoreClass<FSAccessFile>(
+              restoredAsset.file,
+              FSAccessFile
+            );
           }
           editor.assets.set(asset.value.id, restoredAsset);
         });
       }
 
       router.push(`/editor/list/assets`);
-    }
+    };
 
     return {
-      editor, asset, store, router,
-      saveAsset, createAsset
-    }
+      editor,
+      asset,
+      store,
+      router,
+      saveAsset,
+      createAsset,
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>

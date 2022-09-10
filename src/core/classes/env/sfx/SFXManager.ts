@@ -1,6 +1,4 @@
 export class SFXManager {
-  volume: number = 100;
+  volume = 100;
   list: AudioBuffer[] = [];
-
-
 }

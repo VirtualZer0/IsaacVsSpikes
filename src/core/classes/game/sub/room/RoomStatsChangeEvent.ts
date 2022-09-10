@@ -1,14 +1,25 @@
 import { LocaleText } from "@/core/classes/base/LocaleText";
 import { RoomEvent } from "./RoomEvent";
-import { NIL as nilUUid } from 'uuid';
+import { NIL as nilUUid } from "uuid";
 import { RoomEventType } from "./RoomEventType";
 import { CharacterStats } from "../character/CharcterStats";
+import { CharacterHearts } from "../character/CharacterHealth";
+import { DamageType } from "@/core/types/game/DamageType";
 
 /** Ивент на изменение параметров игрока */
 export class RoomStatsChangeEvent extends RoomEvent {
-
   /** Статы игрока */
   stats: CharacterStats = new CharacterStats();
+
+  /** Здоровье игрока */
+  addHealth: CharacterHearts = new CharacterHearts();
+  removeHealth: CharacterHearts = new CharacterHearts();
+
+  /** Нанесение урона */
+  damageEnabled = false;
+  damage = 0;
+  damageType: DamageType = DamageType.DEFAULT;
+  damageTags: string[] = [];
 
   /** Теги для добавления */
   addedTags: string[] = [];
@@ -17,10 +28,9 @@ export class RoomStatsChangeEvent extends RoomEvent {
   removedTags: string[] = [];
 
   /** Выходные ивенты при успехе/поражении */
-  outputEvents: { [key: string]: string; } = {
+  outputEvents: { [key: string]: string } = {
     next: nilUUid,
   };
 
   type: RoomEventType = RoomEventType.STATSCHANGE;
-
 }

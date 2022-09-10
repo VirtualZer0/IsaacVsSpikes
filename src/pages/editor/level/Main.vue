@@ -1,35 +1,41 @@
 <template>
   <div class="screen editor editor-level">
+    <editor-resource-top
+      type="level"
+      :res="level"
+      @save="saveLevel"
+      @cancel="router.push('/editor/list/levels')"
+    />
 
-    <editor-resource-top type="level" :res="level" @save="saveLevel" @cancel="router.push('/editor/list/levels')" />
-
-    <editor-resource-menu :items="[
-      {name: 'editor.general', value: 'general'},
-      {name: 'editor.view', value: 'view'},
-    ]" @select="switchMenu" />
+    <editor-resource-menu
+      :items="[
+        { name: 'editor.general', value: 'general' },
+        { name: 'editor.view', value: 'view' },
+      ]"
+      @select="switchMenu"
+    />
 
     <router-view :level="level" class="eui paper content" />
-
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useEditorStore} from '@/store/editor'
-import { Level } from '@/core/classes/game/Level';
-import {v4 as uuid} from 'uuid'
-import { useMainStore } from '@/store/main';
-import reactiveCopy from '@/core/helpers/reactiveCopy';
+import { defineComponent } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useEditorStore } from "@/store/editor";
+import { Level } from "@/core/classes/game/Level";
+import { v4 as uuid } from "uuid";
+import { useMainStore } from "@/store/main";
+import reactiveCopy from "@/core/helpers/reactiveCopy";
 
-import EditorResourceTop from '@/components/editor/EditorResourceTop.vue'
-import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue'
+import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
+import EditorResourceMenu from "@/components/editor/EditorResourceMenu.vue";
 
 export default defineComponent({
-  name: 'EditorLevel',
+  name: "EditorLevel",
   components: {
     EditorResourceTop,
-    EditorResourceMenu
+    EditorResourceMenu,
   },
   async setup() {
     const route = useRoute();
@@ -38,10 +44,10 @@ export default defineComponent({
     const store = useMainStore();
     let level: Level;
 
-    if (route.params.id == 'new') {
+    if (route.params.id == "new") {
       level = new Level();
-      level.id = uuid()
-      await editor.createResource('levels', level);
+      level.id = uuid();
+      await editor.createResource("levels", level);
       await router.replace(`/editor/levels/${level.id}`);
     }
 
@@ -51,25 +57,28 @@ export default defineComponent({
     );
 
     const saveLevel = async () => {
-      if (route.params.id != 'new') {
-        await editor.updateResource('levels', level);
+      if (route.params.id != "new") {
+        await editor.updateResource("levels", level);
       }
 
       router.push(`/editor/list/levels`);
-    }
+    };
 
-    const switchMenu = (item: {name: string, value: string}) => {
+    const switchMenu = (item: { name: string; value: string }) => {
       router.push(`/editor/levels/${level.id}/${item.value}`);
-    }
+    };
 
     return {
-      editor, level, store, router,
-      saveLevel, switchMenu
-    }
+      editor,
+      level,
+      store,
+      router,
+      saveLevel,
+      switchMenu,
+    };
   },
-})
+});
 </script>
-
 
 <style lang="scss" scoped>
 .editor-level {

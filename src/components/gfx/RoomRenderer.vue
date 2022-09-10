@@ -1,16 +1,14 @@
 <template>
-  <div class="room">
-
-  </div>
+  <div class="room"></div>
 </template>
 
 <script lang="ts">
-import { Room } from '../../core/classes/game/Room'
-import { defineComponent, PropType } from 'vue'
+import { Room } from "../../core/classes/game/Room";
+import { defineComponent, PropType } from "vue";
 
 /** Компонент для отрисовки комнаты */
 export default defineComponent({
-  name: 'RoomRenderer',
+  name: "RoomRenderer",
   props: {
     room: {
       type: Object as PropType<Room>,
@@ -22,10 +20,7 @@ export default defineComponent({
       default: false,
     },
   },
-})
+});
 </script>
 
-
-<style>
-
-</style>
+<style></style>

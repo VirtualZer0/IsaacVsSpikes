@@ -1,13 +1,12 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script lang="ts" setup>
-import createI18n from './i18n'
+import createI18n from "./i18n";
 </script>
 
 <style lang="scss">
-
 * {
   box-sizing: border-box;
 }

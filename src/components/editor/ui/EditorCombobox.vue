@@ -1,64 +1,71 @@
 <template>
   <div class="editor-combobox">
-    <slot/>
+    <slot />
 
     <div class="editor-combobox-main" @click="expanded = !expanded">
-      <div class="editor-combobox-text">{{items[selectedIndex].name}}</div>
+      <div class="editor-combobox-text">{{ items[selectedIndex].name }}</div>
 
       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7">
-        <path fill-rule="evenodd" d="M5 6.5a.997.997 0 0 1-.707-.293l-4-4A.999.999 0 1 1 1.707.793l3.305 3.305L8.305.918a1 1 0 0 1 1.39 1.439l-4 3.862A.997.997 0 0 1 5 6.5Z" clip-rule="evenodd"/>
+        <path
+          fill-rule="evenodd"
+          d="M5 6.5a.997.997 0 0 1-.707-.293l-4-4A.999.999 0 1 1 1.707.793l3.305 3.305L8.305.918a1 1 0 0 1 1.39 1.439l-4 3.862A.997.997 0 0 1 5 6.5Z"
+          clip-rule="evenodd"
+        />
       </svg>
 
       <div class="editor-combobox-expand shadow-l1" v-show="expanded">
-        <div class="editor-combobox-item" v-for="item in items" :key="item.value" @click="change(item)">
-          {{item.name}}
+        <div
+          class="editor-combobox-item"
+          v-for="item in items"
+          :key="item.value"
+          @click="change(item)"
+        >
+          {{ item.name ?? item.value }}
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from 'vue'
+import { defineComponent, PropType, ref, computed } from "vue";
 
 export default defineComponent({
-  name: 'EditorCombobox',
-  emits: ['change'],
+  name: "EditorCombobox",
+  emits: ["change"],
   props: {
     items: {
-      type: Array as PropType<{ value: string, name: string }[]>,
-      default: () => []
+      type: Array as PropType<{ value: string; name: string }[]>,
+      default: () => [],
     },
     value: {
       type: [String, Number],
-      default: 0
-    }
+      default: 0,
+    },
   },
 
   setup(props, { emit }) {
     const expanded = ref(false);
 
-    const change = (item: { value: string, name: string }) => {
-      emit('change', item.value);
-    }
+    const change = (item: { value: string; name: string }) => {
+      emit("change", item.value);
+    };
 
     const selectedIndex = computed(() => {
-      return props.items.findIndex(item => item.value == props.value);
+      return props.items.findIndex((item) => item.value == props.value);
     });
 
     return {
       expanded,
       change,
-      selectedIndex
-    }
-  }
-})
+      selectedIndex,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 .editor-combobox {
-
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -106,6 +113,5 @@ export default defineComponent({
       color: $editorBg;
     }
   }
-
 }
 </style>

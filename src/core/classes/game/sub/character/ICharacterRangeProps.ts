@@ -1,18 +1,18 @@
 export interface ICharacterPropsRange {
-  type: 'number'
+  type: "number";
   enabled: boolean;
   from: number;
   to: number;
 }
 
 export interface ICharacterPropsBoolean {
-  type: 'boolean'
+  type: "boolean";
   enabled: boolean;
   value: boolean;
 }
 
 export interface ICharacterPropsTags {
-  type: 'tags',
+  type: "tags";
   enabled: boolean;
   value: string[];
 }

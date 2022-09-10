@@ -17,12 +17,14 @@ export class FSAccessFile implements IFile {
   }
 
   async getUrl(): Promise<string> {
-    return this.url ?? (this.url = window.URL.createObjectURL(await this.handler.getFile()));
+    return (
+      this.url ??
+      (this.url = window.URL.createObjectURL(await this.handler.getFile()))
+    );
   }
 
   free(): void {
-    if (this.url)
-      window.URL.revokeObjectURL(this.url);
+    if (this.url) window.URL.revokeObjectURL(this.url);
   }
 
   async writeAllText(content: string): Promise<void> {
@@ -44,10 +46,8 @@ export class FSAccessFile implements IFile {
   }
 
   async delete(): Promise<void> {
-    if (this.url)
-      window.URL.revokeObjectURL(this.url);
+    if (this.url) window.URL.revokeObjectURL(this.url);
 
     await this.parent.deleteFile(this.name);
   }
-
 }

@@ -1,9 +1,8 @@
 import { LevelDoorSlot } from "../level/LevelDoorSlot";
-import { RoomType } from "./RoomType";
+import { RoomType } from "../../../../types/game/RoomType";
 
 /** Правило генерации комнаты */
 export type RoomRuleGen = {
-
   /** Генерация включена */
   enabled: boolean;
 
@@ -21,5 +20,4 @@ export type RoomRuleGen = {
 
   /** Генерация комнаты обязательна, даже если не найдено подходящее место */
   required: boolean;
-
-}
+};

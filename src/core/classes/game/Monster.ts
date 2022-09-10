@@ -18,26 +18,31 @@ export class Monster extends Resource {
   effects: MonsterEffect[] = [];
 
   override getPreview(): Promise<string> {
-    if (this.animations?.idle?.spritesheet && 'src' in this.animations.idle.spritesheet) {
+    if (
+      this.animations?.idle?.spritesheet &&
+      "src" in this.animations.idle.spritesheet
+    ) {
       const sprite = this.animations.idle.spritesheet as SpriteSource;
 
-      if (typeof sprite.src !== 'string') {
-        const resLink = (this.animations.idle.spritesheet as SpriteSource).src as ResourceLink;
+      if (typeof sprite.src !== "string") {
+        const resLink = (this.animations.idle.spritesheet as SpriteSource)
+          .src as ResourceLink;
         const editor = useEditorStore();
 
         const res = editor.assets.get(resLink.id);
 
         if (!res) {
           return super.getPreview();
-        }
-        else {
+        } else {
           return res.getPreview();
         }
+      } else {
+        return Promise.resolve(
+          `<img lazy src="/assets/${
+            (this.animations.idle.spritesheet as SpriteSource).src
+          }"/>`
+        );
       }
-      else {
-        return Promise.resolve(`<img lazy src="/assets/${(this.animations.idle.spritesheet as SpriteSource).src}"/>`);
-      }
-    }
-    else return super.getPreview();
+    } else return super.getPreview();
   }
 }

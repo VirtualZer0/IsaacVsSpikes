@@ -9,7 +9,12 @@ export class FSAccessDirectory implements IDirectory {
 
   protected handler: any;
 
-  constructor(name: string, path: string, parent: Nullable<IDirectory>, handler: any) {
+  constructor(
+    name: string,
+    path: string,
+    parent: Nullable<IDirectory>,
+    handler: any
+  ) {
     this.name = name;
     this.path = path;
     this.parent = parent;
@@ -17,20 +22,24 @@ export class FSAccessDirectory implements IDirectory {
   }
 
   async getFiles(): Promise<IFile[]> {
-
     const res = [];
 
     for await (const handle of this.handler.values()) {
       res.push(handle);
     }
 
-    return res.filter((e: any) => e.kind == 'file').map(
-      (e: any) => new FSAccessFile(e.name, `${this.path}/${e.name}`, this, e)
-    )
+    return res
+      .filter((e: any) => e.kind == "file")
+      .map(
+        (e: any) => new FSAccessFile(e.name, `${this.path}/${e.name}`, this, e)
+      );
   }
 
-  async getFile(name: string) : Promise<IFile> {
-    return new FSAccessFile(name, `${this.path}/${name}`, this,
+  async getFile(name: string): Promise<IFile> {
+    return new FSAccessFile(
+      name,
+      `${this.path}/${name}`,
+      this,
       await this.handler.getFileHandle(name)
     );
   }
@@ -39,16 +48,22 @@ export class FSAccessDirectory implements IDirectory {
     const res = [];
 
     for await (const handle of this.handler.values()) {
-      res.push(handle)
+      res.push(handle);
     }
 
-    return res.filter((e: any) => e.kind == 'directory').map(
-      (e: any) => new FSAccessDirectory(e.name, `${this.path}/${e.name}`, this, e)
-    )
+    return res
+      .filter((e: any) => e.kind == "directory")
+      .map(
+        (e: any) =>
+          new FSAccessDirectory(e.name, `${this.path}/${e.name}`, this, e)
+      );
   }
 
   async getDirectory(name: string): Promise<IDirectory> {
-    return new FSAccessDirectory(name, `${this.path}/${name}`, this,
+    return new FSAccessDirectory(
+      name,
+      `${this.path}/${name}`,
+      this,
       await this.handler.getDirectoryHandle(name)
     );
   }
@@ -63,7 +78,9 @@ export class FSAccessDirectory implements IDirectory {
   }
 
   async createDirectory(name: string): Promise<IDirectory> {
-    const dhandler = await this.handler.getDirectoryHandle(name, { create: true });
+    const dhandler = await this.handler.getDirectoryHandle(name, {
+      create: true,
+    });
     return new FSAccessDirectory(name, `${this.path}/${name}`, this, dhandler);
   }
 
@@ -72,12 +89,7 @@ export class FSAccessDirectory implements IDirectory {
   }
 
   async delete(): Promise<void> {
-    if (this.parent)
-      return await this.parent.deleteDirectory(this.name);
-    else
-      throw new Error('Cannot delete root directory');
+    if (this.parent) return await this.parent.deleteDirectory(this.name);
+    else throw new Error("Cannot delete root directory");
   }
-
-
-
 }

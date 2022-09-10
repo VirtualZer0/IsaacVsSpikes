@@ -5,6 +5,9 @@
  * @returns Восстановленный объект на основе данных из JSON-строки
  */
 export function restoreClass<T>(obj: string | unknown, base: any): T {
-  const source = typeof obj === 'string' ? JSON.parse(obj) : obj;
-  return Object.create(base.prototype, Object.getOwnPropertyDescriptors(source)) as T;
+  const source = typeof obj === "string" ? JSON.parse(obj) : obj;
+  return Object.create(
+    base.prototype,
+    Object.getOwnPropertyDescriptors(source)
+  ) as T;
 }

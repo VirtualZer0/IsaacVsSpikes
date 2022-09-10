@@ -1,10 +1,16 @@
 <template>
   <div class="events-graph">
-
     <div class="toolbar">
-      <button class="eui circleButton" :class="event" v-for="event in RoomEventType" :key="event" @click="ghostBlock.type = event" v-show="event != RoomEventType.BASE">
-        <event-icon style="width: 24px; height: 24px;" :type="event"/>
-        <div class="label">{{$t(`editor.${event}Event`)}}</div>
+      <button
+        class="eui circleButton"
+        :class="event"
+        v-for="event in RoomEventType"
+        :key="event"
+        @click="ghostBlock.type = event"
+        v-show="event != RoomEventType.BASE"
+      >
+        <event-icon style="width: 24px; height: 24px" :type="event" />
+        <div class="label">{{ $t(`editor.${event}Event`) }}</div>
       </button>
     </div>
 
@@ -13,21 +19,32 @@
       @click="acceptAction"
       @mousemove="mouseMove"
       @contextmenu="stopAction"
-      ref="canvas">
-
+      ref="canvas"
+    >
       <svg class="links" width="100%" height="100%">
-        <line class="new" v-if="newLink.visible" :x1="newLink.inputX" :y1="newLink.inputY" :x2="newLink.outputX" :y2="newLink.outputY" stroke-width="3"/>
-        <line class="link"
-          v-for="link in links"
-          :key="link.inputId+link.outputId+link.outputKey"
-          :x1="link.inputX" :y1="link.inputY"
-          :x2="link.outputX" :y2="link.outputY"
+        <line
+          class="new"
+          v-if="newLink.visible"
+          :x1="newLink.inputX"
+          :y1="newLink.inputY"
+          :x2="newLink.outputX"
+          :y2="newLink.outputY"
           stroke-width="3"
-          @contextmenu="breakLink(link)"/>
+        />
+        <line
+          class="link"
+          v-for="link in links"
+          :key="link.inputId + link.outputId + link.outputKey"
+          :x1="link.inputX"
+          :y1="link.inputY"
+          :x2="link.outputX"
+          :y2="link.outputY"
+          stroke-width="3"
+          @contextmenu="breakLink(link)"
+        />
       </svg>
 
       <div class="events">
-
         <event-element
           v-for="node in curEvents"
           :key="node.id"
@@ -40,38 +57,43 @@
           @output="setPin(node, 'output', $event)"
           @update-links="updateLinks(node, $event)"
           @edit="editEvent = node"
-          @remove="removeNode(node)"/>
-
+          @remove="removeNode(node)"
+        />
       </div>
 
       <div
         class="ghost-block"
         v-if="ghostBlock.type"
         :class="ghostBlock.type"
-        :style="{transform: `translate(${ghostBlock.pos.x}px,${ghostBlock.pos.y}px)`}">
-
-        <span>{{$t('editor.ghostBlockLBM')}}</span>
-        <span>{{$t('editor.ghostBlockRBM')}}</span>
-
+        :style="{
+          transform: `translate(${ghostBlock.pos.x}px,${ghostBlock.pos.y}px)`,
+        }"
+      >
+        <span>{{ $t("editor.ghostBlockLBM") }}</span>
+        <span>{{ $t("editor.ghostBlockRBM") }}</span>
       </div>
     </div>
 
-    <div class="backdrop" v-if="editEvent" @click="editEvent = null"/>
+    <div class="backdrop" v-if="editEvent" @click="editEvent = null" />
     <div class="event-modal shadow-l2" v-if="editEvent">
       <button class="eui button close" @click="editEvent = null">
-        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-          <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+          <path
+            d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+          />
         </svg>
       </button>
       <component
-        :is="`${editEvent.type.charAt(0).toUpperCase() + editEvent.type.slice(1)}EventEditor`" :event="editEvent"/>
+        :is="`${
+          editEvent.type.charAt(0).toUpperCase() + editEvent.type.slice(1)
+        }EventEditor`"
+        :event="editEvent"
+      />
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-
 import { RoomEvent } from "@/core/classes/game/sub/room/RoomEvent";
 import { RoomEventType } from "@/core/classes/game/sub/room/RoomEventType";
 import { RoomStatsCheckEvent } from "@/core/classes/game/sub/room/RoomStatsCheckEvent";
@@ -80,22 +102,23 @@ import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChan
 import { RoomRewardEvent } from "@/core/classes/game/sub/room/RoomRewardEvent";
 import { RoomTextEvent } from "@/core/classes/game/sub/room/RoomTextEvent";
 import { RoomChanceEvent } from "@/core/classes/game/sub/room/RoomChanceEvent";
-import { RoomSoundEvent } from "@/core/classes/game/sub/room/RoomSoundEvent";
+import { RoomEffectEvent } from "@/core/classes/game/sub/room/RoomEffectEvent";
 import { RoomOrEvent } from "@/core/classes/game/sub/room/RoomOrEvent";
+import { RoomCounterEvent } from "@/core/classes/game/sub/room/RoomCounterEvent";
 
 import { reactive, ref } from "@vue/reactivity";
-import { defineAsyncComponent, defineComponent, PropType} from "vue";
+import { defineAsyncComponent, defineComponent, PropType } from "vue";
 import { Coords } from "@/core/classes/base/Coords";
-import { v4 as uuid, NIL as nilUUid } from 'uuid'
+import { v4 as uuid, NIL as nilUUid } from "uuid";
 
 import EventElement from "./EventElement.vue";
 import EventIcon from "./EventIcon.vue";
 
 /** Событие создания подключения */
 type ConnectionEvent = {
-  pos: number[],
-  key: string
-}
+  pos: number[];
+  key: string;
+};
 
 /** Активная связь */
 type Link = {
@@ -106,29 +129,48 @@ type Link = {
   inputY: number;
   outputX: number;
   outputY: number;
-}
+};
 
 export default defineComponent({
-  name: 'EventsGraph',
+  name: "EventsGraph",
   components: {
     EventElement,
     EventIcon,
 
-    TextEventEditor: defineAsyncComponent(() => import("./editors/TextEventEditor.vue")),
-    StatscheckEventEditor: defineAsyncComponent(() => import("./editors/StatscheckEventEditor.vue")),
-    SelectEventEditor: defineAsyncComponent(() => import("./editors/SelectEventEditor.vue")),
-    ChanceEventEditor: defineAsyncComponent(() => import("./editors/ChanceEventEditor.vue")),
-    RewardEventEditor: defineAsyncComponent(() => import("./editors/RewardEventEditor.vue")),
-    StatschangeEventEditor: defineAsyncComponent(() => import("./editors/StatschangeEventEditor.vue")),
-    SoundEventEditor: defineAsyncComponent(() => import("./editors/SoundEventEditor.vue")),
-    OrEventEditor: defineAsyncComponent(() => import("./editors/OrEventEditor.vue")),
+    TextEventEditor: defineAsyncComponent(
+      () => import("./editors/TextEventEditor.vue")
+    ),
+    StatscheckEventEditor: defineAsyncComponent(
+      () => import("./editors/StatscheckEventEditor.vue")
+    ),
+    SelectEventEditor: defineAsyncComponent(
+      () => import("./editors/SelectEventEditor.vue")
+    ),
+    ChanceEventEditor: defineAsyncComponent(
+      () => import("./editors/ChanceEventEditor.vue")
+    ),
+    RewardEventEditor: defineAsyncComponent(
+      () => import("./editors/RewardEventEditor.vue")
+    ),
+    StatschangeEventEditor: defineAsyncComponent(
+      () => import("./editors/StatschangeEventEditor.vue")
+    ),
+    EffectEventEditor: defineAsyncComponent(
+      () => import("./editors/EffectEventEditor.vue")
+    ),
+    OrEventEditor: defineAsyncComponent(
+      () => import("./editors/OrEventEditor.vue")
+    ),
+    CounterEventEditor: defineAsyncComponent(
+      () => import("./editors/CounterEventEditor.vue")
+    ),
   },
   props: {
     events: {
       type: Array as PropType<RoomEvent[]>,
       required: true,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
 
   setup(props) {
@@ -145,59 +187,80 @@ export default defineComponent({
     /** Текущая позиция мыши */
     const curPos = reactive({
       x: 0,
-      y: 0
+      y: 0,
     });
 
     /** Призрачный блок для отображения места размещения */
-    const ghostBlock = reactive<{pos: {x: number, y: number}, type: Nullable<RoomEventType>}>({
+    const ghostBlock = reactive<{
+      pos: { x: number; y: number };
+      type: Nullable<RoomEventType>;
+    }>({
       pos: curPos,
-      type: null
+      type: null,
     });
 
     /** Состояние создания новой связи */
     const newLink = reactive({
       visible: false,
-      inputId: '',
-      outputId: '',
-      outputKey: '',
+      inputId: "",
+      outputId: "",
+      outputKey: "",
       inputX: 0,
       inputY: 0,
       outputX: 0,
-      outputY: 0
+      outputY: 0,
     });
 
     /** Создание связи между двумя блоками */
     const establishConnection = () => {
+      const inputNode = curEvents.value.find(
+        (node) => node.id === newLink.inputId
+      );
+      const outputNode = curEvents.value.find(
+        (node) => node.id === newLink.outputId
+      );
 
-      const inputNode = curEvents.value.find(node => node.id === newLink.inputId);
-      const outputNode = curEvents.value.find(node => node.id === newLink.outputId);
-
-      if (outputNode?.type == RoomEventType.OR && inputNode?.type != RoomEventType.STATSCHECK) {
-        alert('Комбинатор может подключаться только к блокам проверок');
-        newLink.outputId = '';
-        newLink.inputId = '';
+      if (
+        outputNode?.type == RoomEventType.OR &&
+        inputNode?.type != RoomEventType.STATSCHECK
+      ) {
+        alert("Комбинатор может подключаться только к блокам проверок");
+        newLink.outputId = "";
+        newLink.inputId = "";
         newLink.visible = false;
         return;
       }
 
-      const oldLink = links.find(link => link.outputId === newLink.outputId && link.outputKey === newLink.outputKey);
+      const oldLink = links.find(
+        (link) =>
+          link.outputId === newLink.outputId &&
+          link.outputKey === newLink.outputKey
+      );
 
       if (oldLink) {
-        const oldOutputNode = curEvents.value.find(node => node.id === oldLink.outputId);
-        const oldInputNode = curEvents.value.find(node => node.id === oldLink.inputId);
+        const oldOutputNode = curEvents.value.find(
+          (node) => node.id === oldLink.outputId
+        );
+        const oldInputNode = curEvents.value.find(
+          (node) => node.id === oldLink.inputId
+        );
 
         if (oldOutputNode && oldInputNode) {
           oldOutputNode.outputEvents[oldLink.outputKey] = nilUUid;
-          oldInputNode.inputEvents = oldInputNode.inputEvents
-            .filter(event => event.id !== oldLink.inputId && event.key !== oldLink.outputKey);
+          oldInputNode.inputEvents = oldInputNode.inputEvents.filter(
+            (event) =>
+              event.id !== oldLink.inputId && event.key !== oldLink.outputKey
+          );
         }
-
 
         links.splice(links.indexOf(oldLink), 1);
       }
 
       if (inputNode && outputNode) {
-        inputNode.inputEvents.push({id: outputNode.id, key: newLink.outputKey});
+        inputNode.inputEvents.push({
+          id: outputNode.id,
+          key: newLink.outputKey,
+        });
         outputNode.outputEvents[newLink.outputKey] = inputNode.id;
       }
 
@@ -208,11 +271,11 @@ export default defineComponent({
         inputX: newLink.inputX,
         inputY: newLink.inputY,
         outputX: newLink.outputX,
-        outputY: newLink.outputY
+        outputY: newLink.outputY,
       });
 
-      newLink.outputId = '';
-      newLink.inputId = '';
+      newLink.outputId = "";
+      newLink.inputId = "";
       newLink.visible = false;
     };
 
@@ -221,18 +284,19 @@ export default defineComponent({
       const index = curEvents.value.indexOf(delNode);
 
       if (index > -1) {
-        curEvents.value.forEach(node => {
-          node.inputEvents = node.inputEvents.filter(ev => ev.id !== delNode.id);
+        curEvents.value.forEach((node) => {
+          node.inputEvents = node.inputEvents.filter(
+            (ev) => ev.id !== delNode.id
+          );
 
           for (const [key, outputId] of Object.entries(node.outputEvents)) {
             if (outputId === delNode.id) {
               node.outputEvents[key] = nilUUid;
             }
           }
-
         });
 
-        curEvents.value.splice(index, 1)
+        curEvents.value.splice(index, 1);
       }
 
       const linksForRemove = [];
@@ -250,11 +314,17 @@ export default defineComponent({
 
     /** Удаление связи */
     const breakLink = (link: Link) => {
-      const inputNode = curEvents.value.find(node => node.id === link.inputId);
-      const outputNode = curEvents.value.find(node => node.id === link.outputId);
+      const inputNode = curEvents.value.find(
+        (node) => node.id === link.inputId
+      );
+      const outputNode = curEvents.value.find(
+        (node) => node.id === link.outputId
+      );
 
       if (inputNode && outputNode) {
-        inputNode.inputEvents = inputNode.inputEvents.filter(ev => ev.id !== link.outputId || ev.key !== link.outputKey);
+        inputNode.inputEvents = inputNode.inputEvents.filter(
+          (ev) => ev.id !== link.outputId || ev.key !== link.outputKey
+        );
         outputNode.outputEvents[link.outputKey] = nilUUid;
       }
 
@@ -286,66 +356,87 @@ export default defineComponent({
       if (!newLink.inputId && newLink.outputId) {
         newLink.inputX = curPos.x;
         newLink.inputY = curPos.y;
-      }
-      else if (newLink.inputId && !newLink.outputId) {
+      } else if (newLink.inputId && !newLink.outputId) {
         newLink.outputX = curPos.x;
         newLink.outputY = curPos.y;
       }
-    }
+    };
 
     /** Обновление положения связей */
-    const updateLinks = (node: RoomEvent, pins: {input: Coords, outputs: {key: string, x: number, y: number}[]}) => {
+    const updateLinks = (
+      node: RoomEvent,
+      pins: { input: Coords; outputs: { key: string; x: number; y: number }[] }
+    ) => {
       if (!canvas.value) {
         return;
       }
 
-      const inputLinks = links.filter(link => link.inputId === node.id);
-      const outputLinks = links.filter(link => link.outputId === node.id);
+      const inputLinks = links.filter((link) => link.inputId === node.id);
+      const outputLinks = links.filter((link) => link.outputId === node.id);
 
-      inputLinks.forEach(link => {
+      inputLinks.forEach((link) => {
         link.inputX = pins.input.x + node.pos.x;
         link.inputY = pins.input.y + node.pos.y;
       });
 
-      outputLinks.forEach(link => {
-        pins.outputs.forEach(output => {
+      outputLinks.forEach((link) => {
+        pins.outputs.forEach((output) => {
           if (link.outputKey === output.key) {
             link.outputX = output.x + node.pos.x;
             link.outputY = output.y + node.pos.y;
           }
         });
       });
-    }
+    };
 
     /** Остановка текущих активных действий */
     const stopAction = (e: MouseEvent) => {
       ghostBlock.type = null;
       newLink.visible = false;
-      newLink.inputId = '';
-      newLink.outputId = '';
+      newLink.inputId = "";
+      newLink.outputId = "";
       e.stopPropagation();
       e.preventDefault();
-    }
+    };
 
     /** Применение результата активных действий (установка нового блока) */
     const acceptAction = (e: MouseEvent) => {
       if (ghostBlock.type) {
-
         let newEvent: RoomEvent;
 
-        switch(ghostBlock.type) {
-          case RoomEventType.STATSCHECK: (newEvent = new RoomStatsCheckEvent()).id = uuid(); break;
-          case RoomEventType.STATSCHANGE: (newEvent = new RoomStatsChangeEvent()).id = uuid(); break;
-          case RoomEventType.REWARD: (newEvent = new RoomRewardEvent()).id = uuid(); break;
-          case RoomEventType.SELECT: (newEvent = new RoomSelectEvent()).id = uuid(); break;
-          case RoomEventType.TEXT : (newEvent = new RoomTextEvent()).id = uuid(); break;
-          case RoomEventType.CHANCE : (newEvent = new RoomChanceEvent()).id = uuid(); break;
-          case RoomEventType.SOUND: (newEvent = new RoomSoundEvent()).id = uuid(); break;
-          case RoomEventType.OR: (newEvent = new RoomOrEvent()).id = uuid(); break;
-          default: return;
+        switch (ghostBlock.type) {
+          case RoomEventType.STATSCHECK:
+            (newEvent = new RoomStatsCheckEvent()).id = uuid();
+            break;
+          case RoomEventType.STATSCHANGE:
+            (newEvent = new RoomStatsChangeEvent()).id = uuid();
+            break;
+          case RoomEventType.REWARD:
+            (newEvent = new RoomRewardEvent()).id = uuid();
+            break;
+          case RoomEventType.SELECT:
+            (newEvent = new RoomSelectEvent()).id = uuid();
+            break;
+          case RoomEventType.TEXT:
+            (newEvent = new RoomTextEvent()).id = uuid();
+            break;
+          case RoomEventType.CHANCE:
+            (newEvent = new RoomChanceEvent()).id = uuid();
+            break;
+          case RoomEventType.EFFECT:
+            (newEvent = new RoomEffectEvent()).id = uuid();
+            break;
+          case RoomEventType.OR:
+            (newEvent = new RoomOrEvent()).id = uuid();
+            break;
+          case RoomEventType.COUNTER:
+            (newEvent = new RoomCounterEvent()).id = uuid();
+            break;
+          default:
+            return;
         }
 
-        newEvent.pos = {...curPos};
+        newEvent.pos = { ...curPos };
         curEvents.value.push(newEvent);
 
         ghostBlock.type = null;
@@ -353,11 +444,14 @@ export default defineComponent({
 
       e.stopPropagation();
       e.preventDefault();
-    }
+    };
 
     /** Обработка процесса создания новой связи */
-    const setPin = (node: RoomEvent, pin: 'input' | 'output', ev: ConnectionEvent) => {
-
+    const setPin = (
+      node: RoomEvent,
+      pin: "input" | "output",
+      ev: ConnectionEvent
+    ) => {
       if (!canvas.value) {
         return;
       }
@@ -369,33 +463,32 @@ export default defineComponent({
       newLink[`${pin}X`] = ev.pos[0] - rect.left + canvas.value.scrollLeft;
       newLink[`${pin}Y`] = ev.pos[1] - rect.top + canvas.value.scrollTop;
 
-      if (pin === 'output') {
+      if (pin === "output") {
         newLink.outputKey = ev.key;
       }
 
-      let nPin: 'input' | 'output' = pin == 'input' ? 'output' : 'input';
+      let nPin: "input" | "output" = pin == "input" ? "output" : "input";
 
-      if(newLink[`${nPin}Id`]) {
+      if (newLink[`${nPin}Id`]) {
+        const event = curEvents.value.find(
+          (node) => node.id === newLink[`${nPin}Id`]
+        );
 
-        const event = curEvents.value.find(node => node.id === newLink[`${nPin}Id`]);
-
-        if(!event) {
+        if (!event) {
           return;
         }
 
         establishConnection();
-      }
-      else {
+      } else {
         newLink[`${nPin}X`] = curPos.x;
         newLink[`${nPin}Y`] = curPos.y;
       }
-
-    }
+    };
 
     /** Восстановление сохраненных связей */
-    curEvents.value.forEach(outputNode => {
-      for(const [key, value] of Object.entries(outputNode.outputEvents)) {
-        const inputNode = curEvents.value.find(node => node.id === value);
+    curEvents.value.forEach((outputNode) => {
+      for (const [key, value] of Object.entries(outputNode.outputEvents)) {
+        const inputNode = curEvents.value.find((node) => node.id === value);
         if (inputNode) {
           links.push({
             inputId: inputNode.id,
@@ -404,25 +497,34 @@ export default defineComponent({
             inputX: 0,
             inputY: 0,
             outputX: 0,
-            outputY: 0
+            outputY: 0,
           });
         }
       }
     });
 
     return {
-      canvas, links, RoomEventType,
-      newLink, ghostBlock, currentDraggable,
-      mouseMove, stopAction, acceptAction,
-      setPin, updateLinks, removeNode, breakLink,
-      editEvent, curEvents
-    }
-  }
-})
+      canvas,
+      links,
+      RoomEventType,
+      newLink,
+      ghostBlock,
+      currentDraggable,
+      mouseMove,
+      stopAction,
+      acceptAction,
+      setPin,
+      updateLinks,
+      removeNode,
+      breakLink,
+      editEvent,
+      curEvents,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-
 .events-graph {
   width: 100%;
   height: 100%;
@@ -454,7 +556,7 @@ export default defineComponent({
         color: $editorFg;
         font-weight: bold;
         overflow: hidden;
-        transition: all .2s ease;
+        transition: all 0.2s ease;
         z-index: -1;
         text-align: left;
         white-space: nowrap;
@@ -467,14 +569,34 @@ export default defineComponent({
         }
       }
 
-      &.text { background: #4CAF50; }
-      &.dialog { background: #00BCD4; }
-      &.statscheck { background: #3F51B5; }
-      &.reward { background: #673AB7; }
-      &.statschange { background: #F4511E; }
-      &.chance { background: #FBC02D; }
-      &.sound { background: #D81B60; }
-      &.or { background: #757575 }
+      &.text {
+        background: #4caf50;
+      }
+      &.dialog {
+        background: #00bcd4;
+      }
+      &.statscheck {
+        background: #3f51b5;
+      }
+      &.reward {
+        background: #673ab7;
+      }
+      &.statschange {
+        background: #f4511e;
+      }
+      &.chance {
+        background: #fbc02d;
+      }
+      &.effect {
+        background: #d81b60;
+      }
+      &.or {
+        background: #757575;
+      }
+
+      &.counter {
+        background: #ff9800;
+      }
     }
   }
 
@@ -483,7 +605,8 @@ export default defineComponent({
     overflow: auto;
     flex-grow: 1;
 
-    .events, .links {
+    .events,
+    .links {
       top: 0;
       left: 0;
       will-change: transform;
@@ -522,7 +645,7 @@ export default defineComponent({
     flex-direction: column;
     pointer-events: none;
     gap: 8px;
-    background-color: rgba(128,128,128,0.2);
+    background-color: rgba(128, 128, 128, 0.2);
     will-change: transform;
     backface-visibility: hidden;
   }
@@ -534,12 +657,12 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     z-index: 19;
-    background-color: rgba(128,128,128,0.5);
+    background-color: rgba(128, 128, 128, 0.5);
   }
 
   .event-modal {
     position: absolute;
-    overflow:auto;
+    overflow: auto;
     width: 80%;
     height: 80%;
     left: 10%;
@@ -556,7 +679,9 @@ export default defineComponent({
       padding: 0;
 
       &:hover {
-        svg {fill: $editorBg;}
+        svg {
+          fill: $editorBg;
+        }
       }
     }
   }

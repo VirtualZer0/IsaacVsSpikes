@@ -1,48 +1,52 @@
 <template>
   <div class="eui top paper">
     <div class="title">
-      {{$t(`editor.${type}`)}} {{res?.getDisplayName(store.currentLocale)}}
-      <span class="uuid">{{res ? res.id : ''}}</span>
+      {{ $t(`editor.${type}`) }} {{ res?.getDisplayName(store.currentLocale) }}
+      <span class="uuid">{{ res ? res.id : "" }}</span>
     </div>
-    <editor-resource-controls @save="emit('save')" @cancel="emit('cancel')" :disable-save="!res"/>
+    <editor-resource-controls
+      @save="emit('save')"
+      @cancel="emit('cancel')"
+      :disable-save="!res"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Resource } from '@/core/classes/base/Resource'
-import { useMainStore } from '@/store/main';
-import { defineComponent, PropType} from 'vue'
-import EditorResourceControls from './EditorResourceControls.vue'
+import { Resource } from "@/core/classes/base/Resource";
+import { useMainStore } from "@/store/main";
+import { defineComponent, PropType } from "vue";
+import EditorResourceControls from "./EditorResourceControls.vue";
 
 /** Отображает верхнюю строку в редакторе ресурса */
 export default defineComponent({
-  name: 'EditorResourceTop',
-  emits: ['save', 'cancel'],
+  name: "EditorResourceTop",
+  emits: ["save", "cancel"],
   components: {
-    EditorResourceControls
+    EditorResourceControls,
   },
   props: {
     res: {
       type: Object as PropType<Nullable<Resource>>,
       required: false,
-      default: null
+      default: null,
     },
 
     type: {
       type: String,
       required: false,
-      default: 'resource'
-    }
+      default: "resource",
+    },
   },
 
   setup(_props, { emit }) {
     const store = useMainStore();
     return {
       store,
-      emit
-    }
-  }
-})
+      emit,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

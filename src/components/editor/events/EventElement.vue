@@ -1,73 +1,114 @@
 <template>
-  <div class="event-element" :style="{transform: `translate(${x}px, ${y}px`, height: `${height}px`}" @click="emit('edit')">
-
-    <div class="header" :class="{visible: isDragging}" @click.stop="">
-      <svg style="width:24px;height:24px" viewBox="0 0 24 24" class="control drag" @mousedown="emit('startMove', $event); isDragging = true" @mouseup="emit('stopMove');  isDragging = false">
-        <path d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z" />
+  <div
+    class="event-element"
+    :style="{ transform: `translate(${x}px, ${y}px`, height: `${height}px` }"
+    @click="emit('edit')"
+  >
+    <div class="header" :class="{ visible: isDragging }" @click.stop="">
+      <svg
+        style="width: 24px; height: 24px"
+        viewBox="0 0 24 24"
+        class="control drag"
+        @mousedown="
+          emit('startMove', $event);
+          isDragging = true;
+        "
+        @mouseup="
+          emit('stopMove');
+          isDragging = false;
+        "
+      >
+        <path
+          d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"
+        />
       </svg>
 
-      <svg style="width:22px;height:22px" viewBox="0 0 24 24" class="control" @click="emit('remove')">
-        <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+      <svg
+        style="width: 22px; height: 22px"
+        viewBox="0 0 24 24"
+        class="control"
+        @click="emit('remove')"
+      >
+        <path
+          d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+        />
       </svg>
     </div>
 
     <!-- Иконка типа -->
-    <event-icon style="width: 24px; height: 24px;" :type="event.type"></event-icon>
+    <event-icon
+      style="width: 24px; height: 24px"
+      :type="event.type"
+    ></event-icon>
 
     <div class="name">
-      {{event.getDisplayName()}}
+      {{ event.getDisplayName() }}
     </div>
-    <div class="input" @click.stop="setPin('input', $event)" ref="inputPin"/>
+    <div class="input" @click.stop="setPin('input', $event)" ref="inputPin" />
     <div class="outputs">
-      <div class="output" v-for="output in Object.keys(event.outputEvents)" :key="output" :class="output" :data-pinkey="output"  @click.stop="setPin('output', $event, output)" :ref="setOutputPin">
-        <div class="label">{{output}}</div>
+      <div
+        class="output"
+        v-for="output in Object.keys(event.outputEvents)"
+        :key="output"
+        :class="output"
+        :data-pinkey="output"
+        @click.stop="setPin('output', $event, output)"
+        :ref="setOutputPin"
+      >
+        <div class="label">{{ output }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUpdate, onMounted, onUpdated, PropType, ref } from "vue";
+import {
+  defineComponent,
+  onBeforeUpdate,
+  onMounted,
+  onUpdated,
+  PropType,
+  ref,
+} from "vue";
 import { RoomEventType } from "@/core/classes/game/sub/room/RoomEventType";
-import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
+import { RoomEvent } from "@/core/classes/game/sub/room/RoomEvent";
 import { computed } from "@vue/reactivity";
 import { Coords } from "@/core/classes/base/Coords";
 
 import EventIcon from "./EventIcon.vue";
 
 export default defineComponent({
-  name: 'EventElement',
+  name: "EventElement",
   components: {
-    EventIcon
+    EventIcon,
   },
   emits: [
-    'input',
-    'output',
-    'startMove',
-    'updateLinks',
-    'stopMove',
-    'remove',
-    'edit'
+    "input",
+    "output",
+    "startMove",
+    "updateLinks",
+    "stopMove",
+    "remove",
+    "edit",
   ],
   props: {
     event: {
       type: Object as PropType<RoomEvent>,
-      required: true
+      required: true,
     },
 
     x: {
       type: Number as PropType<number>,
-      required: true
+      required: true,
     },
 
     y: {
       type: Number as PropType<number>,
-      required: true
-    }
+      required: true,
+    },
   },
 
   setup(props, { emit }) {
-
     const isDragging = ref(false);
     const height = computed(() => {
       return Object.keys(props.event.outputEvents).length * 20 + 20;
@@ -88,11 +129,11 @@ export default defineComponent({
     });
 
     const updateLinks = () => {
-      if(!inputPin.value) {
+      if (!inputPin.value) {
         return;
       }
 
-      emit('updateLinks', {
+      emit("updateLinks", {
         input: {
           x: inputPin.value.offsetLeft + inputPin.value.offsetWidth / 2,
           y: inputPin.value.offsetTop + inputPin.value.offsetHeight / 2,
@@ -100,13 +141,18 @@ export default defineComponent({
         outputs: outputPins.value.map((outputPin: HTMLElement) => {
           return {
             key: outputPin.dataset.pinkey as string,
-            x: outputPin.offsetLeft + (outputPin.parentElement as HTMLElement).offsetLeft + outputPin.offsetWidth / 2,
-            y: outputPin.offsetTop + (outputPin.parentElement as HTMLElement).offsetTop + outputPin.offsetHeight / 2
-          }
-        })
+            x:
+              outputPin.offsetLeft +
+              (outputPin.parentElement as HTMLElement).offsetLeft +
+              outputPin.offsetWidth / 2,
+            y:
+              outputPin.offsetTop +
+              (outputPin.parentElement as HTMLElement).offsetTop +
+              outputPin.offsetHeight / 2,
+          };
+        }),
       });
     };
-
 
     // Отправка данных о расположении текущих пинов
     onUpdated(() => {
@@ -117,7 +163,7 @@ export default defineComponent({
       updateLinks();
     });
 
-    const setPin = (pin: 'input' | 'output', e: MouseEvent, key = '') => {
+    const setPin = (pin: "input" | "output", e: MouseEvent, key = "") => {
       if (!e.target) {
         return;
       }
@@ -127,9 +173,9 @@ export default defineComponent({
       emit(pin, {
         key,
         pos: [
-          rect.left + (pin == 'input' ? pinEl.offsetWidth : 12),
-          rect.top + (pin == 'input' ? 16 : 9),
-        ]
+          rect.left + (pin == "input" ? pinEl.offsetWidth : 12),
+          rect.top + (pin == "input" ? 16 : 9),
+        ],
       });
     };
 
@@ -140,11 +186,10 @@ export default defineComponent({
       emit,
       inputPin,
       setOutputPin,
-      isDragging
-    }
-
-  }
-})
+      isDragging,
+    };
+  },
+});
 </script>
 
 <style lang="scss">
@@ -169,7 +214,7 @@ export default defineComponent({
     background: $editorFg;
     top: -2px;
     padding: 0 4px;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -209,10 +254,10 @@ export default defineComponent({
     width: 14px;
     height: 14px;
     left: -7px;
-    background: #42A5F5;
+    background: #42a5f5;
     border: 2px solid $editorFg;
     transform: rotate(45deg);
-    transition: all .1s ease;
+    transition: all 0.1s ease;
     cursor: crosshair;
 
     &:hover {
@@ -232,9 +277,9 @@ export default defineComponent({
   .output {
     width: 14px;
     height: 14px;
-    background: #FFA726;
+    background: #ffa726;
     border: 2px solid $editorFg;
-    transition: all .1s ease;
+    transition: all 0.1s ease;
     cursor: crosshair;
 
     .label {
@@ -260,15 +305,15 @@ export default defineComponent({
     }
 
     &.fail {
-      background: #EF5350;
+      background: #ef5350;
     }
 
     &.success {
-      background: #66BB6A;
+      background: #66bb6a;
     }
 
     &.next {
-      background: #7E57C2;
+      background: #7e57c2;
     }
   }
 }

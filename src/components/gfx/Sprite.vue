@@ -2,85 +2,92 @@
   <div
     class="sprite"
     :style="{
-      background: `no-repeat url(/res/gfx/${src.src}) left ${frame*src.width}px center`,
+      background: `no-repeat url(/res/gfx/${src.src}) left ${
+        frame * src.width
+      }px center`,
       backgroundSize: 'contain',
       transform: `translate(${x}px, ${y}px)`,
       width: `${width}vmax`,
       height: `${height}vmax`,
-      position: relative ? 'unset' : 'absolute'
+      position: relative ? 'unset' : 'absolute',
     }"
   />
 </template>
 
 <script lang="ts">
-import {core} from "@/core/Core";
+import { core } from "@/core/Core";
 import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
+import {
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  ref,
+} from "vue";
 
 export default defineComponent({
-  name: 'Sprite',
+  name: "Sprite",
   props: {
     frames: {
       type: Number,
-      default: 1
+      default: 1,
     },
 
     startFrame: {
       type: Number,
-      default: 0
+      default: 0,
     },
 
     x: {
       type: Number,
-      default: 0
+      default: 0,
     },
 
     y: {
       type: Number,
-      default: 0
+      default: 0,
     },
 
     width: {
       type: Number,
-      default: 5
+      default: 5,
     },
 
     height: {
       type: Number,
-      default: 5
+      default: 5,
     },
 
     relative: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     src: {
       type: Object as PropType<SpriteSource>,
       default: () => ({}),
-      required: true
-    }
+      required: true,
+    },
   },
 
   setup(props) {
-
     let frame = ref(0);
 
     const tick = (): void => {
+      if (frame.value >= props.frames - 1) frame.value = 0;
+      else frame.value++;
+    };
 
-      if (frame.value >= props.frames-1)
-        frame.value = 0;
-      else
-        frame.value ++;
+    onMounted(() =>
+      props.frames > 1 ? core.spriteManager.addSprite(tick) : null
+    );
+    onBeforeUnmount(() =>
+      props.frames > 1 ? core.spriteManager.removeSprite(tick) : null
+    );
 
-    }
-
-    onMounted(() => props.frames > 1 ? core.spriteManager.addSprite(tick) : null);
-    onBeforeUnmount(() => props.frames > 1 ? core.spriteManager.removeSprite(tick) : null);
-
-    return {frame}
-  }
-})
+    return { frame };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

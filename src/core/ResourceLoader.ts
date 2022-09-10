@@ -1,5 +1,1 @@
-export class ResourceLoader {
-
-
-
-}
+export class ResourceLoader {}

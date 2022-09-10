@@ -4,9 +4,8 @@ import { Resource } from "../base/Resource";
 import { LocaleText } from "../base/LocaleText";
 
 export class Item extends Resource {
-
   /** Открыт-ли предмет */
-  isOpen: boolean = false;
+  isOpen = false;
 
   /** Спрайт предмета */
   sprite: SpriteSource | null = null;
@@ -15,10 +14,10 @@ export class Item extends Resource {
   desc: LocaleText = {};
 
   /** Приоритет предмета */
-  priority: number = 0;
+  priority = 0;
 
   /** Пересчитывать статы */
-  recalculateStats: boolean = false;
+  recalculateStats = false;
 
   /** Пул предмета */
   pool: ItemPool = ItemPool.DEFAULT;
@@ -27,9 +26,10 @@ export class Item extends Resource {
   onRoomChange?: Nullable<() => void> = null;
 
   override getPreview(): Promise<string> {
-    if (this.sprite && 'src' in this.sprite) {
-      return Promise.resolve(`<img lazy src="/assets/${(this.sprite as SpriteSource).src}"/>`);
-    }
-    else return super.getPreview();
+    if (this.sprite && "src" in this.sprite) {
+      return Promise.resolve(
+        `<img lazy src="/assets/${(this.sprite as SpriteSource).src}"/>`
+      );
+    } else return super.getPreview();
   }
 }

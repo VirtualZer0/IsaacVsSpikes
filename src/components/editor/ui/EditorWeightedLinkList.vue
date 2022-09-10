@@ -1,14 +1,30 @@
 <template>
   <div class="editor-weighted-link-list">
     <div class="item" v-for="(res, num) in curLinks" :key="num">
-      <editor-link :res="res" :type="type" @select="curLinks[num] = {...$event, weight: 1}"
-        @remove="curLinks.splice(num, 1)" :spriteMode="spriteMode" />
+      <editor-link
+        :res="res"
+        :type="type"
+        @select="curLinks[num] = { ...$event, weight: 1 }"
+        @remove="curLinks.splice(num, 1)"
+        :spriteMode="spriteMode"
+      />
       <div class="weight">
-        <div class="weight-label">{{$t('editor.weight')}}</div>
-        <input type="number" class="eui input" min="0" max="1" step=".05" v-model.number="curLinks[num].weight" />
+        <div class="weight-label">{{ $t("editor.weight") }}</div>
+        <input
+          type="number"
+          class="eui input"
+          min="0"
+          max="1"
+          step=".05"
+          v-model.number="curLinks[num].weight"
+        />
       </div>
     </div>
-    <editor-link :type="type" @select="curLinks.push({...$event, weight: 1})" :spriteMode="spriteMode" />
+    <editor-link
+      :type="type"
+      @select="curLinks.push({ ...$event, weight: 1 })"
+      :spriteMode="spriteMode"
+    />
   </div>
 </template>
 
@@ -19,46 +35,42 @@ import { defineComponent, PropType, ref } from "vue";
 import EditorLink from "./EditorLink.vue";
 
 export default defineComponent({
-  name: 'EditorLinkList',
+  name: "EditorLinkList",
   components: {
-    EditorLink
+    EditorLink,
   },
   props: {
     links: {
       type: Array as PropType<WeightedResourceLink[] | WeightedSpriteSource[]>,
       required: false,
-      default: () => []
+      default: () => [],
     },
     type: {
       type: String,
-      required: true
+      required: true,
     },
     spriteMode: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
 
-  setup(props, {emit}) {
-
+  setup(props, { emit }) {
     const curLinks = ref(props.links);
-    const newRes = props.spriteMode ? ref<WeightedSpriteSource | null>(null) : ref<WeightedResourceLink | null>(null);
+    const newRes = props.spriteMode
+      ? ref<WeightedSpriteSource | null>(null)
+      : ref<WeightedResourceLink | null>(null);
 
     return {
-      curLinks, newRes
-    }
-  }
-})
-
+      curLinks,
+      newRes,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-
-
-
-
-
 .editor-weighted-link-list {
   display: flex;
   flex-wrap: wrap;

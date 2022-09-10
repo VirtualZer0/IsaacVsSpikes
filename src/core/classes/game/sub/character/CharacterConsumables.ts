@@ -1,9 +1,9 @@
 export class CharacterConsumables {
-  coins: number = 0;
-  keys: number = 0;
-  bombs: number = 0;
-  blueFriends: number = 0;
+  coins = 0;
+  keys = 0;
+  bombs = 0;
+  blueFriends = 0;
 
-  goldenKey: boolean = false;
-  goldenBomb: boolean = false;
+  goldenKey = false;
+  goldenBomb = false;
 }

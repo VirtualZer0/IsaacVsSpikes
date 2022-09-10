@@ -1,11 +1,10 @@
 /** Управляет состоянием всех отрисовываемых в данный момент спрайтов */
 export class SpriteManager {
-
   /** Массив с коллбэками для активных спрайтов */
-  private renderCallbacks: { (delta: DOMHighResTimeStamp): void; }[] = [];
+  private renderCallbacks: { (delta: DOMHighResTimeStamp): void }[] = [];
 
   /** Максимальное значение FPS (FPS Lock) */
-  private maxFPS: number = 60;
+  private maxFPS = 60;
 
   /** Интервал между кадрами */
   private frameInterval: number = 1000 / this.maxFPS;
@@ -14,7 +13,7 @@ export class SpriteManager {
   private lastRAF: number = new Date().getTime();
 
   /** Статус проигрывания анимации спрайтов */
-  private pause: boolean = false;
+  private pause = false;
 
   /** Добавляет спрайт в массив активных спрайтов */
   addSprite(callback: (delta: DOMHighResTimeStamp) => void): void {
@@ -29,7 +28,6 @@ export class SpriteManager {
 
   /** Метод для вызова из requestAnimationFrame */
   requestAnimationFrame(delta: DOMHighResTimeStamp) {
-
     if (this.pause) return;
     requestAnimationFrame(this.requestAnimationFrame);
 
@@ -47,7 +45,6 @@ export class SpriteManager {
       this.renderCallbacks[i](delta);
       ++i;
     }
-
   }
 
   /** Запускает анимацию всех спрайтов */
@@ -65,8 +62,8 @@ export class SpriteManager {
    * Устанавливает максимальное значение FPS
    * @param FPS - Максимальное значение FPS
    */
-  setMaxFPS(FPS: number = 60) {
+  setMaxFPS(FPS = 60) {
     this.maxFPS = FPS;
-    this.frameInterval = 1000/FPS;
+    this.frameInterval = 1000 / FPS;
   }
 }

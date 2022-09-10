@@ -7,12 +7,13 @@ type Nullable<T> = T | null;
  */
 type Indexable<T> = {
   [key: string]: T;
-}
+};
 
 /**
  * Расширенный тип для window, добавляющий методы, которые существуют,
  * но не указаны в дефолтном типе для window
  */
-type GameWindow = Window & typeof globalThis & {core: Core} & {
-  showDirectoryPicker?: () => Promise<FileSystemDirectoryHandle>;
-};
+type GameWindow = Window &
+  typeof globalThis & { core: Core } & {
+    showDirectoryPicker?: () => Promise<FileSystemDirectoryHandle>;
+  };

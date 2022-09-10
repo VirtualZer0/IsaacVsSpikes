@@ -1,6 +1,4 @@
 export enum LevelGenSystemType {
-
-  INCREMENTAL = 'incremental',
-  STATIC = 'static',
-
+  INCREMENTAL = "incremental",
+  STATIC = "static",
 }

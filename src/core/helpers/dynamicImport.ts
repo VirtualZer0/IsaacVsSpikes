@@ -9,7 +9,7 @@ export function dynamicImport(imports: any): unknown[] {
 
   imports.keys().forEach((key: string) => {
     arr.push(imports(key).default);
-  })
+  });
 
   return arr;
 }
@@ -19,7 +19,7 @@ export function dynamicImport(imports: any): unknown[] {
  * @param imports - Функция запроса модулей
  * @returns Словарь импортированных модулей
  */
-export function dynamicImportUsingId(imports: any): Map<string,unknown> {
+export function dynamicImportUsingId(imports: any): Map<string, unknown> {
   const arr: Map<string, unknown> = new Map();
 
   imports.keys().forEach((key: string) => {

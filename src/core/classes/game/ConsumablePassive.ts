@@ -6,12 +6,10 @@ import { Resource } from "../base/Resource";
 
 /** Класс для карт/рун */
 export class ConsumablePassive extends Resource implements IConsumable {
-
-  isOpen: boolean = false;
+  isOpen = false;
   sprite: SpriteSource | null = null;
   pool: ConsumablePool = ConsumablePool.ROOMCLEAN;
 
   onPickup?: Nullable<() => void> = null;
   onRoomChange?: Nullable<() => void> = null;
-
 }
