@@ -16,11 +16,6 @@
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{ $t("editor.startDialog") }}</label>
-      <editor-locale-multi-text class="input" :text="event.startDialog" />
-    </div>
-
-    <div class="vertical-line">
       <label class="eui label">{{ $t("editor.addHealth") }}</label>
       <editor-hearts class="input" :health="event.addHealth" />
     </div>

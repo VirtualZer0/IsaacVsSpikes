@@ -15,11 +15,6 @@
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
-    <div class="vertical-line">
-      <label class="eui label">{{ $t(`editor.label`) }}</label>
-      <input class="eui input" v-model.number="event.label" />
-    </div>
-
     <div class="vertical-line small">
       <label class="eui label">{{ $t(`editor.counterEventMode.main`) }}</label>
       <editor-combobox
@@ -32,7 +27,21 @@
 
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.value`) }}</label>
-      <input class="eui input" type="number" v-model.number="event.value" />
+      <div class="one-line">
+        <editor-combobox
+          v-if="event.mode === CounterEventMode.CHECK"
+          :items="checkModes"
+          :value="event.checkMode"
+          @change="event.checkMode = $event"
+          style="width: 50px"
+        />
+        <input class="eui input" type="number" v-model.number="event.value" />
+      </div>
+    </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.label`) }}</label>
+      <input class="eui input" v-model.number="event.label" />
     </div>
   </div>
 </template>
@@ -48,6 +57,7 @@ import EventIcon from "../EventIcon.vue";
 import { NIL as nilUUid } from "uuid";
 import { useI18n } from "vue-i18n";
 import { CounterEventMode } from "@/core/types/game/CounterEventMode";
+import { CounterEventCheck } from "@/core/types/game/CounterEventCheck";
 
 export default defineComponent({
   name: "CounterEventEditor",
@@ -70,6 +80,11 @@ export default defineComponent({
     const counterModes = Object.values(CounterEventMode).map((type) => ({
       value: type,
       name: t(`editor.counterEventMode.${type}`),
+    }));
+
+    const checkModes = Object.values(CounterEventCheck).map((type) => ({
+      value: type,
+      name: t(`editor.counterEventCheck.${type}`),
     }));
 
     watch(
@@ -97,6 +112,8 @@ export default defineComponent({
     return {
       curEvent,
       counterModes,
+      checkModes,
+      CounterEventMode,
     };
   },
 });
@@ -104,6 +121,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .counter-event-editor {
+  padding-bottom: 24px;
   .title {
     font-size: 21px;
     font-weight: bold;
@@ -119,6 +137,12 @@ export default defineComponent({
 
   .vertical-line.small {
     width: 335px;
+  }
+
+  .one-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .variants {

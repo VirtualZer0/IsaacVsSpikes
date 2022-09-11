@@ -2,7 +2,7 @@
   <div class="or-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.chanceEvent") }}
+      {{ $t("editor.orEvent") }}
     </div>
 
     <div class="vertical-line">
@@ -39,6 +39,33 @@
         {{ $t(`editor.addVariant`) }}
       </button>
     </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.counterEvent`) }}</label>
+      <div class="nth-format">
+        <div class="stat-line">
+          <div class="checkbox">
+            <editor-checkbox v-model="event.counterEnabled" />
+            <div class="sub">{{ $t("editor.writeChecks") }}</div>
+          </div>
+        </div>
+        <template v-if="event.counterEnabled">
+          <div class="stat-line">
+            <div class="name">{{ $t("editor.label") }}</div>
+            <input class="eui input" v-model="event.counterLabel" />
+          </div>
+          <div class="stat-line">
+            <div class="name">{{ $t("editor.value") }}</div>
+            <editor-combobox
+              :items="counterModes"
+              :value="event.counterChecksMode"
+              @change="event.counterChecksMode = $event"
+              style="width: 210px"
+            />
+          </div>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -48,14 +75,19 @@ import { defineComponent, PropType, ref } from "vue";
 
 import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
 import EventIcon from "../EventIcon.vue";
+import EditorCheckbox from "../../ui/EditorCheckbox.vue";
+import EditorCombobox from "../../ui/EditorCombobox.vue";
 import { NIL as nilUUid } from "uuid";
 import { useI18n } from "vue-i18n";
+import { OrChecksMode } from "@/core/types/game/OrChecksMode";
 
 export default defineComponent({
   name: "OrEventEditor",
   components: {
     EditorLocaleInput,
     EventIcon,
+    EditorCheckbox,
+    EditorCombobox,
   },
   props: {
     event: {
@@ -69,6 +101,9 @@ export default defineComponent({
     const { t } = useI18n();
 
     const addVariant = () => {
+      if (newVariantKey.value === "fail") {
+        return;
+      }
       if (curEvent.value.outputEvents[newVariantKey.value]) {
         alert(t("editor.keyAlreadyExists"));
         return;
@@ -87,11 +122,17 @@ export default defineComponent({
       newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
     };
 
+    const counterModes = Object.values(OrChecksMode).map((mode) => ({
+      value: mode,
+      name: t(`editor.${mode}Checks`),
+    }));
+
     return {
       curEvent,
       newVariantKey,
       addVariant,
       removeVariant,
+      counterModes,
     };
   },
 });
@@ -164,9 +205,50 @@ export default defineComponent({
     gap: 12px;
     align-items: center;
     font-weight: bold;
+    margin-bottom: 24px;
 
     .input {
       width: 100px;
+    }
+  }
+
+  .nth-format {
+    padding-bottom: 24px;
+    .stat-line:nth-child(2n + 1) {
+      background-color: $editorBgInvariant;
+    }
+  }
+
+  .stat-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 8px;
+
+    .range {
+      .input {
+        width: 60px;
+        background: $editorPaper;
+        margin-left: 8px;
+        margin-right: 16px;
+      }
+    }
+
+    &:nth-child(2n) {
+      background: #f5f5f5;
+    }
+
+    .name {
+      font-weight: bold;
+      min-width: 150px;
+      text-align: left;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
   }
 }

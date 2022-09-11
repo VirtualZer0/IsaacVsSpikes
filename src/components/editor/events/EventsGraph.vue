@@ -222,7 +222,9 @@ export default defineComponent({
 
       if (
         outputNode?.type == RoomEventType.OR &&
-        inputNode?.type != RoomEventType.STATSCHECK
+        inputNode?.type != RoomEventType.STATSCHECK &&
+        inputNode?.type != RoomEventType.COUNTER &&
+        newLink.outputKey != "fail"
       ) {
         alert("Комбинатор может подключаться только к блокам проверок");
         newLink.outputId = "";

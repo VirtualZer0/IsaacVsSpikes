@@ -114,6 +114,16 @@
       "sub": "Вычесть",
       "set": "Установить"
     },
+    "counterEventCheck": {
+      "equal": "=",
+      "more": ">",
+      "less": "<",
+      "not_equal": "≠"
+    },
+    "writeChecks": "Записать в счетчик",
+    "checkType": "Тип проверки",
+    "successChecks": "Успешные проверки",
+    "failChecks": "Неудачные проверки",
     "label": "Метка",
     "value": "Значение",
 

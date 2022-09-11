@@ -130,6 +130,7 @@ export default defineComponent({
         case HeartType.ADDITIONAL_WHITE:
           return "white";
         case HeartType.ROTTEN:
+        case HeartType.ADDITIONAL_ROTTEN:
           return "rotten";
         default:
           return "";
