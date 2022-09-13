@@ -65,6 +65,40 @@
         </div>
       </div>
     </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.consumables`) }}</label>
+
+      <div class="nth-format">
+        <div
+          class="stat-line"
+          v-for="[consumable, params] of Object.entries(requiredConsumables)"
+          :key="consumable"
+        >
+          <editor-checkbox v-model="params.enabled" />
+          <div class="name">{{ $t(`game.${consumable}`) }}</div>
+
+          <div class="checkbox" v-if="params.type == 'boolean'">
+            <editor-checkbox v-model="params.value" />
+            <div class="sub">{{ $t(`editor.required`) }}</div>
+          </div>
+
+          <div
+            class="range"
+            v-else-if="typeof params == 'object' && params.type == 'number'"
+          >
+            {{ $t("editor.from") }}
+            <input
+              class="eui input"
+              type="number"
+              v-model.number="params.from"
+            />
+            {{ $t("editor.to") }}
+            <input class="eui input" type="number" v-model.number="params.to" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -101,6 +135,7 @@ export default defineComponent({
   },
   setup(props) {
     const requiredStats = reactive(props.event.requiredStats);
+    const requiredConsumables = reactive(props.event.requiredConsumables);
 
     const changeParam = (param: string, value: any) => {
       (requiredStats as Record<string, any>)[param] = value;
@@ -108,6 +143,7 @@ export default defineComponent({
 
     return {
       requiredStats,
+      requiredConsumables,
       changeParam,
     };
   },
@@ -132,6 +168,10 @@ export default defineComponent({
   .nth-format {
     .stat-line:nth-child(2n + 1) {
       background-color: $editorBgInvariant;
+    }
+
+    .input {
+      background: $editorPaper;
     }
   }
 

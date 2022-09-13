@@ -5,6 +5,7 @@ import { RoomEventType } from "./RoomEventType";
 import { CharacterStatsCheckData } from "../character/CharcterStats";
 import { ResourceLink } from "@/core/classes/base/ResourceLink";
 import { CharacterHearts } from "../character/CharacterHealth";
+import { CharacterConsumablesCheckData } from "../character/CharacterConsumables";
 
 /** Ивент на проверку статов персонажа */
 export class RoomStatsCheckEvent extends RoomEvent {
@@ -19,6 +20,10 @@ export class RoomStatsCheckEvent extends RoomEvent {
 
   /** Требуемые для прохождения статы */
   requiredStats: CharacterStatsCheckData = new CharacterStatsCheckData();
+
+  /** Требуемые расходники */
+  requiredConsumables: CharacterConsumablesCheckData =
+    new CharacterConsumablesCheckData();
 
   /** Требуемые сердца */
   hearts: CharacterHearts = new CharacterHearts();
