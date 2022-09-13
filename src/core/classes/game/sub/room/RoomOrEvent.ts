@@ -13,8 +13,9 @@ export class RoomOrEvent extends RoomEvent {
     fail: nilUUid,
   };
 
-  type: RoomEventType = RoomEventType.OR;
   counterEnabled = false;
   counterLabel = "";
   counterChecksMode: OrChecksMode = OrChecksMode.SUCCESS;
+
+  type: RoomEventType = RoomEventType.OR;
 }

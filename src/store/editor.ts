@@ -16,7 +16,7 @@ import { DoorDesc } from "@/core/classes/game/DoorDesc";
 import { runMigration } from "@/core/helpers/migrateProject";
 
 /** Текущая версия проекта */
-const CURRENT_VERSION = 2;
+const CURRENT_VERSION = 3;
 
 /** Хранилище редактора контента */
 export const useEditorStore = defineStore("editor", {

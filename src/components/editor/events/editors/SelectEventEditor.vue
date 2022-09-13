@@ -11,12 +11,12 @@
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
+      <label class="eui label">{{ $t("editor.startDialog") }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{ $t(`editor.variants`) }}</label>
+      <label class="eui label">{{ $t("editor.variants") }}</label>
       <div class="variants">
         <div
           class="variant"
@@ -31,7 +31,7 @@
                 />
               </svg>
             </button>
-            {{ $t(`editor.out`) }} {{ variant.key }}
+            {{ $t("editor.out") }} {{ variant.key }}
           </div>
 
           <div class="variant-line">
@@ -40,21 +40,115 @@
 
           <div class="horizontal-line">
             <editor-checkbox v-model="variant.showFuture" />
-            Показывать будущее
+            {{ $t("editor.showFuture") }}
           </div>
 
           <div class="horizontal-line">
-            <editor-checkbox v-model="variant.requirment" />
-            Следующая проверка как требование
+            <editor-checkbox v-model="variant.requirment.enabled" />
+            {{ $t("editor.requirments") }}
+          </div>
+
+          <div class="requirments" v-if="variant.requirment.enabled">
+            <div class="vertical-line">
+              <label class="eui label">{{ $t("editor.consumables") }}</label>
+
+              <div class="stat-line">
+                <div class="name">{{ $t("game.coins") }}</div>
+                <input
+                  class="eui input"
+                  type="number"
+                  v-model="variant.requirment.consumables.coins"
+                />
+              </div>
+
+              <div class="stat-line">
+                <div class="name">{{ $t("game.bombs") }}</div>
+                <input
+                  class="eui input"
+                  type="number"
+                  v-model="variant.requirment.consumables.bombs"
+                />
+              </div>
+
+              <div class="stat-line">
+                <div class="name">{{ $t("game.keys") }}</div>
+                <input
+                  class="eui input"
+                  type="number"
+                  v-model="variant.requirment.consumables.keys"
+                />
+              </div>
+
+              <div class="stat-line">
+                <div class="name">{{ $t("game.blueFriends") }}</div>
+                <input
+                  class="eui input"
+                  type="number"
+                  v-model="variant.requirment.consumables.blueFriends"
+                />
+              </div>
+
+              <div class="stat-line">
+                <div class="name">{{ $t("game.goldenBomb") }}</div>
+                <editor-checkbox
+                  v-model="variant.requirment.consumables.goldenBomb"
+                />
+              </div>
+
+              <div class="stat-line">
+                <div class="name">{{ $t("game.goldenKey") }}</div>
+                <editor-checkbox
+                  v-model="variant.requirment.consumables.goldenKey"
+                />
+              </div>
+            </div>
+
+            <div class="vertical-line">
+              <label class="eui label">{{ $t("game.health") }}</label>
+              <editor-hearts :health="variant.requirment.hearts" />
+            </div>
+
+            <div class="vertical-line">
+              <label class="eui label">{{ $t("editor.damage") }}</label>
+              <div class="stat-line">
+                <div class="checkbox">
+                  <editor-checkbox v-model="variant.requirment.damageEnabled" />
+                  <div class="sub">{{ $t("editor.enableDamage") }}</div>
+                </div>
+              </div>
+              <template v-if="variant.requirment.damageEnabled">
+                <div class="stat-line">
+                  <div class="name">{{ $t("editor.count") }}</div>
+                  <input
+                    class="eui input"
+                    type="number"
+                    v-model.number="variant.requirment.damage"
+                  />
+                </div>
+                <div class="stat-line">
+                  <div class="name">{{ $t("editor.damageType.main") }}</div>
+                  <editor-combobox
+                    :items="damageTypes"
+                    :value="variant.requirment.damageType"
+                    @change="variant.requirment.damageType = $event"
+                    style="width: 210px"
+                  />
+                </div>
+                <div class="stat-line">
+                  <div class="name">{{ $t("editor.tags") }}</div>
+                  <editor-tag-list :tags="variant.requirment.damageTags" />
+                </div>
+              </template>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="add-variant">
-        {{ $t(`editor.newOutKey`) }}
+        {{ $t("editor.newOutKey") }}
         <input class="eui input" type="text" v-model="newVariantKey" />
         <button class="eui button" @click="addVariant">
-          {{ $t(`editor.addVariant`) }}
+          {{ $t("editor.addVariant") }}
         </button>
       </div>
     </div>
@@ -62,7 +156,10 @@
 </template>
 
 <script lang="ts">
-import { RoomSelectEvent } from "@/core/classes/game/sub/room/RoomSelectEvent";
+import {
+  RoomSelectEvent,
+  RoomSelectEventVariant,
+} from "@/core/classes/game/sub/room/RoomSelectEvent";
 import { defineComponent, PropType, ref } from "vue";
 
 import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
@@ -72,6 +169,10 @@ import { NIL as nilUUid } from "uuid";
 import EditorLocaleText from "../../ui/EditorLocaleText.vue";
 import { useI18n } from "vue-i18n";
 import EditorCheckbox from "../../ui/EditorCheckbox.vue";
+import EditorHearts from "../../ui/EditorHearts.vue";
+import EditorCombobox from "../../ui/EditorCombobox.vue";
+import EditorTagList from "../../ui/EditorTagList.vue";
+import { DamageType } from "@/core/types/game/DamageType";
 
 export default defineComponent({
   name: "SelectEventEditor",
@@ -81,6 +182,9 @@ export default defineComponent({
     EventIcon,
     EditorLocaleText,
     EditorCheckbox,
+    EditorHearts,
+    EditorCombobox,
+    EditorTagList,
   },
   props: {
     event: {
@@ -99,12 +203,9 @@ export default defineComponent({
         return;
       }
 
-      curEvent.value.variants.push({
-        text: {},
-        key: newVariantKey.value,
-        showFuture: false,
-        requirment: false,
-      });
+      const newVar = new RoomSelectEventVariant();
+      newVar.key = newVariantKey.value;
+      curEvent.value.variants.push(newVar);
 
       curEvent.value.outputEvents[newVariantKey.value] = nilUUid;
       newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
@@ -117,11 +218,17 @@ export default defineComponent({
       newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
     };
 
+    const damageTypes = Object.values(DamageType).map((type) => ({
+      value: type,
+      name: t(`editor.damageType.${type}`),
+    }));
+
     return {
       curEvent,
       newVariantKey,
       addVariant,
       removeVariant,
+      damageTypes,
     };
   },
 });
@@ -184,6 +291,43 @@ export default defineComponent({
             background: #f44336;
             border-color: #f44336;
           }
+        }
+      }
+
+      .requirments {
+        margin-top: 16px;
+        width: 680px;
+        padding: 12px;
+        border: 2px dashed $editorFg;
+      }
+
+      .vertical-line {
+        .label {
+          font-size: 16px;
+        }
+      }
+
+      .stat-line {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 38px;
+        padding: 4px;
+        .input {
+          width: 60px;
+          background: $editorPaper;
+          margin-right: 16px;
+        }
+
+        .name {
+          min-width: 120px;
+          text-align: left;
+        }
+
+        .checkbox {
+          display: flex;
+          align-items: center;
+          gap: 4px;
         }
       }
     }
