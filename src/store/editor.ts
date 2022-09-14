@@ -16,7 +16,7 @@ import { DoorDesc } from "@/core/classes/game/DoorDesc";
 import { runMigration } from "@/core/helpers/migrateProject";
 
 /** Текущая версия проекта */
-const CURRENT_VERSION = 3;
+const CURRENT_VERSION = 4;
 
 /** Хранилище редактора контента */
 export const useEditorStore = defineStore("editor", {
@@ -185,7 +185,7 @@ export const useEditorStore = defineStore("editor", {
         this.rooms.forEach((room) => {
           room.events = restoreEvents(room.events);
         });
-      }, 60);
+      }, 150);
     },
 
     /**

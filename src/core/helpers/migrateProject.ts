@@ -189,6 +189,37 @@ const migrations: { [key: number]: any } = {
 
     await asyncWait(100);
   },
+
+  /**
+   * v4: StatChange now have consumables editor
+   */
+  4: async (fs: IBaseFS) => {
+    const dir = await fs.getDirectory("rooms");
+    const files = await dir.getFiles();
+
+    files.forEach(async (file) => {
+      const room = JSON.parse(await file.readAllText());
+      room.events.forEach(async (event: any) => {
+        if (event.type === "statschange" && !event.consumables) {
+          event.consumables = {
+            coins: 0,
+            keys: 0,
+            bombs: 0,
+            blueFriends: 0,
+
+            goldenKey: false,
+            goldenBomb: false,
+          };
+        }
+      });
+
+      log("log", `Saving ${room.id} to rooms`, room);
+
+      await file.writeAllText(JSON.stringify(room));
+    });
+
+    await asyncWait(100);
+  },
 };
 
 const log = (type: "log" | "warn" | "error", ...args: any[]) => {

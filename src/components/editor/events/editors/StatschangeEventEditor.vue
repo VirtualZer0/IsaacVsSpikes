@@ -97,6 +97,34 @@
         </div>
       </div>
     </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.changedConsumables`) }}</label>
+
+      <div class="nth-format">
+        <div
+          class="stat-line"
+          v-for="[consumable, params] of Object.entries(requiredConsumables)"
+          :key="consumable"
+        >
+          <div class="name">{{ $t(`game.${consumable}`) }}</div>
+
+          <div class="checkbox" v-if="typeof params == 'boolean'">
+            <editor-checkbox
+              v-model="(requiredConsumables as any)[consumable]"
+            />
+            <div class="sub">{{ $t("editor.give") }}</div>
+          </div>
+
+          <input
+            v-else
+            class="eui input"
+            type="number"
+            v-model.number="(requiredConsumables as any)[consumable]"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -139,6 +167,7 @@ export default defineComponent({
   },
   setup(props) {
     const requiredStats = reactive(props.event.stats);
+    const requiredConsumables = reactive(props.event.consumables);
 
     const changeParam = (param: string, value: any) => {
       (requiredStats as Record<string, any>)[param] = value;
@@ -151,6 +180,7 @@ export default defineComponent({
 
     return {
       requiredStats,
+      requiredConsumables,
       changeParam,
       isArray,
       damageTypes,

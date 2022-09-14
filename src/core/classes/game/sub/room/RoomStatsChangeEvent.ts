@@ -5,11 +5,14 @@ import { RoomEventType } from "./RoomEventType";
 import { CharacterStats } from "../character/CharcterStats";
 import { CharacterHearts } from "../character/CharacterHealth";
 import { DamageType } from "@/core/types/game/DamageType";
+import { CharacterConsumables } from "../character/CharacterConsumables";
 
 /** Ивент на изменение параметров игрока */
 export class RoomStatsChangeEvent extends RoomEvent {
   /** Статы игрока */
   stats: CharacterStats = new CharacterStats();
+  /** Расходники игрока */
+  consumables: CharacterConsumables = new CharacterConsumables();
 
   /** Здоровье игрока */
   addHealth: CharacterHearts = new CharacterHearts();
