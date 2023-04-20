@@ -26,14 +26,14 @@
 </template>
 
 <script lang="ts">
-import { Level } from "@/core/classes/game/Level";
-import { defineComponent, PropType } from "vue";
-import EditorLinkList from "@/components/editor/ui/EditorLinkList.vue";
-import { RoomType } from "@/core/types/game/RoomType";
+import { Level } from '@/core/classes/game/Level';
+import { defineComponent, PropType } from 'vue';
+import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
+import { RoomType } from '@/core/types/game/RoomType';
 
 export default defineComponent({
   components: { EditorLinkList },
-  name: "EditorLevelView",
+  name: 'EditorLevelView',
   props: {
     level: {
       type: Object as PropType<Level>,

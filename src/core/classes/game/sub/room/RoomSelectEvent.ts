@@ -1,10 +1,10 @@
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { RoomEvent } from "./RoomEvent";
-import { RoomEventType } from "./RoomEventType";
-import { NIL as nilUUid } from "uuid";
-import { CharacterHearts } from "../character/CharacterHealth";
-import { CharacterConsumables } from "../character/CharacterConsumables";
-import { DamageType } from "@/core/types/game/DamageType";
+import { LocaleText } from '@/core/classes/base/LocaleText';
+import { RoomEvent } from './RoomEvent';
+import { RoomEventType } from './RoomEventType';
+import { NIL as nilUUid } from 'uuid';
+import { CharacterHearts } from '../character/CharacterHealth';
+import { CharacterConsumables } from '../character/CharacterConsumables';
+import { DamageType } from '@/core/types/game/DamageType';
 
 /** Ивент на отображение диалога с ввыбором */
 export class RoomSelectEvent extends RoomEvent {
@@ -19,7 +19,7 @@ export class RoomSelectEvent extends RoomEvent {
 
 export class RoomSelectEventVariant {
   text: LocaleText = {};
-  key = "out1";
+  key = 'out1';
   showFuture = false;
   requirment = {
     enabled: false,

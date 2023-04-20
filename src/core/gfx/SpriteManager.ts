@@ -16,41 +16,44 @@ export class SpriteManager {
   private pause = false;
 
   /** Добавляет спрайт в массив активных спрайтов */
-  addSprite(callback: (delta: DOMHighResTimeStamp) => void): void {
+  addSprite(callback: (delta: number) => void): void {
     this.renderCallbacks.push(callback);
   }
 
   /** Удаялет спрайт из массива активных спрайтов */
-  removeSprite(callback: (delta: DOMHighResTimeStamp) => void): void {
+  removeSprite(callback: (delta: number) => void): void {
     const index = this.renderCallbacks.indexOf(callback);
     this.renderCallbacks.splice(index, 1);
   }
 
   /** Метод для вызова из requestAnimationFrame */
-  requestAnimationFrame(delta: DOMHighResTimeStamp) {
-    if (this.pause) return;
-    requestAnimationFrame(this.requestAnimationFrame);
+  requestAnimationFrame() {
+    if (this.pause) {
+      requestAnimationFrame(this.requestAnimationFrame.bind(this));
+      return;
+    }
 
     const now = new Date().getTime();
     const time = now - this.lastRAF;
 
-    if (time <= this.frameInterval) return;
+    if (time > this.frameInterval) {
+      this.lastRAF = now;
 
-    this.lastRAF = now - (delta % this.lastRAF);
+      let i = 0;
+      const l = this.renderCallbacks.length;
 
-    let i = 0;
-    const l = this.renderCallbacks.length;
-
-    while (i < l) {
-      this.renderCallbacks[i](delta);
-      ++i;
+      while (i < l) {
+        this.renderCallbacks[i](now);
+        ++i;
+      }
     }
+    requestAnimationFrame(this.requestAnimationFrame.bind(this));
   }
 
   /** Запускает анимацию всех спрайтов */
   start() {
     this.pause = false;
-    this.requestAnimationFrame(0);
+    this.requestAnimationFrame();
   }
 
   /** Останавливает анимацию всех спрайтов */

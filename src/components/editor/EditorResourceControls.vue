@@ -25,12 +25,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 /** Отображает кнопки сохранения и отмены в редакторе ресурса */
 export default defineComponent({
-  name: "EditorResourceControls",
-  emits: ["save", "cancel"],
+  name: 'EditorResourceControls',
+  emits: ['save', 'cancel'],
 
   props: {
     disableSave: {

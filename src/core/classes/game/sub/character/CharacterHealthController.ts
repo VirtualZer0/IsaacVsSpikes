@@ -1,8 +1,9 @@
-import { HeartContainerType } from "@/core/types/game/HeartContainerType";
-import { HeartType } from "@/core/types/game/HeartType";
-import { Ref, ref } from "vue";
-import { Character } from "../../Character";
-import { CharacterHearts, Heart, HeartContainer } from "./CharacterHealth";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { HeartContainerType } from '@/core/types/game/HeartContainerType';
+import { HeartType } from '@/core/types/game/HeartType';
+import { Ref, ref } from 'vue';
+import { Character } from '../../Character';
+import { CharacterHearts, Heart, HeartContainer } from './CharacterHealth';
 
 // TODO: Добавить вызов коллбэков для событий здоровья
 
@@ -59,12 +60,12 @@ export class CharacterHealthController {
   }
 
   addHeart(type: HeartType = HeartType.RED, amount = 1): void {
-    if (type.includes("additional")) {
+    if (type.includes('additional')) {
       return this.addAdditionalHeart(type);
     }
 
-    if (type.includes("half")) {
-      return this.addHeart(type.replace("half_", "") as HeartType, 1);
+    if (type.includes('half')) {
+      return this.addHeart(type.replace('half_', '') as HeartType, 1);
     }
 
     const halfHearts = amount % 2;
@@ -156,7 +157,7 @@ export class CharacterHealthController {
     },
 
     /** Гнилые сердца */
-    [HeartType.ROTTEN]: (fullHearts: number, halfHeart: boolean) => {
+    [HeartType.ROTTEN]: (fullHearts: number, _halfHeart: boolean) => {
       if (
         !this.character.rules.allowRedHearts ||
         this.health.value.containers.length == 0
@@ -322,7 +323,7 @@ export class CharacterHealthController {
     },
 
     /** Золотое сердце */
-    [HeartType.GOLDEN]: (fullHearts: number, halfHeart: boolean) => {
+    [HeartType.GOLDEN]: (fullHearts: number, _halfHeart: boolean) => {
       const freeHearts = [
         ...this.health.value.containers.filter((heart) => !heart.golden),
         ...this.health.value.hearts.filter((heart) => !heart.golden),
@@ -338,7 +339,7 @@ export class CharacterHealthController {
     },
 
     /** Белое сердце */
-    [HeartType.WHITE]: (fullHearts: number, halfHeart: boolean) => {
+    [HeartType.WHITE]: (_fullHearts: number, _halfHeart: boolean) => {
       // Поиск уже существующих белых сердец
       const whiteHearts = [
         ...this.health.value.hearts.filter((heart) => heart.white),
@@ -349,7 +350,6 @@ export class CharacterHealthController {
         // Если белое сердце уже есть, то заменяем на контейнер
         const heart = whiteHearts.pop() as { type: HeartType; white: boolean };
         heart.white = false;
-        fullHearts--;
 
         this.addContainer(HeartContainerType.DEFAULT);
       } else {

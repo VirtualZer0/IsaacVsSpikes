@@ -16,8 +16,12 @@
 
     <div
       class="canvas"
+      :class="{ drag: dragMode }"
       @click="acceptAction"
       @mousemove="mouseMove"
+      @mousedown="dragMode = true"
+      @mouseup="dragMode = false"
+      @mouseleave="dragMode = false"
       @contextmenu="stopAction"
       ref="canvas"
     >
@@ -40,7 +44,7 @@
           :x2="link.outputX"
           :y2="link.outputY"
           stroke-width="3"
-          @contextmenu="breakLink(link)"
+          @contextmenu.stop.prevent="breakLink(link)"
         />
       </svg>
 
@@ -69,8 +73,8 @@
           transform: `translate(${ghostBlock.pos.x}px,${ghostBlock.pos.y}px)`,
         }"
       >
-        <span>{{ $t("editor.ghostBlockLBM") }}</span>
-        <span>{{ $t("editor.ghostBlockRBM") }}</span>
+        <span>{{ $t('editor.ghostBlockLBM') }}</span>
+        <span>{{ $t('editor.ghostBlockRBM') }}</span>
       </div>
     </div>
 
@@ -94,25 +98,25 @@
 </template>
 
 <script lang="ts">
-import { RoomEvent } from "@/core/classes/game/sub/room/RoomEvent";
-import { RoomEventType } from "@/core/classes/game/sub/room/RoomEventType";
-import { RoomStatsCheckEvent } from "@/core/classes/game/sub/room/RoomStatsCheckEvent";
-import { RoomSelectEvent } from "@/core/classes/game/sub/room/RoomSelectEvent";
-import { RoomStatsChangeEvent } from "@/core/classes/game/sub/room/RoomStatsChangeEvent";
-import { RoomRewardEvent } from "@/core/classes/game/sub/room/RoomRewardEvent";
-import { RoomTextEvent } from "@/core/classes/game/sub/room/RoomTextEvent";
-import { RoomChanceEvent } from "@/core/classes/game/sub/room/RoomChanceEvent";
-import { RoomEffectEvent } from "@/core/classes/game/sub/room/RoomEffectEvent";
-import { RoomOrEvent } from "@/core/classes/game/sub/room/RoomOrEvent";
-import { RoomCounterEvent } from "@/core/classes/game/sub/room/RoomCounterEvent";
+import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
+import { RoomEventType } from '@/core/classes/game/sub/room/RoomEventType';
+import { RoomStatsCheckEvent } from '@/core/classes/game/sub/room/RoomStatsCheckEvent';
+import { RoomSelectEvent } from '@/core/classes/game/sub/room/RoomSelectEvent';
+import { RoomStatsChangeEvent } from '@/core/classes/game/sub/room/RoomStatsChangeEvent';
+import { RoomRewardEvent } from '@/core/classes/game/sub/room/RoomRewardEvent';
+import { RoomTextEvent } from '@/core/classes/game/sub/room/RoomTextEvent';
+import { RoomChanceEvent } from '@/core/classes/game/sub/room/RoomChanceEvent';
+import { RoomEffectEvent } from '@/core/classes/game/sub/room/RoomEffectEvent';
+import { RoomOrEvent } from '@/core/classes/game/sub/room/RoomOrEvent';
+import { RoomCounterEvent } from '@/core/classes/game/sub/room/RoomCounterEvent';
 
-import { reactive, ref } from "@vue/reactivity";
-import { defineAsyncComponent, defineComponent, PropType } from "vue";
-import { Coords } from "@/core/classes/base/Coords";
-import { v4 as uuid, NIL as nilUUid } from "uuid";
+import { reactive, ref } from '@vue/reactivity';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { Coords } from '@/core/classes/base/Coords';
+import { v4 as uuid, NIL as nilUUid } from 'uuid';
 
-import EventElement from "./EventElement.vue";
-import EventIcon from "./EventIcon.vue";
+import EventElement from './EventElement.vue';
+import EventIcon from './EventIcon.vue';
 
 /** Событие создания подключения */
 type ConnectionEvent = {
@@ -132,37 +136,37 @@ type Link = {
 };
 
 export default defineComponent({
-  name: "EventsGraph",
+  name: 'EventsGraph',
   components: {
     EventElement,
     EventIcon,
 
     TextEventEditor: defineAsyncComponent(
-      () => import("./editors/TextEventEditor.vue")
+      () => import('./editors/TextEventEditor.vue')
     ),
     StatscheckEventEditor: defineAsyncComponent(
-      () => import("./editors/StatscheckEventEditor.vue")
+      () => import('./editors/StatscheckEventEditor.vue')
     ),
     SelectEventEditor: defineAsyncComponent(
-      () => import("./editors/SelectEventEditor.vue")
+      () => import('./editors/SelectEventEditor.vue')
     ),
     ChanceEventEditor: defineAsyncComponent(
-      () => import("./editors/ChanceEventEditor.vue")
+      () => import('./editors/ChanceEventEditor.vue')
     ),
     RewardEventEditor: defineAsyncComponent(
-      () => import("./editors/RewardEventEditor.vue")
+      () => import('./editors/RewardEventEditor.vue')
     ),
     StatschangeEventEditor: defineAsyncComponent(
-      () => import("./editors/StatschangeEventEditor.vue")
+      () => import('./editors/StatschangeEventEditor.vue')
     ),
     EffectEventEditor: defineAsyncComponent(
-      () => import("./editors/EffectEventEditor.vue")
+      () => import('./editors/EffectEventEditor.vue')
     ),
     OrEventEditor: defineAsyncComponent(
-      () => import("./editors/OrEventEditor.vue")
+      () => import('./editors/OrEventEditor.vue')
     ),
     CounterEventEditor: defineAsyncComponent(
-      () => import("./editors/CounterEventEditor.vue")
+      () => import('./editors/CounterEventEditor.vue')
     ),
   },
   props: {
@@ -190,6 +194,8 @@ export default defineComponent({
       y: 0,
     });
 
+    const dragMode = ref(false);
+
     /** Призрачный блок для отображения места размещения */
     const ghostBlock = reactive<{
       pos: { x: number; y: number };
@@ -202,9 +208,9 @@ export default defineComponent({
     /** Состояние создания новой связи */
     const newLink = reactive({
       visible: false,
-      inputId: "",
-      outputId: "",
-      outputKey: "",
+      inputId: '',
+      outputId: '',
+      outputKey: '',
       inputX: 0,
       inputY: 0,
       outputX: 0,
@@ -224,11 +230,11 @@ export default defineComponent({
         outputNode?.type == RoomEventType.OR &&
         inputNode?.type != RoomEventType.STATSCHECK &&
         inputNode?.type != RoomEventType.COUNTER &&
-        newLink.outputKey != "fail"
+        newLink.outputKey != 'fail'
       ) {
-        alert("Комбинатор может подключаться только к блокам проверок");
-        newLink.outputId = "";
-        newLink.inputId = "";
+        alert('Комбинатор может подключаться только к блокам проверок');
+        newLink.outputId = '';
+        newLink.inputId = '';
         newLink.visible = false;
         return;
       }
@@ -276,8 +282,8 @@ export default defineComponent({
         outputY: newLink.outputY,
       });
 
-      newLink.outputId = "";
-      newLink.inputId = "";
+      newLink.outputId = '';
+      newLink.inputId = '';
       newLink.visible = false;
     };
 
@@ -342,6 +348,11 @@ export default defineComponent({
         return;
       }
 
+      if (dragMode.value) {
+        canvas.value.scrollLeft -= e.movementX;
+        canvas.value.scrollTop -= e.movementY;
+      }
+
       const rect = canvas.value.getBoundingClientRect();
       curPos.x = Math.round(e.clientX - rect.left + canvas.value.scrollLeft);
       curPos.y = Math.round(e.clientY - rect.top + canvas.value.scrollTop);
@@ -395,8 +406,8 @@ export default defineComponent({
     const stopAction = (e: MouseEvent) => {
       ghostBlock.type = null;
       newLink.visible = false;
-      newLink.inputId = "";
-      newLink.outputId = "";
+      newLink.inputId = '';
+      newLink.outputId = '';
       e.stopPropagation();
       e.preventDefault();
     };
@@ -451,7 +462,7 @@ export default defineComponent({
     /** Обработка процесса создания новой связи */
     const setPin = (
       node: RoomEvent,
-      pin: "input" | "output",
+      pin: 'input' | 'output',
       ev: ConnectionEvent
     ) => {
       if (!canvas.value) {
@@ -465,11 +476,11 @@ export default defineComponent({
       newLink[`${pin}X`] = ev.pos[0] - rect.left + canvas.value.scrollLeft;
       newLink[`${pin}Y`] = ev.pos[1] - rect.top + canvas.value.scrollTop;
 
-      if (pin === "output") {
+      if (pin === 'output') {
         newLink.outputKey = ev.key;
       }
 
-      let nPin: "input" | "output" = pin == "input" ? "output" : "input";
+      const nPin: 'input' | 'output' = pin == 'input' ? 'output' : 'input';
 
       if (newLink[`${nPin}Id`]) {
         const event = curEvents.value.find(
@@ -513,6 +524,7 @@ export default defineComponent({
       ghostBlock,
       currentDraggable,
       mouseMove,
+      dragMode,
       stopAction,
       acceptAction,
       setPin,
@@ -607,6 +619,10 @@ export default defineComponent({
     overflow: auto;
     flex-grow: 1;
 
+    &.drag {
+      cursor: grabbing;
+    }
+
     .events,
     .links {
       top: 0;
@@ -619,6 +635,7 @@ export default defineComponent({
 
       line {
         stroke: $editorFg;
+        cursor: pointer;
 
         &.new {
           stroke: $editorGray;

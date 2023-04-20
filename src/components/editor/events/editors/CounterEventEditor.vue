@@ -2,7 +2,7 @@
   <div class="counter-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.counterEvent") }}
+      {{ $t('editor.counterEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -13,6 +13,16 @@
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
+    </div>
+
+    <div class="vertical-line small">
+      <label class="eui label">{{ $t(`editor.counterEventScope.main`) }}</label>
+      <editor-combobox
+        :items="counterScopes"
+        :value="event.scope"
+        @change="event.scope = $event"
+        style="width: 210px"
+      />
     </div>
 
     <div class="vertical-line small">
@@ -47,20 +57,23 @@
 </template>
 
 <script lang="ts">
-import { RoomCounterEvent } from "@/core/classes/game/sub/room/RoomCounterEvent";
-import { defineComponent, PropType, ref, watch } from "vue";
+import {
+  CounterEventScope,
+  RoomCounterEvent,
+} from '@/core/classes/game/sub/room/RoomCounterEvent';
+import { defineComponent, PropType, ref, watch } from 'vue';
 
-import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EditorCombobox from "../../ui/EditorCombobox.vue";
-import EventIcon from "../EventIcon.vue";
-import { NIL as nilUUid } from "uuid";
-import { useI18n } from "vue-i18n";
-import { CounterEventMode } from "@/core/types/game/CounterEventMode";
-import { CounterEventCheck } from "@/core/types/game/CounterEventCheck";
+import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EditorCombobox from '../../ui/EditorCombobox.vue';
+import EventIcon from '../EventIcon.vue';
+import { NIL as nilUUid } from 'uuid';
+import { useI18n } from 'vue-i18n';
+import { CounterEventMode } from '@/core/types/game/CounterEventMode';
+import { CounterEventCheck } from '@/core/types/game/CounterEventCheck';
 
 export default defineComponent({
-  name: "CounterEventEditor",
+  name: 'CounterEventEditor',
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,
@@ -76,6 +89,11 @@ export default defineComponent({
   setup(props) {
     const curEvent = ref(props.event);
     const { t } = useI18n();
+
+    const counterScopes = Object.values(CounterEventScope).map((type) => ({
+      value: type,
+      name: t(`editor.counterEventScope.${type}`),
+    }));
 
     const counterModes = Object.values(CounterEventMode).map((type) => ({
       value: type,
@@ -111,6 +129,7 @@ export default defineComponent({
 
     return {
       curEvent,
+      counterScopes,
       counterModes,
       checkModes,
       CounterEventMode,

@@ -2,7 +2,7 @@
   <div class="reward-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.rewardEvent") }}
+      {{ $t('editor.rewardEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -17,7 +17,20 @@
 
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.items`) }}</label>
-      <editor-link-list :links="event.reward" type="items" />
+      <editor-link-list :links="event.reward" :type="ResourceType.ITEM" />
+    </div>
+
+    <div class="vertical-line">
+      <div class="stat-line">
+        <editor-checkbox v-model="curEvent.giveFromPool" />
+        <div class="name">{{ $t('editor.giveFromPool') }}:</div>
+        <editor-combobox
+          :items="itemPools"
+          :value="event.pool"
+          @change="event.pool = $event"
+          style="width: 210px"
+        />
+      </div>
     </div>
 
     <div class="vertical-line">
@@ -25,7 +38,7 @@
 
       <div class="nth-format">
         <div class="stat-line">
-          <div class="name">{{ $t("game.coins") }}</div>
+          <div class="name">{{ $t('game.coins') }}</div>
           <input
             class="eui input"
             type="number"
@@ -34,7 +47,7 @@
         </div>
 
         <div class="stat-line">
-          <div class="name">{{ $t("game.bombs") }}</div>
+          <div class="name">{{ $t('game.bombs') }}</div>
           <input
             class="eui input"
             type="number"
@@ -48,7 +61,7 @@
         </div>
 
         <div class="stat-line">
-          <div class="name">{{ $t("game.keys") }}</div>
+          <div class="name">{{ $t('game.keys') }}</div>
           <input
             class="eui input"
             type="number"
@@ -66,25 +79,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from "vue";
+import { defineComponent, PropType, ref } from 'vue';
 
-import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EventIcon from "../EventIcon.vue";
+import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EventIcon from '../EventIcon.vue';
 
-import EditorCheckbox from "../../ui/EditorCheckbox.vue";
+import EditorCheckbox from '../../ui/EditorCheckbox.vue';
+import EditorCombobox from '../../ui/EditorCombobox.vue';
 
-import { RoomRewardEvent } from "@/core/classes/game/sub/room/RoomRewardEvent";
-import EditorLinkList from "../../ui/EditorLinkList.vue";
+import { RoomRewardEvent } from '@/core/classes/game/sub/room/RoomRewardEvent';
+import EditorLinkList from '../../ui/EditorLinkList.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
+import { ItemPool } from '@/core/types/game/ItemPool';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
-  name: "RewardEventEditor",
+  name: 'RewardEventEditor',
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,
     EventIcon,
     EditorCheckbox,
     EditorLinkList,
+    EditorCombobox,
   },
   props: {
     event: {
@@ -93,10 +111,17 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { t } = useI18n();
     const curEvent = ref(props.event);
+    const itemPools = Object.values(ItemPool).map((type) => ({
+      value: type,
+      name: t(`game.pools.${type}`),
+    }));
 
     return {
       curEvent,
+      ResourceType,
+      itemPools,
     };
   },
 });
@@ -143,7 +168,7 @@ export default defineComponent({
 
     .name {
       font-weight: bold;
-      width: 100px;
+      min-width: 100px;
       text-align: left;
     }
 

@@ -1,8 +1,8 @@
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { Resource } from "@/core/classes/base/Resource";
-import { RoomEventType } from "./RoomEventType";
+import { LocaleText } from '@/core/classes/base/LocaleText';
+import { Resource } from '@/core/classes/base/Resource';
+import { RoomEventType } from './RoomEventType';
 
-import i18n from "@/i18n";
+import i18n from '@/i18n';
 
 const { t } = i18n.global;
 

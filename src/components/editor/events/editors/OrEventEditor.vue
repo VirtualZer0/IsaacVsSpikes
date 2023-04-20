@@ -2,7 +2,7 @@
   <div class="or-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.orEvent") }}
+      {{ $t('editor.orEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -46,16 +46,16 @@
         <div class="stat-line">
           <div class="checkbox">
             <editor-checkbox v-model="event.counterEnabled" />
-            <div class="sub">{{ $t("editor.writeChecks") }}</div>
+            <div class="sub">{{ $t('editor.writeChecks') }}</div>
           </div>
         </div>
         <template v-if="event.counterEnabled">
           <div class="stat-line">
-            <div class="name">{{ $t("editor.label") }}</div>
+            <div class="name">{{ $t('editor.label') }}</div>
             <input class="eui input" v-model="event.counterLabel" />
           </div>
           <div class="stat-line">
-            <div class="name">{{ $t("editor.value") }}</div>
+            <div class="name">{{ $t('editor.value') }}</div>
             <editor-combobox
               :items="counterModes"
               :value="event.counterChecksMode"
@@ -70,19 +70,19 @@
 </template>
 
 <script lang="ts">
-import { RoomOrEvent } from "@/core/classes/game/sub/room/RoomOrEvent";
-import { defineComponent, PropType, ref } from "vue";
+import { RoomOrEvent } from '@/core/classes/game/sub/room/RoomOrEvent';
+import { defineComponent, PropType, ref } from 'vue';
 
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EventIcon from "../EventIcon.vue";
-import EditorCheckbox from "../../ui/EditorCheckbox.vue";
-import EditorCombobox from "../../ui/EditorCombobox.vue";
-import { NIL as nilUUid } from "uuid";
-import { useI18n } from "vue-i18n";
-import { OrChecksMode } from "@/core/types/game/OrChecksMode";
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EventIcon from '../EventIcon.vue';
+import EditorCheckbox from '../../ui/EditorCheckbox.vue';
+import EditorCombobox from '../../ui/EditorCombobox.vue';
+import { NIL as nilUUid } from 'uuid';
+import { useI18n } from 'vue-i18n';
+import { OrChecksMode } from '@/core/types/game/OrChecksMode';
 
 export default defineComponent({
-  name: "OrEventEditor",
+  name: 'OrEventEditor',
   components: {
     EditorLocaleInput,
     EventIcon,
@@ -101,25 +101,25 @@ export default defineComponent({
     const { t } = useI18n();
 
     const addVariant = () => {
-      if (newVariantKey.value === "fail") {
+      if (newVariantKey.value === 'fail') {
         return;
       }
       if (curEvent.value.outputEvents[newVariantKey.value]) {
-        alert(t("editor.keyAlreadyExists"));
+        alert(t('editor.keyAlreadyExists'));
         return;
       }
 
       curEvent.value.variants.push(newVariantKey.value);
 
       curEvent.value.outputEvents[newVariantKey.value] = nilUUid;
-      newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
+      newVariantKey.value = 'out' + (curEvent.value.variants.length + 1);
     };
 
     const removeVariant = (index: number) => {
       const [removedVariant] = curEvent.value.variants.splice(index, 1);
       delete curEvent.value.outputEvents[removedVariant];
 
-      newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
+      newVariantKey.value = 'out' + (curEvent.value.variants.length + 1);
     };
 
     const counterModes = Object.values(OrChecksMode).map((mode) => ({

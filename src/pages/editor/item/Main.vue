@@ -17,19 +17,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useEditorStore } from "@/store/editor";
-import { Item } from "@/core/classes/game/Item";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import reactiveCopy from "@/core/helpers/reactiveCopy";
+import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useEditorStore } from '@/store/editor';
+import { Item } from '@/core/classes/game/Item';
+import { v4 as uuid } from 'uuid';
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/utils/reactiveCopy';
 
-import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
-import EditorResourceMenu from "@/components/editor/EditorResourceMenu.vue";
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
+import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
-  name: "EditorItem",
+  name: 'EditorItem',
   components: {
     EditorResourceTop,
     EditorResourceMenu,
@@ -41,10 +42,10 @@ export default defineComponent({
     const store = useMainStore();
     let item: Item;
 
-    if (route.params.id == "new") {
+    if (route.params.id == 'new') {
       item = new Item();
       item.id = uuid();
-      await editor.createResource("items", item);
+      await editor.createResource(ResourceType.ITEM, item);
       await router.replace(`/editor/items/${item.id}`);
     }
 
@@ -54,8 +55,8 @@ export default defineComponent({
     );
 
     const saveItem = async () => {
-      if (route.params.id != "new") {
-        await editor.updateResource("items", item);
+      if (route.params.id != 'new') {
+        await editor.updateResource(ResourceType.ITEM, item);
       }
 
       router.push(`/editor/list/items`);

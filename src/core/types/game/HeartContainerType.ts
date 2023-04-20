@@ -1,3 +1,3 @@
 export enum HeartContainerType {
-  DEFAULT = "default",
+  DEFAULT = 'default',
 }

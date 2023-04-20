@@ -2,7 +2,7 @@
   <div class="checkstats-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.statscheckEvent") }}
+      {{ $t('editor.statscheckEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -46,13 +46,13 @@
             class="range"
             v-else-if="typeof params == 'object' && params.type == 'number'"
           >
-            {{ $t("editor.from") }}
+            {{ $t('editor.from') }}
             <input
               class="eui input"
               type="number"
               v-model.number="params.from"
             />
-            {{ $t("editor.to") }}
+            {{ $t('editor.to') }}
             <input class="eui input" type="number" v-model.number="params.to" />
           </div>
 
@@ -87,13 +87,13 @@
             class="range"
             v-else-if="typeof params == 'object' && params.type == 'number'"
           >
-            {{ $t("editor.from") }}
+            {{ $t('editor.from') }}
             <input
               class="eui input"
               type="number"
               v-model.number="params.from"
             />
-            {{ $t("editor.to") }}
+            {{ $t('editor.to') }}
             <input class="eui input" type="number" v-model.number="params.to" />
           </div>
         </div>
@@ -103,21 +103,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, PropType, reactive } from 'vue';
 
-import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EventIcon from "../EventIcon.vue";
+import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EventIcon from '../EventIcon.vue';
 
-import EditorCheckbox from "../../ui/EditorCheckbox.vue";
+import EditorCheckbox from '../../ui/EditorCheckbox.vue';
 
-import { RoomStatsCheckEvent } from "@/core/classes/game/sub/room/RoomStatsCheckEvent";
-import EditorLinkList from "../../ui/EditorLinkList.vue";
-import EditorTagList from "../../ui/EditorTagList.vue";
-import EditorHearts from "../../ui/EditorHearts.vue";
+import { RoomStatsCheckEvent } from '@/core/classes/game/sub/room/RoomStatsCheckEvent';
+import EditorLinkList from '../../ui/EditorLinkList.vue';
+import EditorTagList from '../../ui/EditorTagList.vue';
+import EditorHearts from '../../ui/EditorHearts.vue';
 
 export default defineComponent({
-  name: "StatscheckEventEditor",
+  name: 'StatscheckEventEditor',
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,

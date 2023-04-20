@@ -2,7 +2,7 @@
   <div class="effect-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.effectEvent") }}
+      {{ $t('editor.effectEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -23,15 +23,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from 'vue';
 
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EventIcon from "../EventIcon.vue";
-import { RoomEffectEvent } from "@/core/classes/game/sub/room/RoomEffectEvent";
-import EditorLink from "../../ui/EditorLink.vue";
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EventIcon from '../EventIcon.vue';
+import { RoomEffectEvent } from '@/core/classes/game/sub/room/RoomEffectEvent';
+import EditorLink from '../../ui/EditorLink.vue';
 
 export default defineComponent({
-  name: "EffectEventEditor",
+  name: 'EffectEventEditor',
   components: {
     EditorLocaleInput,
     EventIcon,

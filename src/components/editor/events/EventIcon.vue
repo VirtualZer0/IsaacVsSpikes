@@ -57,11 +57,11 @@
 </template>
 
 <script lang="ts">
-import { RoomEventType } from "@/core/classes/game/sub/room/RoomEventType";
-import { defineComponent, PropType } from "vue";
+import { RoomEventType } from '@/core/classes/game/sub/room/RoomEventType';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
-  name: "EventIcon",
+  name: 'EventIcon',
   props: {
     type: {
       type: String as PropType<RoomEventType>,

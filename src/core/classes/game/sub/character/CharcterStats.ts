@@ -1,8 +1,7 @@
 import {
-  ICharacterPropsBoolean,
   ICharacterPropsRange,
   ICharacterPropsTags,
-} from "./ICharacterRangeProps";
+} from './ICharacterRangeProps';
 
 export class CharacterStats {
   countdown = 0;
@@ -16,56 +15,56 @@ export class CharacterStats {
 
 export class CharacterStatsCheckData {
   countdown: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   damage: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   speed: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   skill: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   devilChance: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   angelChance: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   health: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   tags: ICharacterPropsTags = {
-    type: "tags",
+    type: 'tags',
     enabled: false,
     value: [],
   };

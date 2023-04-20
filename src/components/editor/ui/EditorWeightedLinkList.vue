@@ -9,7 +9,7 @@
         :spriteMode="spriteMode"
       />
       <div class="weight">
-        <div class="weight-label">{{ $t("editor.weight") }}</div>
+        <div class="weight-label">{{ $t('editor.weight') }}</div>
         <input
           type="number"
           class="eui input"
@@ -29,13 +29,13 @@
 </template>
 
 <script lang="ts">
-import { WeightedResourceLink } from "@/core/classes/base/ResourceLink";
-import { WeightedSpriteSource } from "@/core/types/gfx/SpriteSource";
-import { defineComponent, PropType, ref } from "vue";
-import EditorLink from "./EditorLink.vue";
+import { WeightedResourceLink } from '@/core/classes/base/ResourceLink';
+import { WeightedSpriteSource } from '@/core/types/gfx/SpriteSource';
+import { defineComponent, PropType, ref } from 'vue';
+import EditorLink from './EditorLink.vue';
 
 export default defineComponent({
-  name: "EditorLinkList",
+  name: 'EditorLinkList',
   components: {
     EditorLink,
   },
@@ -56,7 +56,7 @@ export default defineComponent({
     },
   },
 
-  setup(props, { emit }) {
+  setup(props) {
     const curLinks = ref(props.links);
     const newRes = props.spriteMode
       ? ref<WeightedSpriteSource | null>(null)

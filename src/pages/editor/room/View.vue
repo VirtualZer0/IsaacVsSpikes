@@ -1,14 +1,17 @@
 <template>
-  <div class="room-editor-general edit-form"></div>
+  <div class="room-editor-view edit-form">
+    <EditorRoomVisual :room="curRoom" />
+  </div>
 </template>
 
 <script lang="ts">
-import { Room } from "@/core/classes/game/Room";
-import { defineComponent, PropType, reactive } from "vue";
+import EditorRoomVisual from '@/components/editor/visual/EditorRoomVisual.vue';
+import { Room } from '@/core/classes/game/Room';
+import { defineComponent, PropType, reactive } from 'vue';
 
 export default defineComponent({
-  components: {},
-  name: "EditorRoomGeneral",
+  components: { EditorRoomVisual },
+  name: 'EditorRoomGeneral',
   props: {
     room: {
       type: Object as PropType<Room>,
@@ -27,4 +30,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.room-editor-view {
+  width: 100%;
+  min-height: 100%;
+  height: 1px;
+  padding: 0;
+}
+</style>

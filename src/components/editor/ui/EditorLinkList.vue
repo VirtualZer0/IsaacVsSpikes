@@ -18,13 +18,14 @@
 </template>
 
 <script lang="ts">
-import { ResourceLink } from "@/core/classes/base/ResourceLink";
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { defineComponent, PropType, reactive, ref } from "vue";
-import EditorLink from "./EditorLink.vue";
+import { ResourceLink } from '@/core/classes/base/ResourceLink';
+import { ResourceType } from '@/core/types/game/ResourceType';
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { defineComponent, PropType, ref } from 'vue';
+import EditorLink from './EditorLink.vue';
 
 export default defineComponent({
-  name: "EditorLinkList",
+  name: 'EditorLinkList',
   components: {
     EditorLink,
   },
@@ -35,7 +36,7 @@ export default defineComponent({
       default: () => [],
     },
     type: {
-      type: String,
+      type: String as PropType<ResourceType>,
       required: true,
     },
     spriteMode: {
@@ -45,7 +46,7 @@ export default defineComponent({
     },
   },
 
-  setup(props, { emit }) {
+  setup(props) {
     const curLinks = ref(props.links);
     const newRes = props.spriteMode
       ? ref<SpriteSource | null>(null)

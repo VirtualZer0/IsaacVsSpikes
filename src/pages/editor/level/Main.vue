@@ -20,19 +20,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useEditorStore } from "@/store/editor";
-import { Level } from "@/core/classes/game/Level";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import reactiveCopy from "@/core/helpers/reactiveCopy";
+import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useEditorStore } from '@/store/editor';
+import { Level } from '@/core/classes/game/Level';
+import { v4 as uuid } from 'uuid';
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/utils/reactiveCopy';
 
-import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
-import EditorResourceMenu from "@/components/editor/EditorResourceMenu.vue";
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
+import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
-  name: "EditorLevel",
+  name: 'EditorLevel',
   components: {
     EditorResourceTop,
     EditorResourceMenu,
@@ -44,10 +45,10 @@ export default defineComponent({
     const store = useMainStore();
     let level: Level;
 
-    if (route.params.id == "new") {
+    if (route.params.id == 'new') {
       level = new Level();
       level.id = uuid();
-      await editor.createResource("levels", level);
+      await editor.createResource(ResourceType.LEVEL, level);
       await router.replace(`/editor/levels/${level.id}`);
     }
 
@@ -57,8 +58,8 @@ export default defineComponent({
     );
 
     const saveLevel = async () => {
-      if (route.params.id != "new") {
-        await editor.updateResource("levels", level);
+      if (route.params.id != 'new') {
+        await editor.updateResource(ResourceType.LEVEL, level);
       }
 
       router.push(`/editor/list/levels`);

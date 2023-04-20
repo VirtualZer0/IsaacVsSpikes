@@ -72,8 +72,8 @@
 </template>
 
 <script lang="ts">
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { useMainStore } from "@/store/main";
+import { LocaleText } from '@/core/classes/base/LocaleText';
+import { useMainStore } from '@/store/main';
 import {
   defineComponent,
   PropType,
@@ -81,16 +81,16 @@ import {
   reactive,
   onBeforeUpdate,
   watch,
-} from "vue";
-import EditorCombobox from "./EditorCombobox.vue";
-import { QuillEditor, Quill } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { v4 as uuid } from "uuid";
+} from 'vue';
+import EditorCombobox from './EditorCombobox.vue';
+import { QuillEditor, Quill } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { v4 as uuid } from 'uuid';
 
 export default defineComponent({
   components: { EditorCombobox, QuillEditor },
-  name: "EditorLocaleMultiText",
-  emits: ["change"],
+  name: 'EditorLocaleMultiText',
+  emits: ['change'],
   props: {
     text: {
       type: Array as PropType<LocaleText[]>,
@@ -117,12 +117,12 @@ export default defineComponent({
     const textChange = (num: number) => {
       editors.value = editors.value.filter((item) => item);
       if (!editors.value[num]) {
-        console.log("Err", num, editors.value);
+        console.log('Err', num, editors.value);
         return;
       }
 
       copyText[num][currentLocale.value] = editors.value[num].getHTML();
-      emit("change", copyText);
+      emit('change', copyText);
     };
 
     const addBlock = () => {
@@ -155,7 +155,7 @@ export default defineComponent({
       }
 
       for (let i = 0; i < editors.value.length; i++) {
-        editors.value[i].setHTML(copyText[i][newVal] || "");
+        editors.value[i].setHTML(copyText[i][newVal] || '');
       }
     });
 

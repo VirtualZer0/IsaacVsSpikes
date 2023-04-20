@@ -4,6 +4,6 @@ export class MusicManager {
   musicElement: HTMLAudioElement;
 
   constructor(musicEl: string) {
-    this.musicElement = document.createElement("audio");
+    this.musicElement = document.createElement('audio');
   }
 }

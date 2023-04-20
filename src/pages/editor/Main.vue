@@ -12,21 +12,27 @@
 </template>
 
 <script lang="ts">
-import "../../assets/styles/editorui.scss";
-import { defineComponent } from "vue";
-import { useRoute } from "vue-router";
-import EditorSidebar from "@/components/editor/EditorSidebar.vue";
-import { useEditorStore } from "@/store/editor";
+import '../../assets/styles/editorui.scss';
+import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import EditorSidebar from '@/components/editor/EditorSidebar.vue';
+import { useEditorStore } from '@/store/editor';
 
 export default defineComponent({
-  name: "EditorScreen",
+  name: 'EditorScreen',
   components: {
     EditorSidebar,
   },
 
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const editor = useEditorStore();
+
+    if (!editor.isOpen) {
+      router.push('/editor');
+    }
+
     return { route, editor };
   },
 });
@@ -44,6 +50,8 @@ export default defineComponent({
 
   display: flex;
   gap: 1vw;
+  max-height: 100vh;
+  overflow: overlay;
 }
 
 .editor-child,

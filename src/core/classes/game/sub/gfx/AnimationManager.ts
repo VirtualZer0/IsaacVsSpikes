@@ -1,4 +1,4 @@
-import { SpriteController } from "./SpriteController";
+import { SpriteController } from './SpriteController';
 
 export class AnimationManager {
   spriteControllers: SpriteController[] = [];

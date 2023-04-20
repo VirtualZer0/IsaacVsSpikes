@@ -71,13 +71,13 @@
 </template>
 
 <script lang="ts">
-import { HeartContainerType } from "@/core/types/game/HeartContainerType";
-import { HeartType } from "@/core/types/game/HeartType";
-import { defineComponent, PropType } from "vue";
+import { HeartContainerType } from '@/core/types/game/HeartContainerType';
+import { HeartType } from '@/core/types/game/HeartType';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
-  name: "EditorHeartItem",
-  emits: ["select", "empty", "remove"],
+  name: 'EditorHeartItem',
+  emits: ['select', 'empty', 'remove'],
   props: {
     container: {
       type: Boolean,
@@ -116,29 +116,29 @@ export default defineComponent({
         case HeartType.HALF_RED:
         case HeartType.ADDITIONAL_RED:
         case HeartType.ADDITIONAL_HALF_RED:
-          return "red";
+          return 'red';
         case HeartType.BLUE:
         case HeartType.HALF_BLUE:
-          return "blue";
+          return 'blue';
         case HeartType.BLACK:
         case HeartType.HALF_BLACK:
-          return "black";
+          return 'black';
         case HeartType.GOLDEN:
         case HeartType.ADDITIONAL_GOLDEN:
-          return "golden";
+          return 'golden';
         case HeartType.WHITE:
         case HeartType.ADDITIONAL_WHITE:
-          return "white";
+          return 'white';
         case HeartType.ROTTEN:
         case HeartType.ADDITIONAL_ROTTEN:
-          return "rotten";
+          return 'rotten';
         default:
-          return "";
+          return '';
       }
     };
 
     const getHalf = () => {
-      if (props.type?.includes("half") || props.type?.includes("white")) {
+      if (props.type?.includes('half') || props.type?.includes('white')) {
         return true;
       }
 
@@ -146,7 +146,7 @@ export default defineComponent({
     };
 
     const getAdditional = () => {
-      if (props.type?.includes("additional")) {
+      if (props.type?.includes('additional')) {
         return true;
       }
 

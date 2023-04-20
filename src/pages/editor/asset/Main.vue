@@ -15,23 +15,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from "vue";
+import { defineComponent, Ref, ref } from 'vue';
 
-import { useRoute, useRouter } from "vue-router";
-import { useEditorStore } from "@/store/editor";
-import { Asset } from "@/core/classes/game/Asset";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import reactiveCopy from "@/core/helpers/reactiveCopy";
-import { restoreClass } from "@/core/helpers/restoreClass";
+import { useRoute, useRouter } from 'vue-router';
+import { useEditorStore } from '@/store/editor';
+import { Asset } from '@/core/classes/game/Asset';
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/utils/reactiveCopy';
+import { restoreClass } from '@/core/utils/restoreClass';
 
-import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
-import EditorFileDrop from "@/components/editor/ui/EditorFileDrop.vue";
-import EditorAssetGeneral from "@/pages/editor/asset/General.vue";
-import { FSAccessFile } from "@/utils/uniFS/FSAccess/FSAccessFile";
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
+import EditorFileDrop from '@/components/editor/ui/EditorFileDrop.vue';
+import EditorAssetGeneral from '@/pages/editor/asset/General.vue';
+import { FSAccessFile } from '@/utils/uniFS/FSAccess/FSAccessFile';
 
 export default defineComponent({
-  name: "EditorAsset",
+  name: 'EditorAsset',
   components: {
     EditorResourceTop,
     EditorFileDrop,
@@ -42,10 +41,9 @@ export default defineComponent({
     const router = useRouter();
     const editor = useEditorStore();
     const store = useMainStore();
-    let asset: Ref<Asset | null>;
 
-    asset = ref(
-      route.params.id != "new"
+    const asset: Ref<Asset | null> = ref(
+      route.params.id != 'new'
         ? reactiveCopy<Asset>(
             editor.assets.get(route.params.id as string),
             new Asset()
@@ -64,7 +62,7 @@ export default defineComponent({
     };
 
     const saveAsset = async () => {
-      if (route.params.id != "new" && asset) {
+      if (route.params.id != 'new' && asset) {
         editor.$patch(() => {
           if (!asset.value) {
             return;

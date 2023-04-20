@@ -1,32 +1,36 @@
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { Resource } from "../base/Resource";
-import { LocaleText } from "../base/LocaleText";
-import { MonsterEffect } from "./sub/MonsterEffect";
-import { ResourceLink } from "../base/ResourceLink";
-import { useEditorStore } from "@/store/editor";
-import { library } from "@/core/Core";
-import { MonsterAnimation } from "./sub/monster/MonsterAnimation";
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { LocaleText } from '../base/LocaleText';
+import { ResourceLink } from '../base/ResourceLink';
+import { useEditorStore } from '@/store/editor';
+import { SpriteAnimation } from './sub/gfx/SpriteAnimation';
+import { Entity } from '../base/Entity';
+import { EntityType } from '@/core/types/game/EntityType';
 
-export class Monster extends Resource {
-  /** Анимации */
-  animations: MonsterAnimation = new MonsterAnimation();
+export class Monster extends Entity {
+  type = EntityType.MONSTER;
 
   /** Описание монстра */
   desc: LocaleText = {};
 
-  /** Визуальные эффекты монстра */
-  effects: MonsterEffect[] = [];
+  /** Теги монстра */
+  tags = ['monster'];
+
+  constructor() {
+    super();
+    const anim = new SpriteAnimation();
+    anim.name = 'idle';
+    this.animations.push(anim);
+  }
 
   override getPreview(): Promise<string> {
     if (
-      this.animations?.idle?.spritesheet &&
-      "src" in this.animations.idle.spritesheet
+      this.animations[0]?.spritesheet &&
+      'src' in this.animations[0]?.spritesheet
     ) {
-      const sprite = this.animations.idle.spritesheet as SpriteSource;
+      const sprite = this.animations[0].spritesheet;
 
-      if (typeof sprite.src !== "string") {
-        const resLink = (this.animations.idle.spritesheet as SpriteSource)
-          .src as ResourceLink;
+      if (typeof sprite.src !== 'string') {
+        const resLink = this.animations[0].spritesheet.src as ResourceLink;
         const editor = useEditorStore();
 
         const res = editor.assets.get(resLink.id);
@@ -39,7 +43,7 @@ export class Monster extends Resource {
       } else {
         return Promise.resolve(
           `<img lazy src="/assets/${
-            (this.animations.idle.spritesheet as SpriteSource).src
+            (this.animations[0].spritesheet as SpriteSource).src
           }"/>`
         );
       }

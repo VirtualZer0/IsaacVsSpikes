@@ -1,39 +1,44 @@
-import { Resource } from "@/core/classes/base/Resource";
-import { Item } from "@/core/classes/game/Item";
-import { Level } from "@/core/classes/game/Level";
-import { Monster } from "@/core/classes/game/Monster";
-import { Room } from "@/core/classes/game/Room";
-import IBaseFS from "@/utils/uniFS/IBaseFS";
+import { Resource } from '@/core/classes/base/Resource';
+import { Item } from '@/core/classes/game/Item';
+import { Level } from '@/core/classes/game/Level';
+import { Monster } from '@/core/classes/game/Monster';
+import { Room } from '@/core/classes/game/Room';
+import IBaseFS from '@/utils/uniFS/IBaseFS';
 
-import { v4 as uuid } from "uuid";
-import { acceptHMRUpdate, defineStore } from "pinia";
-import { createFS } from "@/utils/uniFS/createFS";
-import { Asset } from "@/core/classes/game/Asset";
+import { v4 as uuid } from 'uuid';
+import { acceptHMRUpdate, defineStore } from 'pinia';
+import { createFS } from '@/utils/uniFS/createFS';
+import { Asset } from '@/core/classes/game/Asset';
 
-import { restoreClass } from "@/core/helpers/restoreClass";
-import { restoreEvents } from "@/core/helpers/restoreEvents";
-import { DoorDesc } from "@/core/classes/game/DoorDesc";
-import { runMigration } from "@/core/helpers/migrateProject";
+import { restoreClass } from '@/core/utils/restoreClass';
+import { restoreEvents } from '@/core/utils/restoreEvents';
+import { DoorDesc } from '@/core/classes/game/DoorDesc';
+import { runMigration } from '@/core/utils/migrateProject';
+import { fancyLog } from '@/core/utils/fancyLog';
+import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { EntityObject } from '@/core/classes/game/EntityObject';
+import { ResourceType } from '@/core/types/game/ResourceType';
+import { AssetType } from '@/core/types/game/AssetType';
 
 /** Текущая версия проекта */
-const CURRENT_VERSION = 4;
+const CURRENT_VERSION = 6;
 
 /** Хранилище редактора контента */
-export const useEditorStore = defineStore("editor", {
+export const useEditorStore = defineStore('editor', {
   state: () => ({
     fs: null as Nullable<IBaseFS>,
-    name: "",
-    dir: "",
-    uuid: "",
+    name: '',
+    dir: '',
+    uuid: '',
     version: CURRENT_VERSION,
 
     isOpen: false,
-    bosses: new Map<string, Resource>(),
     characters: new Map<string, Resource>(),
     items: new Map<string, Item>(),
     levels: new Map<string, Level>(),
     monsters: new Map<string, Monster>(),
-    objects: new Map<string, Resource>(),
+    objects: new Map<string, EntityObject>(),
     assets: new Map<string, Asset>(),
     rooms: new Map<string, Room>(),
     scripts: new Map<string, Resource>(),
@@ -50,7 +55,7 @@ export const useEditorStore = defineStore("editor", {
       const fs = this.fs as IBaseFS;
 
       if (!fs) {
-        throw "FS not available";
+        throw 'FS not available';
       }
 
       await fs.createDirectory(dir);
@@ -61,17 +66,11 @@ export const useEditorStore = defineStore("editor", {
       this.uuid = uuid();
 
       await Promise.all([
-        fs.createDirectory("levels"),
-        fs.createDirectory("rooms"),
-        fs.createDirectory("monsters"),
-        fs.createDirectory("bosses"),
-        fs.createDirectory("objects"),
-        fs.createDirectory("items"),
-        fs.createDirectory("characters"),
-        fs.createDirectory("scripts"),
-        fs.createDirectory("doorDescs"),
+        ...Object.values(ResourceType).map((v) => {
+          return fs.createDirectory(v.toString());
+        }),
         (
-          await fs.createFile("project.json")
+          await fs.createFile('project.json')
         ).writeAllText(
           JSON.stringify({
             name,
@@ -81,16 +80,12 @@ export const useEditorStore = defineStore("editor", {
         ),
       ]);
 
-      const assets = await fs.createDirectory("assets");
+      const assets = await fs.createDirectory('assets');
       await Promise.all([
-        (await assets.createFile("index.json")).writeAllText("[]"),
-        assets.createDirectory("images"),
-        assets.createDirectory("audio"),
-        assets.createDirectory("video"),
-        assets.createDirectory("fonts"),
-        assets.createDirectory("scripts"),
-        assets.createDirectory("json"),
-        assets.createDirectory("other"),
+        (await assets.createFile('index.json')).writeAllText('[]'),
+        ...Object.values(AssetType).map((v) => {
+          return fs.createDirectory(v.toString());
+        }),
       ]);
 
       setTimeout(() => {
@@ -105,7 +100,7 @@ export const useEditorStore = defineStore("editor", {
       await fs.init();
 
       const meta = JSON.parse(
-        await (await fs.getFile("project.json")).readAllText()
+        await (await fs.getFile('project.json')).readAllText()
       );
 
       this.name = meta.name;
@@ -118,8 +113,8 @@ export const useEditorStore = defineStore("editor", {
       }
 
       (await fs.getDirectories()).forEach(async (dir) => {
-        if (dir.name === "assets") {
-          const index = await dir.getFile("index.json");
+        if (dir.name === 'assets') {
+          const index = await dir.getFile('index.json');
           const assets = JSON.parse(await index.readAllText());
           assets.forEach(async (asset: Asset) => {
             const restoredAsset = restoreClass<Asset>(asset, Asset);
@@ -135,31 +130,31 @@ export const useEditorStore = defineStore("editor", {
 
           // Восстановление классов, поскольку из JSON'a мы получаем только данные
           switch (dir.name) {
-            case "levels":
+            case 'levels':
               res = restoreClass<Level>(await file.readAllText(), Level);
               break;
-            case "rooms":
+            case 'rooms':
               res = restoreClass<Room>(await file.readAllText(), Room);
               break;
-            case "monsters":
+            case 'monsters':
               res = restoreClass<Monster>(await file.readAllText(), Monster);
               break;
-            case "bosses":
-              res = restoreClass<Resource>(await file.readAllText(), Resource);
+            case 'objects':
+              res = restoreClass<EntityObject>(
+                await file.readAllText(),
+                EntityObject
+              );
               break;
-            case "objects":
-              res = restoreClass<Resource>(await file.readAllText(), Resource);
-              break;
-            case "items":
+            case 'items':
               res = restoreClass<Item>(await file.readAllText(), Item);
               break;
-            case "characters":
+            case 'characters':
               res = restoreClass<Resource>(await file.readAllText(), Resource);
               break;
-            case "scripts":
+            case 'scripts':
               res = restoreClass<Resource>(await file.readAllText(), Resource);
               break;
-            case "doorDescs":
+            case 'doorDescs':
               res = restoreClass<DoorDesc>(await file.readAllText(), DoorDesc);
               break;
             default:
@@ -172,18 +167,28 @@ export const useEditorStore = defineStore("editor", {
 
         (this as unknown as Indexable<Map<string, Resource>>)[dir.name] = data;
 
-        console.log(
-          "%cEditor",
-          "background-color: #9E9E9E; color: #333; border-radius: 100px;padding: 1px 4px",
-          `Loaded ${data.size} ${dir.name}`
-        );
+        setTimeout(() => {
+          fancyLog(
+            'log',
+            'Editor',
+            `Loaded ${data.size} ${dir.name}`,
+            '#9E9E9E'
+          );
+        }, 150);
       });
 
       setTimeout(() => {
         this.isOpen = true;
-        // Восстановление классов ивентов
+        // Восстановление классов событий и сущностей
         this.rooms.forEach((room) => {
           room.events = restoreEvents(room.events);
+          room.scenes = room.scenes.map((scene) => {
+            const curScene = restoreClass<RoomScene>(scene, RoomScene);
+            curScene.entities = curScene.entities.map((entity) =>
+              restoreClass<EntityInstance>(entity, EntityInstance)
+            );
+            return curScene;
+          });
         });
       }, 150);
     },
@@ -193,7 +198,7 @@ export const useEditorStore = defineStore("editor", {
      * @param type - Тип ресурса
      * @param resource - Ресурс для сохранения
      */
-    async createResource(type: string, resource: Resource) {
+    async createResource(type: ResourceType, resource: Resource) {
       const state = this as unknown as Indexable<Map<string, Resource>>;
       state[type].set(resource.id, resource);
       return await this.saveResource(type, resource.id);
@@ -204,7 +209,7 @@ export const useEditorStore = defineStore("editor", {
      * @param id - Идентификатор ресурса
      * @param type - Тип ресурса
      */
-    async deleteResource(type: string, id: string) {
+    async deleteResource(type: ResourceType, id: string) {
       const fs = this.fs as IBaseFS;
       const dir = await fs.getDirectory(type);
       const file = await dir.getFile(`${id}.json`);
@@ -217,7 +222,7 @@ export const useEditorStore = defineStore("editor", {
      * @param type - Тип ресурса
      * @param resource - Ресурс для обновления
      */
-    async updateResource(type: string, resource: Resource) {
+    async updateResource(type: ResourceType, resource: Resource) {
       (this as unknown as Indexable<Map<string, Resource>>)[type].set(
         resource.id,
         resource
@@ -231,18 +236,13 @@ export const useEditorStore = defineStore("editor", {
      * @param type - Тип ресурса
      * @returns Файл с сохраненным ресурсом
      */
-    async saveResource(type: string, id: string) {
+    async saveResource(type: ResourceType, id: string) {
       const state = this as unknown as Indexable<Map<string, Resource>>;
       const res = state[type].get(id);
       const fs = this.fs as IBaseFS;
       const dir = await fs.getDirectory(type);
       const file = await dir.createFile(`${id}.json`);
-      console.log(
-        "%cEditor",
-        "background-color: #9E9E9E; color: #333; border-radius: 100px;padding: 1px 4px",
-        `Saving ${id} to ${type}`,
-        res
-      );
+      fancyLog('log', 'Editor', [`Saving ${id} to ${type}`, res], '#9E9E9E');
       await file.writeAllText(JSON.stringify(res));
 
       return file;
@@ -262,12 +262,11 @@ export const useEditorStore = defineStore("editor", {
 
       delete assetCopy.file;
 
-      const assetsDir = await fs.getDirectory("assets");
+      const assetsDir = await fs.getDirectory('assets');
 
       const indexCopy: Asset[] = [];
       this.assets.forEach((asset) => {
         const assetCopy = JSON.parse(JSON.stringify(asset));
-        delete assetCopy.file;
         indexCopy.push(assetCopy);
       });
 
@@ -282,7 +281,7 @@ export const useEditorStore = defineStore("editor", {
      */
     async deleteAsset(asset: Asset) {
       const fs = this.fs as IBaseFS;
-      const assetsDir = await fs.getDirectory("assets");
+      const assetsDir = await fs.getDirectory('assets');
       const targetDir = await assetsDir.getDirectory(asset.type);
       await targetDir.deleteFile(`${asset.id}.${asset.extension}`);
       this.assets.delete(asset.id);
@@ -302,6 +301,9 @@ export const useEditorStore = defineStore("editor", {
 });
 
 const meta = import.meta as any;
-if (meta.hot) meta.hot.accept(acceptHMRUpdate(useEditorStore, meta.hot));
+if (meta.hot)
+  meta.hot.accept((acceptHMRUpdate as any)(useEditorStore, meta.hot));
 if (meta.webpackHot)
-  meta.webpackHot.accept(acceptHMRUpdate(useEditorStore, meta.webpackHot));
+  meta.webpackHot.accept(
+    (acceptHMRUpdate as any)(useEditorStore, meta.webpackHot)
+  );

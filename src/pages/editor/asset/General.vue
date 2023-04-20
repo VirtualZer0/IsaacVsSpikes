@@ -54,17 +54,17 @@
 </template>
 
 <script lang="ts">
-import EditorResPreview from "@/components/editor/ui/EditorResPreview.vue";
-import EditorLocaleInput from "@/components/editor/ui/EditorLocaleInput.vue";
-import EditorTagList from "@/components/editor/ui/EditorTagList.vue";
-import { Asset } from "@/core/classes/game/Asset";
-import { defineComponent, PropType, ref } from "vue";
-import { restoreClass } from "@/core/helpers/restoreClass";
-import { FSAccessFile } from "@/utils/uniFS/FSAccess/FSAccessFile";
+import EditorResPreview from '@/components/editor/ui/EditorResPreview.vue';
+import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
+import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
+import { Asset } from '@/core/classes/game/Asset';
+import { defineComponent, PropType, ref } from 'vue';
+import { restoreClass } from '@/core/utils/restoreClass';
+import { FSAccessFile } from '@/utils/uniFS/FSAccess/FSAccessFile';
 
 export default defineComponent({
   components: { EditorLocaleInput, EditorResPreview, EditorTagList },
-  name: "EditorAssetGeneral",
+  name: 'EditorAssetGeneral',
   props: {
     asset: {
       type: Object as PropType<Asset>,

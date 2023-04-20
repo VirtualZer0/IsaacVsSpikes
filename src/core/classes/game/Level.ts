@@ -1,12 +1,10 @@
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { Resource } from "../base/Resource";
-import { LocaleText } from "../base/LocaleText";
-import { Room } from "./Room";
-import { Asset } from "./Asset";
-import { LevelGenSystemType } from "./sub/level/LevelGenSystemType";
-import { RoomRuleGen } from "./sub/room/RoomRuleGen";
-import { ResourceLink } from "../base/ResourceLink";
-import { RoomType } from "../../types/game/RoomType";
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { Resource } from '../base/Resource';
+import { LocaleText } from '../base/LocaleText';
+import { LevelGenSystemType } from './sub/level/LevelGenSystemType';
+import { RoomRuleGen } from './sub/room/RoomRuleGen';
+import { ResourceLink } from '../base/ResourceLink';
+import { RoomType } from '../../types/game/RoomType';
 
 export class Level extends Resource {
   /** Описание уровня */

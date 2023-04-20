@@ -20,7 +20,7 @@
         v-if="includeBuiltin && (library as any)[resource]"
       >
         <div class="group">
-          <div class="group-title">{{ $t("editor.builtin") }}</div>
+          <div class="group-title">{{ $t('editor.builtin') }}</div>
         </div>
         <div
           class="eui card shadow-l1 item"
@@ -54,7 +54,7 @@
       <!-- Пользовательские ресурсы -->
       <div class="eui items">
         <div class="group" v-if="includeBuiltin">
-          <div class="group-title">{{ $t("editor.custom") }}</div>
+          <div class="group-title">{{ $t('editor.custom') }}</div>
         </div>
         <div
           class="eui card shadow-l1 item"
@@ -135,26 +135,30 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from "vue";
-import { useEditorStore } from "@/store/editor";
-import { useRoute, useRouter } from "vue-router";
-import { defineComponent } from "vue";
-import { Resource } from "@/core/classes/base/Resource";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import { Asset } from "@/core/classes/game/Asset";
-import { restoreClass } from "@/core/helpers/restoreClass";
-import { Level } from "@/core/classes/game/Level";
-import { Room } from "@/core/classes/game/Room";
-import { Item } from "@/core/classes/game/Item";
+import { ref, computed, PropType } from 'vue';
+import { useEditorStore } from '@/store/editor';
+import { useRoute, useRouter } from 'vue-router';
+import { defineComponent } from 'vue';
+import { Resource } from '@/core/classes/base/Resource';
+import { v4 as uuid } from 'uuid';
+import { useMainStore } from '@/store/main';
+import { Asset } from '@/core/classes/game/Asset';
+import { restoreClass } from '@/core/utils/restoreClass';
+import { Level } from '@/core/classes/game/Level';
+import { Room } from '@/core/classes/game/Room';
+import { Item } from '@/core/classes/game/Item';
 
-import EditorResPreview from "@/components/editor/ui/EditorResPreview.vue";
+import EditorResPreview from '@/components/editor/ui/EditorResPreview.vue';
 
-import { library } from "@/core/Core";
-import { restoreEvents } from "@/core/helpers/restoreEvents";
+import { library } from '@/core/Core';
+import { restoreEvents } from '@/core/utils/restoreEvents';
+import { ResourceType } from '@/core/types/game/ResourceType';
+import { ResourceCollectionType } from '@/core/types/game/ResourceCollectionType';
+import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
 
 export default defineComponent({
-  name: "EditorResourcesListScreen",
+  name: 'EditorResourcesListScreen',
   props: {
     modal: {
       type: Boolean,
@@ -169,24 +173,30 @@ export default defineComponent({
       default: false,
     },
     resourceType: {
-      type: String,
-      default: "",
+      type: String as PropType<ResourceType>,
+      default: '',
     },
   },
   components: {
     EditorResPreview,
   },
-  emits: ["select"],
+  emits: ['select'],
   setup(props, { emit }) {
     const editor = useEditorStore();
     const store = useMainStore();
     const route = useRoute();
     const router = useRouter();
-    const resource = props.resourceType || (route.params.resource as string);
-    const items = (editor as unknown as Indexable<Map<string, Resource>>)[
-      resource
-    ] as Map<string, Resource>;
-    const filter = ref("");
+    const resource: ResourceType =
+      props.resourceType || (route.params.resource as ResourceType);
+    const items = computed(() =>
+      library.getResourcesByType<Resource>(
+        resource,
+        props.includeBuiltin
+          ? ResourceCollectionType.ALL
+          : ResourceCollectionType.CUSTOM
+      )
+    );
+    const filter = ref('');
 
     const duplicateResource = async (res: Resource) => {
       let duplicatedItem = JSON.parse(JSON.stringify(res));
@@ -194,19 +204,28 @@ export default defineComponent({
 
       // Восстановление класса копии
       switch (resource) {
-        case "levels":
+        case ResourceType.LEVEL:
           duplicatedItem = restoreClass<Level>(duplicatedItem, Level);
           break;
-        case "rooms": {
-          // Для комнаты дополнительно копируем ноды
+        case ResourceType.ROOM: {
+          // Для комнаты дополнительно копируем ноды и энтити
           duplicatedItem = restoreClass<Room>(duplicatedItem, Room);
           duplicatedItem.events = restoreEvents(duplicatedItem.events);
+          duplicatedItem.scenes = duplicatedItem.scenes.map(
+            (scene: RoomScene) => {
+              const curScene = restoreClass<RoomScene>(scene, RoomScene);
+              curScene.entities = curScene.entities.map((entity) =>
+                restoreClass<EntityInstance>(entity, EntityInstance)
+              );
+              return curScene;
+            }
+          );
           break;
         }
-        case "items":
+        case ResourceType.ITEM:
           duplicatedItem = restoreClass<Item>(duplicatedItem, Item);
           break;
-        case "assets":
+        case ResourceType.ASSET:
           duplicatedItem = restoreClass<Asset>(duplicatedItem, Asset);
           break;
         default:
@@ -218,7 +237,7 @@ export default defineComponent({
     };
 
     const deleteResource = async (res: Resource) => {
-      if (resource != "assets") {
+      if (resource != 'assets') {
         await editor.deleteResource(resource, res.id);
       } else {
         await editor.deleteAsset(res as Asset);
@@ -229,11 +248,11 @@ export default defineComponent({
       let filtered: Map<string, Resource> = new Map();
 
       if (filter.value) {
-        for (const [id, res] of items) {
+        for (const [id, res] of items.value) {
           res.isMatch(filter.value) && filtered.set(id, res);
         }
       } else {
-        filtered = items;
+        filtered = items.value;
       }
 
       return new Map(

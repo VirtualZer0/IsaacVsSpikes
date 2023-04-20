@@ -56,7 +56,7 @@
         :res="curLevel.musicStart"
         @select="curLevel.musicStart = $event"
         @remove="curLevel.musicStart = null"
-        type="assets"
+        :type="ResourceType.ASSET"
       />
     </div>
 
@@ -66,20 +66,21 @@
         :res="curLevel.musicLoop"
         @select="curLevel.musicLoop = $event"
         @remove="curLevel.musicLoop = null"
-        type="assets"
+        :type="ResourceType.ASSET"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import EditorLocaleInput from "@/components/editor/ui/EditorLocaleInput.vue";
-import { Level } from "@/core/classes/game/Level";
-import { defineComponent, PropType, ref } from "vue";
-import EditorLocaleText from "@/components/editor/ui/EditorLocaleText.vue";
-import EditorCheckbox from "@/components/editor/ui/EditorCheckbox.vue";
-import EditorLink from "@/components/editor/ui/EditorLink.vue";
-import EditorTagList from "@/components/editor/ui/EditorTagList.vue";
+import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
+import { Level } from '@/core/classes/game/Level';
+import { defineComponent, PropType, ref } from 'vue';
+import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
+import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';
+import EditorLink from '@/components/editor/ui/EditorLink.vue';
+import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
   components: {
@@ -89,7 +90,7 @@ export default defineComponent({
     EditorLink,
     EditorTagList,
   },
-  name: "EditorLevelGeneral",
+  name: 'EditorLevelGeneral',
   props: {
     level: {
       type: Object as PropType<Level>,
@@ -103,6 +104,7 @@ export default defineComponent({
     return {
       emit,
       curLevel,
+      ResourceType,
     };
   },
 });

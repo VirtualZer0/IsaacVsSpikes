@@ -1,11 +1,10 @@
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { Resource } from "../base/Resource";
-import { LocaleText } from "../base/LocaleText";
-import { Monster } from "./Monster";
-import { RoomDrop } from "./sub/room/RoomDrop";
-import { RoomEvent } from "./sub/room/RoomEvent";
-import { ResourceLink, WeightedResourceLink } from "../base/ResourceLink";
-import { RoomType } from "../../types/game/RoomType";
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { Resource } from '../base/Resource';
+import { LocaleText } from '../base/LocaleText';
+import { RoomEvent } from './sub/room/RoomEvent';
+import { ResourceLink, WeightedResourceLink } from '../base/ResourceLink';
+import { RoomType } from '../../types/game/RoomType';
+import { RoomScene } from './sub/room/RoomScene';
 
 export class Room extends Resource {
   /** Шанс появления комнаты */
@@ -32,8 +31,8 @@ export class Room extends Resource {
   /** Привязанный уровень */
   level: ResourceLink | null = null;
 
-  /** Монстры в комнате */
-  monsters: Monster[] = [];
+  /** Сцены комнаты */
+  scenes: RoomScene[] = [new RoomScene()];
 
   /** События в комнате */
   events: RoomEvent[] = [];

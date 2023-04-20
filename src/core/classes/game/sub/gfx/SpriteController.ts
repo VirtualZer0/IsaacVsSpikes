@@ -1,6 +1,6 @@
-import { AnimationState } from "@/core/types/gfx/AnimationState";
-import { AnimationManager } from "./AnimationManager";
-import { SpriteAnimation } from "./SpriteAnimation";
+import { AnimationState } from '@/core/types/gfx/AnimationState';
+import { AnimationManager } from './AnimationManager';
+import { SpriteAnimation } from './SpriteAnimation';
 
 export class SpriteController {
   source: SpriteAnimation;
@@ -13,14 +13,6 @@ export class SpriteController {
 
   public constructor(source: SpriteAnimation) {
     this.source = source;
-  }
-
-  public attachElement(el: HTMLElement) {
-    this.el = el;
-    this.el.style.height = this.source.frameHeight + "px";
-    this.el.style.width = this.source.frameWidth + "px";
-    this.el.style.backgroundPosition = "0 0";
-    this.el.style.backgroundSize = this.source.count * 100 + "%";
   }
 
   public bindManager(manager: AnimationManager) {

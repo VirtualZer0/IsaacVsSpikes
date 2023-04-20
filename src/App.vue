@@ -2,9 +2,7 @@
   <router-view />
 </template>
 
-<script lang="ts" setup>
-import createI18n from "./i18n";
-</script>
+<script lang="ts" setup></script>
 
 <style lang="scss">
 * {

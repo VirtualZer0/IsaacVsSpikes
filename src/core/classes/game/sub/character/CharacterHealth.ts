@@ -1,5 +1,5 @@
-import { HeartContainerType } from "@/core/types/game/HeartContainerType";
-import { HeartType } from "@/core/types/game/HeartType";
+import { HeartContainerType } from '@/core/types/game/HeartContainerType';
+import { HeartType } from '@/core/types/game/HeartType';
 
 export class CharacterHearts {
   /** Контейнеры */

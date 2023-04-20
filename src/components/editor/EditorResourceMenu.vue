@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from 'vue';
 export default defineComponent({
-  name: "EditorResourceMenu",
-  emits: ["select"],
+  name: 'EditorResourceMenu',
+  emits: ['select'],
   props: {
     items: {
       type: Array as PropType<{ name: string; value: string }[]>,
@@ -29,10 +29,10 @@ export default defineComponent({
 
     const select = (index: number) => {
       selected.value = index;
-      emit("select", props.items[index]);
+      emit('select', props.items[index]);
     };
 
-    emit("select", props.items[selected.value]);
+    emit('select', props.items[selected.value]);
 
     return {
       selected,

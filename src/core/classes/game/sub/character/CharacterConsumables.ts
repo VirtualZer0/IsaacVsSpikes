@@ -1,7 +1,7 @@
 import {
   ICharacterPropsBoolean,
   ICharacterPropsRange,
-} from "./ICharacterRangeProps";
+} from './ICharacterRangeProps';
 
 export class CharacterConsumables {
   coins = 0;
@@ -15,41 +15,41 @@ export class CharacterConsumables {
 
 export class CharacterConsumablesCheckData {
   coins: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   keys: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   bombs: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   blueFriends: ICharacterPropsRange = {
-    type: "number",
+    type: 'number',
     enabled: false,
     from: 0,
     to: 0,
   };
 
   goldenKey: ICharacterPropsBoolean = {
-    type: "boolean",
+    type: 'boolean',
     enabled: false,
     value: false,
   };
 
   goldenBomb: ICharacterPropsBoolean = {
-    type: "boolean",
+    type: 'boolean',
     enabled: false,
     value: false,
   };

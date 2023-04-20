@@ -19,15 +19,15 @@
 </template>
 
 <script lang="ts">
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { useMainStore } from "@/store/main";
-import { defineComponent, PropType, ref, reactive, computed } from "vue";
-import EditorCombobox from "./EditorCombobox.vue";
+import { LocaleText } from '@/core/classes/base/LocaleText';
+import { useMainStore } from '@/store/main';
+import { defineComponent, PropType, ref, reactive, computed } from 'vue';
+import EditorCombobox from './EditorCombobox.vue';
 
 export default defineComponent({
   components: { EditorCombobox },
-  name: "EditorLocaleInput",
-  emits: ["change"],
+  name: 'EditorLocaleInput',
+  emits: ['change'],
   props: {
     text: {
       type: Object as PropType<LocaleText>,
@@ -44,7 +44,7 @@ export default defineComponent({
     const copyText = reactive<LocaleText>(props.text);
 
     const currentText = computed(() => {
-      return copyText[currentLocale.value] || "";
+      return copyText[currentLocale.value] || '';
     });
 
     return {

@@ -5,13 +5,13 @@
 </template>
 
 <script lang="ts">
-import { Room } from "@/core/classes/game/Room";
-import { defineComponent, PropType } from "vue";
+import { Room } from '@/core/classes/game/Room';
+import { defineComponent, PropType } from 'vue';
 
-import EventsGraph from "@/components/editor/events/EventsGraph.vue";
+import EventsGraph from '@/components/editor/events/EventsGraph.vue';
 
 export default defineComponent({
-  name: "EditorRoomScenaries",
+  name: 'EditorRoomScenaries',
   components: {
     EventsGraph,
   },

@@ -27,7 +27,7 @@
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.level`) }}</label>
       <editor-link
-        type="levels"
+        :type="ResourceType.LEVEL"
         :res="curRoom.level"
         @select="curRoom.level = $event"
         @remove="curRoom.level = null"
@@ -70,7 +70,7 @@
       <div class="vertical-line">
         <label class="eui label">{{ $t(`editor.background`) }}</label>
         <editor-link-list
-          type="assets"
+          :type="ResourceType.ASSET"
           :links="curRoom.background"
           spriteMode
         />
@@ -78,24 +78,29 @@
       <div class="vertical-split" />
       <div class="vertical-line">
         <label class="eui label">{{ $t(`editor.overlay`) }}</label>
-        <editor-link-list type="assets" :links="curRoom.overlay" spriteMode />
+        <editor-link-list
+          :type="ResourceType.ASSET"
+          :links="curRoom.overlay"
+          spriteMode
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import EditorLocaleInput from "@/components/editor/ui/EditorLocaleInput.vue";
-import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
-import { Room } from "@/core/classes/game/Room";
-import { computed, defineComponent, PropType, reactive } from "vue";
-import EditorLinkList from "@/components/editor/ui/EditorLinkList.vue";
-import EditorLink from "@/components/editor/ui/EditorLink.vue";
-import EditorTagList from "@/components/editor/ui/EditorTagList.vue";
-import EditorCombobox from "@/components/editor/ui/EditorCombobox.vue";
-import { RoomType } from "@/core/types/game/RoomType";
-import i18n from "@/i18n";
-import EditorWeightedLinkList from "@/components/editor/ui/EditorWeightedLinkList.vue";
+import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
+import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
+import { Room } from '@/core/classes/game/Room';
+import { computed, defineComponent, PropType, reactive } from 'vue';
+import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
+import EditorLink from '@/components/editor/ui/EditorLink.vue';
+import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
+import EditorCombobox from '@/components/editor/ui/EditorCombobox.vue';
+import { RoomType } from '@/core/types/game/RoomType';
+import i18n from '@/i18n';
+import EditorWeightedLinkList from '@/components/editor/ui/EditorWeightedLinkList.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
   components: {
@@ -107,7 +112,7 @@ export default defineComponent({
     EditorCombobox,
     EditorWeightedLinkList,
   },
-  name: "EditorRoomGeneral",
+  name: 'EditorRoomGeneral',
   props: {
     room: {
       type: Object as PropType<Room>,
@@ -133,6 +138,7 @@ export default defineComponent({
       curRoom,
       roomTypes,
       emit,
+      ResourceType,
     };
   },
 });

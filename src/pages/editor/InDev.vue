@@ -1,16 +1,16 @@
 <template>
   <div class="editor editor-indev">
     <div class="eui card shadow-l2">
-      <div class="title">{{ $t("editor.indev") }}</div>
+      <div class="title">{{ $t('editor.indev') }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "EditorInDevScreen",
+  name: 'EditorInDevScreen',
 });
 </script>
 

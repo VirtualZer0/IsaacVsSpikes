@@ -1,7 +1,7 @@
-import { ItemPool } from "@/core/types/game/ItemPool";
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { Resource } from "../base/Resource";
-import { LocaleText } from "../base/LocaleText";
+import { ItemPool } from '@/core/types/game/ItemPool';
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { Resource } from '../base/Resource';
+import { LocaleText } from '../base/LocaleText';
 
 export class Item extends Resource {
   /** Открыт-ли предмет */
@@ -26,7 +26,7 @@ export class Item extends Resource {
   onRoomChange?: Nullable<() => void> = null;
 
   override getPreview(): Promise<string> {
-    if (this.sprite && "src" in this.sprite) {
+    if (this.sprite && 'src' in this.sprite) {
       return Promise.resolve(
         `<img lazy src="/assets/${(this.sprite as SpriteSource).src}"/>`
       );

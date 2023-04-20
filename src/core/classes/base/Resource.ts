@@ -1,9 +1,7 @@
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { LocaleText } from "./LocaleText";
-import { ResourceFilter } from "./ResourceFilter";
+import { LocaleText } from './LocaleText';
+import { ResourceFilter } from './ResourceFilter';
 
-import { useMainStore } from "@/store/main";
-import { NIL as nilUUid } from "uuid";
+import { NIL as nilUUid } from 'uuid';
 
 /** Базовый класс ресурса */
 export class Resource {
@@ -13,24 +11,24 @@ export class Resource {
   name: LocaleText = {};
 
   /** Примечание */
-  note = "";
+  note = '';
 
   /** Теги ресурса */
   tags: string[] = [];
 
   /** Получить превью ресурса */
   async getPreview(): Promise<string> {
-    return "";
+    return '';
   }
 
   /** Получить отображаемое имя ресурса */
-  getDisplayName(locale = "ru"): string {
+  getDisplayName(locale = 'ru'): string {
     if (this.name[locale]) {
       return this.name[locale];
     } else if (Object.values(this.name).length > 0) {
       return Object.values(this.name)[0];
     } else {
-      return "No name";
+      return 'No name';
     }
   }
 

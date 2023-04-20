@@ -2,7 +2,7 @@
   <div class="chance-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.chanceEvent") }}
+      {{ $t('editor.chanceEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -54,17 +54,17 @@
 </template>
 
 <script lang="ts">
-import { RoomChanceEvent } from "@/core/classes/game/sub/room/RoomChanceEvent";
-import { defineComponent, PropType, ref } from "vue";
+import { RoomChanceEvent } from '@/core/classes/game/sub/room/RoomChanceEvent';
+import { defineComponent, PropType, ref } from 'vue';
 
-import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EventIcon from "../EventIcon.vue";
-import { NIL as nilUUid } from "uuid";
-import { useI18n } from "vue-i18n";
+import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EventIcon from '../EventIcon.vue';
+import { NIL as nilUUid } from 'uuid';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
-  name: "ChanceEventEditor",
+  name: 'ChanceEventEditor',
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,
@@ -83,7 +83,7 @@ export default defineComponent({
 
     const addVariant = () => {
       if (curEvent.value.outputEvents[newVariantKey.value]) {
-        alert(t("editor.keyAlreadyExists"));
+        alert(t('editor.keyAlreadyExists'));
         return;
       }
 
@@ -93,14 +93,14 @@ export default defineComponent({
       });
 
       curEvent.value.outputEvents[newVariantKey.value] = nilUUid;
-      newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
+      newVariantKey.value = 'out' + (curEvent.value.variants.length + 1);
     };
 
     const removeVariant = (index: number) => {
       const [removedVariant] = curEvent.value.variants.splice(index, 1);
       delete curEvent.value.outputEvents[removedVariant.key];
 
-      newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
+      newVariantKey.value = 'out' + (curEvent.value.variants.length + 1);
     };
 
     return {

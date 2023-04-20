@@ -3,30 +3,30 @@ import {
   createWebHashHistory,
   createWebHistory,
   RouteRecordRaw,
-} from "vue-router";
-import Home from "../pages/Home.vue";
+} from 'vue-router';
+import Home from '../pages/Home.vue';
 
 // Routes for editor screen
-import { EditorRoutes } from "./editor";
+import { EditorRoutes } from './editor';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
   },
   {
-    path: "/dev/library",
-    name: "DevLibrary",
+    path: '/dev/library',
+    name: 'DevLibrary',
     component: () =>
-      import(/* webpackChunkName: "devlibrary" */ "../pages/dev/Library.vue"),
+      import(/* webpackChunkName: "devlibrary" */ '../pages/dev/Library.vue'),
   },
 
   {
-    path: "/editor",
-    name: "Editor",
+    path: '/editor',
+    name: 'Editor',
     component: () =>
-      import(/* webpackChunkName: "editormain" */ "../pages/editor/Main.vue"),
+      import(/* webpackChunkName: "editormain" */ '../pages/editor/Main.vue'),
     children: EditorRoutes,
   },
 ];

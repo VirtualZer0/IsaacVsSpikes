@@ -66,15 +66,15 @@
 </template>
 
 <script lang="ts">
-import { CharacterHearts } from "@/core/classes/game/sub/character/CharacterHealth";
-import { CharacterHealthController } from "@/core/classes/game/sub/character/CharacterHealthController";
-import { HeartContainerType } from "@/core/types/game/HeartContainerType";
-import { HeartType } from "@/core/types/game/HeartType";
-import { defineComponent, PropType, ref } from "vue";
-import EditorHeartItem from "./EditorHeartItem.vue";
+import { CharacterHearts } from '@/core/classes/game/sub/character/CharacterHealth';
+import { CharacterHealthController } from '@/core/classes/game/sub/character/CharacterHealthController';
+import { HeartContainerType } from '@/core/types/game/HeartContainerType';
+import { HeartType } from '@/core/types/game/HeartType';
+import { defineComponent, PropType, ref } from 'vue';
+import EditorHeartItem from './EditorHeartItem.vue';
 
 export default defineComponent({
-  name: "EditorHearts",
+  name: 'EditorHearts',
   components: { EditorHeartItem },
   props: {
     health: {

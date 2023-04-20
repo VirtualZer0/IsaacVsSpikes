@@ -39,11 +39,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
-import seedrandom from "seedrandom";
+import { defineComponent, PropType, ref } from 'vue';
+import seedrandom from 'seedrandom';
 
 export default defineComponent({
-  name: "EditorTagList",
+  name: 'EditorTagList',
   props: {
     tags: {
       type: Array as PropType<string[]>,
@@ -54,7 +54,7 @@ export default defineComponent({
 
   setup(props) {
     const curTags = ref(props.tags);
-    const newTag = ref("");
+    const newTag = ref('');
 
     const getColor = (tag: string) => {
       const rng = seedrandom(tag);
@@ -68,7 +68,7 @@ export default defineComponent({
       if (!curTags.value.includes(newTag.value) && newTag.value.length > 0) {
         curTags.value.push(newTag.value.toLowerCase());
       }
-      newTag.value = "";
+      newTag.value = '';
     };
 
     return {

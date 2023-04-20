@@ -1,11 +1,11 @@
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { RoomEvent } from "./RoomEvent";
-import { NIL as nilUUid } from "uuid";
-import { RoomEventType } from "./RoomEventType";
-import { CharacterStatsCheckData } from "../character/CharcterStats";
-import { ResourceLink } from "@/core/classes/base/ResourceLink";
-import { CharacterHearts } from "../character/CharacterHealth";
-import { CharacterConsumablesCheckData } from "../character/CharacterConsumables";
+import { LocaleText } from '@/core/classes/base/LocaleText';
+import { RoomEvent } from './RoomEvent';
+import { NIL as nilUUid } from 'uuid';
+import { RoomEventType } from './RoomEventType';
+import { CharacterStatsCheckData } from '../character/CharcterStats';
+import { ResourceLink } from '@/core/classes/base/ResourceLink';
+import { CharacterHearts } from '../character/CharacterHealth';
+import { CharacterConsumablesCheckData } from '../character/CharacterConsumables';
 
 /** Ивент на проверку статов персонажа */
 export class RoomStatsCheckEvent extends RoomEvent {

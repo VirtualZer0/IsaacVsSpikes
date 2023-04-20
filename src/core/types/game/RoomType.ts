@@ -1,18 +1,18 @@
 export enum RoomType {
   /** Обычная комната */
-  NORMAL = "normal",
+  NORMAL = 'normal',
   /** Комната босса */
-  BOSS = "boss",
+  BOSS = 'boss',
   /** Сокровищница */
-  TREASURE = "treasure",
+  TREASURE = 'treasure',
   /** Магазин */
-  SHOP = "shop",
+  SHOP = 'shop',
   /** Секретная комната */
-  SECRET = "secret",
+  SECRET = 'secret',
   /** Кусачая комната */
-  SPIKES = "spikes",
+  SPIKES = 'spikes',
   /** Комната дьявола */
-  DEVIL = "devil",
+  DEVIL = 'devil',
   /** Комната ангела */
-  ANGEL = "angel",
+  ANGEL = 'angel',
 }

@@ -9,11 +9,11 @@
         style="width: 24px; height: 24px"
         viewBox="0 0 24 24"
         class="control drag"
-        @mousedown="
+        @mousedown.stop="
           emit('startMove', $event);
           isDragging = true;
         "
-        @mouseup="
+        @mouseup.stop="
           emit('stopMove');
           isDragging = false;
         "
@@ -69,27 +69,26 @@ import {
   onUpdated,
   PropType,
   ref,
-} from "vue";
-import { RoomEventType } from "@/core/classes/game/sub/room/RoomEventType";
-import { RoomEvent } from "@/core/classes/game/sub/room/RoomEvent";
-import { computed } from "@vue/reactivity";
-import { Coords } from "@/core/classes/base/Coords";
+} from 'vue';
+import { RoomEventType } from '@/core/classes/game/sub/room/RoomEventType';
+import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
+import { computed } from '@vue/reactivity';
 
-import EventIcon from "./EventIcon.vue";
+import EventIcon from './EventIcon.vue';
 
 export default defineComponent({
-  name: "EventElement",
+  name: 'EventElement',
   components: {
     EventIcon,
   },
   emits: [
-    "input",
-    "output",
-    "startMove",
-    "updateLinks",
-    "stopMove",
-    "remove",
-    "edit",
+    'input',
+    'output',
+    'startMove',
+    'updateLinks',
+    'stopMove',
+    'remove',
+    'edit',
   ],
   props: {
     event: {
@@ -133,7 +132,7 @@ export default defineComponent({
         return;
       }
 
-      emit("updateLinks", {
+      emit('updateLinks', {
         input: {
           x: inputPin.value.offsetLeft + inputPin.value.offsetWidth / 2,
           y: inputPin.value.offsetTop + inputPin.value.offsetHeight / 2,
@@ -163,7 +162,7 @@ export default defineComponent({
       updateLinks();
     });
 
-    const setPin = (pin: "input" | "output", e: MouseEvent, key = "") => {
+    const setPin = (pin: 'input' | 'output', e: MouseEvent, key = '') => {
       if (!e.target) {
         return;
       }
@@ -173,8 +172,8 @@ export default defineComponent({
       emit(pin, {
         key,
         pos: [
-          rect.left + (pin == "input" ? pinEl.offsetWidth : 12),
-          rect.top + (pin == "input" ? 16 : 9),
+          rect.left + (pin == 'input' ? pinEl.offsetWidth : 12),
+          rect.top + (pin == 'input' ? 16 : 9),
         ],
       });
     };

@@ -1,161 +1,204 @@
 export const EditorRoutes = [
   {
-    path: "",
-    name: "EditorStartup",
+    path: '',
+    name: 'EditorStartup',
     component: () =>
       import(
-        /* webpackChunkName: "editorstartup" */ "../pages/editor/Startup.vue"
+        /* webpackChunkName: "editorstartup" */ '../pages/editor/Startup.vue'
       ),
   },
 
   {
-    path: "indev",
-    name: "EditorInDev",
+    path: 'indev',
+    name: 'EditorInDev',
     component: () =>
-      import(/* webpackChunkName: "editorindev" */ "../pages/editor/InDev.vue"),
+      import(/* webpackChunkName: "editorindev" */ '../pages/editor/InDev.vue'),
   },
 
   {
-    path: "new",
-    name: "EditorNewProject",
+    path: 'new',
+    name: 'EditorNewProject',
     component: () =>
       import(
-        /* webpackChunkName: "editornewproject" */ "../pages/editor/NewProject.vue"
+        /* webpackChunkName: "editornewproject" */ '../pages/editor/NewProject.vue'
       ),
   },
 
   {
-    path: "list",
-    name: "EditorMainList",
+    path: 'list',
+    name: 'EditorMainList',
     component: () =>
       import(
-        /* webpackChunkName: "editormainlist" */ "../pages/editor/MainList.vue"
+        /* webpackChunkName: "editormainlist" */ '../pages/editor/MainList.vue'
       ),
   },
 
   {
-    path: "list/:resource",
-    name: "EditorResourcesList",
+    path: 'list/:resource',
+    name: 'EditorResourcesList',
     component: () =>
       import(
-        /* webpackChunkName: "editorresourceslist" */ "../pages/editor/ResourcesList.vue"
+        /* webpackChunkName: "editorresourceslist" */ '../pages/editor/ResourcesList.vue'
       ),
   },
 
   // Пути редакторов
   {
-    path: "levels/:id",
-    name: "EditorLevelMain",
+    path: 'levels/:id',
+    name: 'EditorLevelMain',
     component: () =>
       import(
-        /* webpackChunkName: "editorlevel" */ "../pages/editor/level/Main.vue"
+        /* webpackChunkName: "editorlevel" */ '../pages/editor/level/Main.vue'
       ),
     children: [
       {
-        path: "general",
-        name: "EditorLevelGeneral",
+        path: 'general',
+        name: 'EditorLevelGeneral',
         component: () =>
           import(
-            /* webpackChunkName: "editorlevel" */ "../pages/editor/level/General.vue"
+            /* webpackChunkName: "editorlevel" */ '../pages/editor/level/General.vue'
           ),
       },
       {
-        path: "view",
-        name: "EditorLevelView",
+        path: 'view',
+        name: 'EditorLevelView',
         component: () =>
           import(
-            /* webpackChunkName: "editorlevel" */ "../pages/editor/level/View.vue"
+            /* webpackChunkName: "editorlevel" */ '../pages/editor/level/View.vue'
           ),
       },
       {
-        path: "generation",
-        name: "EditorLevelGeneration",
+        path: 'generation',
+        name: 'EditorLevelGeneration',
         component: () =>
           import(
-            /* webpackChunkName: "editorlevel" */ "../pages/editor/level/Generation.vue"
+            /* webpackChunkName: "editorlevel" */ '../pages/editor/level/Generation.vue'
           ),
       },
     ],
   },
 
   {
-    path: "rooms/:id",
-    name: "EditorRoomMain",
+    path: 'rooms/:id',
+    name: 'EditorRoomMain',
     component: () =>
       import(
-        /* webpackChunkName: "editorroom" */ "../pages/editor/room/Main.vue"
+        /* webpackChunkName: "editorroom" */ '../pages/editor/room/Main.vue'
       ),
     children: [
       {
-        path: "general",
-        name: "EditorRoomGeneral",
+        path: 'general',
+        name: 'EditorRoomGeneral',
         component: () =>
           import(
-            /* webpackChunkName: "editorroom" */ "../pages/editor/room/General.vue"
+            /* webpackChunkName: "editorroom" */ '../pages/editor/room/General.vue'
           ),
       },
       {
-        path: "view",
-        name: "EditorRoomView",
+        path: 'view',
+        name: 'EditorRoomView',
         component: () =>
           import(
-            /* webpackChunkName: "editorroom" */ "../pages/editor/room/View.vue"
+            /* webpackChunkName: "editorroom" */ '../pages/editor/room/View.vue'
           ),
       },
       {
-        path: "scenaries",
-        name: "EditorRoomScenaries",
+        path: 'scenaries',
+        name: 'EditorRoomScenaries',
         component: () =>
           import(
-            /* webpackChunkName: "editorroom" */ "../pages/editor/room/Scenaries.vue"
+            /* webpackChunkName: "editorroom" */ '../pages/editor/room/Scenaries.vue'
           ),
       },
     ],
   },
 
   {
-    path: "monsters/:id",
-    name: "EditorMonsterMain",
+    path: 'monsters/:id',
+    name: 'EditorMonsterMain',
     component: () =>
       import(
-        /* webpackChunkName: "editormonster" */ "../pages/editor/monster/Main.vue"
+        /* webpackChunkName: "editormonster" */ '../pages/editor/monster/Main.vue'
       ),
     children: [
       {
-        path: "general",
-        name: "EditorMonsterGeneral",
+        path: 'general',
+        name: 'EditorMonsterGeneral',
         component: () =>
           import(
-            /* webpackChunkName: "editormonster" */ "../pages/editor/monster/General.vue"
+            /* webpackChunkName: "editormonster" */ '../pages/editor/monster/General.vue'
+          ),
+      },
+      {
+        path: 'view',
+        name: 'EditorMonsterView',
+        component: () =>
+          import(
+            /* webpackChunkName: "editormonster" */ '../pages/editor/monster/View.vue'
           ),
       },
     ],
   },
 
   {
-    path: "assets/:id",
-    name: "EditorAssetMain",
+    path: 'objects/:id',
+    name: 'EditorEntityObjectMain',
     component: () =>
       import(
-        /* webpackChunkName: "editorasset" */ "../pages/editor/asset/Main.vue"
+        /* webpackChunkName: "editorobject" */ '../pages/editor/object/Main.vue'
+      ),
+    children: [
+      {
+        path: 'general',
+        name: 'EditorEntityObjectGeneral',
+        component: () =>
+          import(
+            /* webpackChunkName: "editorobject" */ '../pages/editor/object/General.vue'
+          ),
+      },
+      {
+        path: 'view',
+        name: 'EditorEntityObjectView',
+        component: () =>
+          import(
+            /* webpackChunkName: "editorobject" */ '../pages/editor/object/View.vue'
+          ),
+      },
+      {
+        path: 'params',
+        name: 'EditorEntityObjectParams',
+        component: () =>
+          import(
+            /* webpackChunkName: "editorobject" */ '../pages/editor/object/Params.vue'
+          ),
+      },
+    ],
+  },
+
+  {
+    path: 'assets/:id',
+    name: 'EditorAssetMain',
+    component: () =>
+      import(
+        /* webpackChunkName: "editorasset" */ '../pages/editor/asset/Main.vue'
       ),
     children: [],
   },
 
   {
-    path: "doorDescs/:id",
-    name: "EditorDoorDescMain",
+    path: 'doorDescs/:id',
+    name: 'EditorDoorDescMain',
     component: () =>
       import(
-        /* webpackChunkName: "editordoordesc" */ "../pages/editor/doorDesc/Main.vue"
+        /* webpackChunkName: "editordoordesc" */ '../pages/editor/doorDesc/Main.vue'
       ),
     children: [
       {
-        path: "general",
-        name: "EditorDoorDescGeneral",
+        path: 'general',
+        name: 'EditorDoorDescGeneral',
         component: () =>
           import(
-            /* webpackChunkName: "editordoordesc" */ "../pages/editor/doorDesc/General.vue"
+            /* webpackChunkName: "editordoordesc" */ '../pages/editor/doorDesc/General.vue'
           ),
       },
     ],

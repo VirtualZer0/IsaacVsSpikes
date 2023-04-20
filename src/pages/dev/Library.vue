@@ -16,13 +16,13 @@
 </template>
 
 <script lang="ts">
-import { library } from "@/core/Core";
-import { defineComponent } from "vue";
-import Sprite from "@/components/gfx/Sprite.vue";
-import { ItemPool } from "@/core/types/game/ItemPool";
+import { library } from '@/core/Core';
+import { defineComponent } from 'vue';
+import Sprite from '@/components/gfx/Sprite.vue';
+import { ItemPool } from '@/core/types/game/ItemPool';
 
 export default defineComponent({
-  name: "DevLibraryPage",
+  name: 'DevLibraryPage',
   components: { Sprite },
   setup() {
     return { library, ItemPool };

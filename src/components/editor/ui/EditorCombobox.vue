@@ -28,11 +28,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from "vue";
+import { defineComponent, PropType, ref, computed } from 'vue';
 
 export default defineComponent({
-  name: "EditorCombobox",
-  emits: ["change"],
+  name: 'EditorCombobox',
+  emits: ['change'],
   props: {
     items: {
       type: Array as PropType<{ value: string; name: string }[]>,
@@ -48,7 +48,7 @@ export default defineComponent({
     const expanded = ref(false);
 
     const change = (item: { value: string; name: string }) => {
-      emit("change", item.value);
+      emit('change', item.value);
     };
 
     const selectedIndex = computed(() => {

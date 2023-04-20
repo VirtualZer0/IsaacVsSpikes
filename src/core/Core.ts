@@ -1,10 +1,14 @@
-import { Game } from "./classes/game/Game";
-import { SpriteManager } from "./gfx/SpriteManager";
+import { Game } from './classes/game/Game';
+import { SpriteManager } from './gfx/SpriteManager';
 
 /** Основной класс игры */
 class Core {
   spriteManager: SpriteManager = new SpriteManager();
   game: Game = new Game();
+
+  constructor() {
+    this.spriteManager.start();
+  }
 }
 
 const core = new Core();

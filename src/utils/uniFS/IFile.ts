@@ -1,4 +1,4 @@
-import IDirectory from "./IDirectory";
+import IDirectory from './IDirectory';
 
 export default interface IFile {
   url?: any;

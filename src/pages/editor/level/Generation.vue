@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts">
-import EditorLocaleInput from "@/components/editor/ui/EditorLocaleInput.vue";
-import { Level } from "@/core/classes/game/Level";
-import { defineComponent, PropType } from "vue";
-import EditorLocaleText from "@/components/editor/ui/EditorLocaleText.vue";
+import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
+import { Level } from '@/core/classes/game/Level';
+import { defineComponent, PropType } from 'vue';
+import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 
 export default defineComponent({
   components: { EditorLocaleInput, EditorLocaleText },
-  name: "EditorLevelGeneration",
+  name: 'EditorLevelGeneration',
   props: {
     level: {
       type: Object as PropType<Level>,

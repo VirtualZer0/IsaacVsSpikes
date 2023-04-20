@@ -17,19 +17,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useEditorStore } from "@/store/editor";
-import { DoorDesc } from "@/core/classes/game/DoorDesc";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import reactiveCopy from "@/core/helpers/reactiveCopy";
+import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useEditorStore } from '@/store/editor';
+import { DoorDesc } from '@/core/classes/game/DoorDesc';
+import { v4 as uuid } from 'uuid';
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/utils/reactiveCopy';
 
-import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
-import EditorResourceMenu from "@/components/editor/EditorResourceMenu.vue";
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
+import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
-  name: "EditorLevel",
+  name: 'EditorLevel',
   components: {
     EditorResourceTop,
     EditorResourceMenu,
@@ -41,10 +42,10 @@ export default defineComponent({
     const store = useMainStore();
     let doorDesc: DoorDesc;
 
-    if (route.params.id == "new") {
+    if (route.params.id == 'new') {
       doorDesc = new DoorDesc();
       doorDesc.id = uuid();
-      await editor.createResource("doorDescs", doorDesc);
+      await editor.createResource(ResourceType.DOOR_DESC, doorDesc);
       await router.replace(`/editor/doorDescs/${doorDesc.id}`);
     }
 
@@ -54,8 +55,8 @@ export default defineComponent({
     );
 
     const saveDoorDesc = async () => {
-      if (route.params.id != "new") {
-        await editor.updateResource("doorDescs", doorDesc);
+      if (route.params.id != 'new') {
+        await editor.updateResource(ResourceType.DOOR_DESC, doorDesc);
       }
 
       router.push(`/editor/list/doorDescs`);

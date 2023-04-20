@@ -3,38 +3,36 @@
     <div class="eui paper">
       <div class="eui items">
         <router-link to="/editor/list/levels" class="eui card item shadow-l1"
-          >{{ $t("editor.levels") }}
+          >{{ $t('editor.levels') }}
           <span class="count">{{ editor.levels.size }}</span></router-link
         >
         <router-link to="/editor/list/rooms" class="eui card item shadow-l1"
-          >{{ $t("editor.rooms") }}
+          >{{ $t('editor.rooms') }}
           <span class="count">{{ editor.rooms.size }}</span></router-link
         >
         <router-link to="/editor/list/monsters" class="eui card item shadow-l1"
-          >{{ $t("editor.monsters") }}
+          >{{ $t('editor.monsters') }}
           <span class="count">{{ editor.monsters.size }}</span></router-link
         >
+        <router-link to="/editor/list/objects" class="eui card item shadow-l1">
+          {{ $t('editor.objects') }}
+          <span class="count">{{ editor.objects.size }}</span>
+        </router-link>
         <div class="eui card item shadow-l1">
-          {{ $t("editor.bosses") }} <span class="count">0</span>
+          {{ $t('editor.items') }} <span class="count">0</span>
         </div>
         <div class="eui card item shadow-l1">
-          {{ $t("editor.objects") }} <span class="count">0</span>
-        </div>
-        <div class="eui card item shadow-l1">
-          {{ $t("editor.items") }} <span class="count">0</span>
-        </div>
-        <div class="eui card item shadow-l1">
-          {{ $t("editor.characters") }} <span class="count">0</span>
+          {{ $t('editor.characters') }} <span class="count">0</span>
         </div>
         <router-link to="/editor/list/assets" class="eui card item shadow-l1"
-          >{{ $t("editor.assets") }}
+          >{{ $t('editor.assets') }}
           <span class="count">{{ editor.assets.size }}</span></router-link
         >
         <div class="eui card item shadow-l1">
-          {{ $t("editor.scripts") }} <span class="count">0</span>
+          {{ $t('editor.scripts') }} <span class="count">0</span>
         </div>
         <router-link to="/editor/list/doorDescs" class="eui card item shadow-l1"
-          >{{ $t("editor.doorDescs") }}
+          >{{ $t('editor.doorDescs') }}
           <span class="count">{{ editor.doorDescs.size }}</span></router-link
         >
       </div>
@@ -43,13 +41,19 @@
 </template>
 
 <script lang="ts">
-import { useEditorStore } from "@/store/editor";
-import { defineComponent } from "vue";
+import { useEditorStore } from '@/store/editor';
+import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: "EditorMainListScreen",
+  name: 'EditorMainListScreen',
   setup() {
     const editor = useEditorStore();
+    const router = useRouter();
+
+    if (!editor.isOpen) {
+      router.push('/editor');
+    }
 
     return {
       editor,

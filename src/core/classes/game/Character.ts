@@ -1,7 +1,6 @@
-import { Resource } from "../base/Resource";
-import { CharacterHearts } from "./sub/character/CharacterHealth";
-import { CharacterHealthController } from "./sub/character/CharacterHealthController";
-import { CharacterStats } from "./sub/character/CharcterStats";
+import { Resource } from '../base/Resource';
+import { CharacterHealthController } from './sub/character/CharacterHealthController';
+import { CharacterStats } from './sub/character/CharcterStats';
 
 export class Character extends Resource {
   stats: CharacterStats = new CharacterStats();

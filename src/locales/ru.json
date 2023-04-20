@@ -13,12 +13,11 @@
     "levels": "Уровни",
     "rooms": "Комнаты",
     "monsters": "Монстры",
-    "bosses": "Боссы",
     "objects": "Объекты",
     "items": "Предметы",
     "characters": "Персонажи",
     "resources": "Ресурсы",
-    "assets": "Ресурсы",
+    "assets": "Ассеты",
     "scripts": "Скрипты",
     "doorDescs": "Описания дверей",
 
@@ -109,7 +108,12 @@
       "ignore_defence": "Игнорировать защиту",
       "red_hearts":"По красным сердцам"
     },
-
+    "counterEventScope": {
+      "main": "Уровень счетчика",
+      "local": "Локальный",
+      "session": "Сессионный",
+      "global": "Глобальный"
+    },
     "counterEventMode": {
       "main": "Режим счетчика",
       "check": "Проверка",
@@ -140,7 +144,42 @@
     "sprite": "Спрайт",
 
     "exportFolder": "Папка экспорта",
-    "exportName": "Имя при экспорте"
+    "exportName": "Имя при экспорте",
+    "animations": "Анимации",
+    "spritesheet": "Таблица спрайтов",
+    "frameCount": "Количество кадров",
+    "animationSpeed": "Скорость смены кадра",
+
+    "special": "Особое",
+    "root": "Главное меню",
+    "back": "Назад",
+    "remove": "Удалить",
+    "duplicate": "Дублировать",
+    "toForward": "На передний план",
+    "toBack": "На задний план",
+    "properties": "Свойства",
+    "toggleGizmo": "Показать/скрыть гизмо",
+    "scenesMenu": "Управление сценами",
+    "toggleGrid": "Показать/скрыть сетку",
+    "entityEdit": "Редактирование сущности",
+    "position": "Позиция",
+    "size": "Размер",
+    "rotation": "Поворот",
+    "zIndex": "Z-индекс",
+    "giveFromPool": "Выдать из пула",
+    "smooth": "Сглаживание",
+    "enabled": "Включено",
+    "saveAspectRatio": "Сохранять сотношение сторон",
+    "params": "Параметры",
+
+    "entityType": {
+      "main": "Тип объекта",
+      "monster": "Монстр",
+      "object": "Объект",
+      "pickup": "Пикап",
+      "chest": "Сундук",
+      "special": "Специальный"
+    }
   },
 
   "game": {
@@ -178,7 +217,19 @@
     "goldenKey": "Золотой ключ",
     "goldenBomb": "Золотая бомба",
     "goldenVersion": "Золотая версия",
-    "blueFriends": "Синие друзья"
+    "blueFriends": "Синие друзья",
+
+    "pools": {
+      "default": "Стандартный",
+      "treasure": "Сокровищница",
+      "boss": "Босс",
+      "shop": "Магазин",
+      "devil": "Дьявол",
+      "angel": "Ангел",
+      "secret": "Секретный",
+      "library": "Библиотека",
+      "spikes": "Шипастая комната"
+    }
 
 
   }

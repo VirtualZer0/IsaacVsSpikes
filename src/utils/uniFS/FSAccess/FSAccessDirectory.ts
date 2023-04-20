@@ -1,6 +1,6 @@
-import IDirectory from "../IDirectory";
-import IFile from "../IFile";
-import { FSAccessFile } from "./FSAccessFile";
+import IDirectory from '../IDirectory';
+import IFile from '../IFile';
+import { FSAccessFile } from './FSAccessFile';
 
 export class FSAccessDirectory implements IDirectory {
   name: string;
@@ -29,7 +29,7 @@ export class FSAccessDirectory implements IDirectory {
     }
 
     return res
-      .filter((e: any) => e.kind == "file")
+      .filter((e: any) => e.kind == 'file')
       .map(
         (e: any) => new FSAccessFile(e.name, `${this.path}/${e.name}`, this, e)
       );
@@ -52,7 +52,7 @@ export class FSAccessDirectory implements IDirectory {
     }
 
     return res
-      .filter((e: any) => e.kind == "directory")
+      .filter((e: any) => e.kind == 'directory')
       .map(
         (e: any) =>
           new FSAccessDirectory(e.name, `${this.path}/${e.name}`, this, e)
@@ -90,6 +90,6 @@ export class FSAccessDirectory implements IDirectory {
 
   async delete(): Promise<void> {
     if (this.parent) return await this.parent.deleteDirectory(this.name);
-    else throw new Error("Cannot delete root directory");
+    else throw new Error('Cannot delete root directory');
   }
 }

@@ -1,8 +1,7 @@
-import { ConsumablePool } from "@/core/types/game/ConsumablePool";
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import IConsumable from "../base/IConsumable";
-import { LocaleText } from "../base/LocaleText";
-import { Resource } from "../base/Resource";
+import { ConsumablePool } from '@/core/types/game/ConsumablePool';
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import IConsumable from '../base/IConsumable';
+import { Resource } from '../base/Resource';
 
 /** Класс для карт/рун */
 export class ConsumablePassive extends Resource implements IConsumable {

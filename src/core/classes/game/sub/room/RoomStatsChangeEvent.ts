@@ -1,34 +1,27 @@
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { RoomEvent } from "./RoomEvent";
-import { NIL as nilUUid } from "uuid";
-import { RoomEventType } from "./RoomEventType";
-import { CharacterStats } from "../character/CharcterStats";
-import { CharacterHearts } from "../character/CharacterHealth";
-import { DamageType } from "@/core/types/game/DamageType";
-import { CharacterConsumables } from "../character/CharacterConsumables";
+import { RoomEvent } from './RoomEvent';
+import { NIL as nilUUid } from 'uuid';
+import { RoomEventType } from './RoomEventType';
+import { CharacterStats } from '../character/CharcterStats';
+import { CharacterHearts } from '../character/CharacterHealth';
+import { DamageType } from '@/core/types/game/DamageType';
+import { CharacterConsumables } from '../character/CharacterConsumables';
+import { IStatModifier } from '../character/IStatModifier';
 
 /** Ивент на изменение параметров игрока */
-export class RoomStatsChangeEvent extends RoomEvent {
-  /** Статы игрока */
-  stats: CharacterStats = new CharacterStats();
-  /** Расходники игрока */
-  consumables: CharacterConsumables = new CharacterConsumables();
+export class RoomStatsChangeEvent extends RoomEvent implements IStatModifier {
+  stats = new CharacterStats();
+  consumables = new CharacterConsumables();
 
-  /** Здоровье игрока */
-  addHealth: CharacterHearts = new CharacterHearts();
-  removeHealth: CharacterHearts = new CharacterHearts();
+  addHealth = new CharacterHearts();
+  removeHealth = new CharacterHearts();
 
-  /** Нанесение урона */
   damageEnabled = false;
   damage = 0;
-  damageType: DamageType = DamageType.DEFAULT;
-  damageTags: string[] = [];
+  damageType = DamageType.DEFAULT;
+  damageTags = [];
 
-  /** Теги для добавления */
-  addedTags: string[] = [];
-
-  /** Теги для удаления */
-  removedTags: string[] = [];
+  addedTags = [];
+  removedTags = [];
 
   /** Выходные ивенты при успехе/поражении */
   outputEvents: { [key: string]: string } = {

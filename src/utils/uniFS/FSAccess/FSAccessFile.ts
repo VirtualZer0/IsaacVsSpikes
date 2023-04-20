@@ -1,5 +1,5 @@
-import IDirectory from "../IDirectory";
-import IFile from "../IFile";
+import IDirectory from '../IDirectory';
+import IFile from '../IFile';
 
 export class FSAccessFile implements IFile {
   name: string;

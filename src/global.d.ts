@@ -17,3 +17,10 @@ type GameWindow = Window &
   typeof globalThis & { core: Core } & {
     showDirectoryPicker?: () => Promise<FileSystemDirectoryHandle>;
   };
+
+/**
+ * Позволяет использовать класс как тип
+ */
+interface Type<T> extends Function {
+  new (...args: any[]): T;
+}

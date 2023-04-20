@@ -11,8 +11,8 @@ module.exports = {
 
   pluginOptions: {
     i18n: {
-      locale: "ru",
-      fallbackLocale: "en",
+      locale: 'ru',
+      fallbackLocale: 'en',
       localeDir: undefined,
       enableLegacy: undefined,
       runtimeOnly: false,
@@ -28,7 +28,7 @@ module.exports = {
   },
 
   pwa: {
-    name: "Isaac VS Spikes",
+    name: 'Isaac VS Spikes',
   },
 };
 

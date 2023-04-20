@@ -1,17 +1,17 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
+import { defineStore, acceptHMRUpdate } from 'pinia';
 
-export const useMainStore = defineStore("main", {
+export const useMainStore = defineStore('main', {
   state: () => ({
-    allLocales: ["en", "ru"],
-    currentLocale: "ru",
+    allLocales: ['en', 'ru'],
+    currentLocale: 'ru',
   }),
 
   actions: {
     async init() {
-      if (!localStorage.getItem("locale")) {
-        localStorage.setItem("locale", this.currentLocale);
+      if (!localStorage.getItem('locale')) {
+        localStorage.setItem('locale', this.currentLocale);
       } else {
-        this.currentLocale = localStorage.getItem("locale") as string;
+        this.currentLocale = localStorage.getItem('locale') as string;
       }
     },
   },

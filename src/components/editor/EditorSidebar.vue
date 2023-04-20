@@ -15,7 +15,7 @@
 
     <div class="content" :class="{ expanded }">
       <div class="no-project" v-if="!editor.isOpen">
-        {{ $t("editor.sidebarNoProject") }}
+        {{ $t('editor.sidebarNoProject') }}
       </div>
 
       <div class="menu" v-else>
@@ -26,43 +26,39 @@
         </div>
 
         <router-link to="/editor/list/levels"
-          >{{ $t("editor.levels") }}
+          >{{ $t('editor.levels') }}
           <span class="count">{{ editor.levels.size }}</span></router-link
         >
         <router-link to="/editor/list/rooms"
-          >{{ $t("editor.rooms") }}
+          >{{ $t('editor.rooms') }}
           <span class="count">{{ editor.rooms.size }}</span></router-link
         >
         <router-link to="/editor/list/monsters"
-          >{{ $t("editor.monsters") }}
+          >{{ $t('editor.monsters') }}
           <span class="count">{{ editor.monsters.size }}</span></router-link
         >
-        <router-link to="/editor/indev"
-          >{{ $t("editor.bosses") }}
-          <span class="count">{{ editor.bosses.size }}</span></router-link
-        >
-        <router-link to="/editor/indev"
-          >{{ $t("editor.objects") }}
+        <router-link to="/editor/list/objects"
+          >{{ $t('editor.objects') }}
           <span class="count">{{ editor.objects.size }}</span></router-link
         >
         <router-link to="/editor/indev"
-          >{{ $t("editor.items") }}
+          >{{ $t('editor.items') }}
           <span class="count">{{ editor.items.size }}</span></router-link
         >
         <router-link to="/editor/indev"
-          >{{ $t("editor.characters") }}
+          >{{ $t('editor.characters') }}
           <span class="count">{{ editor.characters.size }}</span></router-link
         >
         <router-link to="/editor/list/assets"
-          >{{ $t("editor.resources") }}
+          >{{ $t('editor.assets') }}
           <span class="count">{{ editor.assets.size }}</span></router-link
         >
         <router-link to="/editor/indev"
-          >{{ $t("editor.scripts") }}
+          >{{ $t('editor.scripts') }}
           <span class="count">{{ editor.scripts.size }}</span></router-link
         >
         <router-link to="/editor/list/doorDescs"
-          >{{ $t("editor.doorDescs") }}
+          >{{ $t('editor.doorDescs') }}
           <span class="count">{{ editor.doorDescs.size }}</span></router-link
         >
       </div>
@@ -71,11 +67,11 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
-import { useEditorStore } from "@/store/editor";
+import { ref } from 'vue';
+import { useEditorStore } from '@/store/editor';
 
 export default {
-  name: "EditorSidebar",
+  name: 'EditorSidebar',
   props: {
     ready: {
       type: Boolean,

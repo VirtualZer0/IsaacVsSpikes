@@ -2,7 +2,7 @@
   <div class="select-event-editor eui edit-form">
     <div class="title">
       <event-icon :type="event.type" class="icon" />
-      {{ $t("editor.selectEvent") }}
+      {{ $t('editor.selectEvent') }}
     </div>
 
     <div class="vertical-line">
@@ -11,12 +11,12 @@
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{ $t("editor.startDialog") }}</label>
+      <label class="eui label">{{ $t('editor.startDialog') }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
     <div class="vertical-line">
-      <label class="eui label">{{ $t("editor.variants") }}</label>
+      <label class="eui label">{{ $t('editor.variants') }}</label>
       <div class="variants">
         <div
           class="variant"
@@ -31,7 +31,7 @@
                 />
               </svg>
             </button>
-            {{ $t("editor.out") }} {{ variant.key }}
+            {{ $t('editor.out') }} {{ variant.key }}
           </div>
 
           <div class="variant-line">
@@ -40,20 +40,20 @@
 
           <div class="horizontal-line">
             <editor-checkbox v-model="variant.showFuture" />
-            {{ $t("editor.showFuture") }}
+            {{ $t('editor.showFuture') }}
           </div>
 
           <div class="horizontal-line">
             <editor-checkbox v-model="variant.requirment.enabled" />
-            {{ $t("editor.requirments") }}
+            {{ $t('editor.requirments') }}
           </div>
 
           <div class="requirments" v-if="variant.requirment.enabled">
             <div class="vertical-line">
-              <label class="eui label">{{ $t("editor.consumables") }}</label>
+              <label class="eui label">{{ $t('editor.consumables') }}</label>
 
               <div class="stat-line">
-                <div class="name">{{ $t("game.coins") }}</div>
+                <div class="name">{{ $t('game.coins') }}</div>
                 <input
                   class="eui input"
                   type="number"
@@ -62,7 +62,7 @@
               </div>
 
               <div class="stat-line">
-                <div class="name">{{ $t("game.bombs") }}</div>
+                <div class="name">{{ $t('game.bombs') }}</div>
                 <input
                   class="eui input"
                   type="number"
@@ -71,7 +71,7 @@
               </div>
 
               <div class="stat-line">
-                <div class="name">{{ $t("game.keys") }}</div>
+                <div class="name">{{ $t('game.keys') }}</div>
                 <input
                   class="eui input"
                   type="number"
@@ -80,7 +80,7 @@
               </div>
 
               <div class="stat-line">
-                <div class="name">{{ $t("game.blueFriends") }}</div>
+                <div class="name">{{ $t('game.blueFriends') }}</div>
                 <input
                   class="eui input"
                   type="number"
@@ -89,14 +89,14 @@
               </div>
 
               <div class="stat-line">
-                <div class="name">{{ $t("game.goldenBomb") }}</div>
+                <div class="name">{{ $t('game.goldenBomb') }}</div>
                 <editor-checkbox
                   v-model="variant.requirment.consumables.goldenBomb"
                 />
               </div>
 
               <div class="stat-line">
-                <div class="name">{{ $t("game.goldenKey") }}</div>
+                <div class="name">{{ $t('game.goldenKey') }}</div>
                 <editor-checkbox
                   v-model="variant.requirment.consumables.goldenKey"
                 />
@@ -104,21 +104,21 @@
             </div>
 
             <div class="vertical-line">
-              <label class="eui label">{{ $t("game.health") }}</label>
+              <label class="eui label">{{ $t('game.health') }}</label>
               <editor-hearts :health="variant.requirment.hearts" />
             </div>
 
             <div class="vertical-line">
-              <label class="eui label">{{ $t("editor.damage") }}</label>
+              <label class="eui label">{{ $t('editor.damage') }}</label>
               <div class="stat-line">
                 <div class="checkbox">
                   <editor-checkbox v-model="variant.requirment.damageEnabled" />
-                  <div class="sub">{{ $t("editor.enableDamage") }}</div>
+                  <div class="sub">{{ $t('editor.enableDamage') }}</div>
                 </div>
               </div>
               <template v-if="variant.requirment.damageEnabled">
                 <div class="stat-line">
-                  <div class="name">{{ $t("editor.count") }}</div>
+                  <div class="name">{{ $t('editor.count') }}</div>
                   <input
                     class="eui input"
                     type="number"
@@ -126,7 +126,7 @@
                   />
                 </div>
                 <div class="stat-line">
-                  <div class="name">{{ $t("editor.damageType.main") }}</div>
+                  <div class="name">{{ $t('editor.damageType.main') }}</div>
                   <editor-combobox
                     :items="damageTypes"
                     :value="variant.requirment.damageType"
@@ -135,7 +135,7 @@
                   />
                 </div>
                 <div class="stat-line">
-                  <div class="name">{{ $t("editor.tags") }}</div>
+                  <div class="name">{{ $t('editor.tags') }}</div>
                   <editor-tag-list :tags="variant.requirment.damageTags" />
                 </div>
               </template>
@@ -145,10 +145,10 @@
       </div>
 
       <div class="add-variant">
-        {{ $t("editor.newOutKey") }}
+        {{ $t('editor.newOutKey') }}
         <input class="eui input" type="text" v-model="newVariantKey" />
         <button class="eui button" @click="addVariant">
-          {{ $t("editor.addVariant") }}
+          {{ $t('editor.addVariant') }}
         </button>
       </div>
     </div>
@@ -159,23 +159,23 @@
 import {
   RoomSelectEvent,
   RoomSelectEventVariant,
-} from "@/core/classes/game/sub/room/RoomSelectEvent";
-import { defineComponent, PropType, ref } from "vue";
+} from '@/core/classes/game/sub/room/RoomSelectEvent';
+import { defineComponent, PropType, ref } from 'vue';
 
-import EditorLocaleMultiText from "@/components/editor/ui/EditorLocaleMultiText.vue";
-import EditorLocaleInput from "../../ui/EditorLocaleInput.vue";
-import EventIcon from "../EventIcon.vue";
-import { NIL as nilUUid } from "uuid";
-import EditorLocaleText from "../../ui/EditorLocaleText.vue";
-import { useI18n } from "vue-i18n";
-import EditorCheckbox from "../../ui/EditorCheckbox.vue";
-import EditorHearts from "../../ui/EditorHearts.vue";
-import EditorCombobox from "../../ui/EditorCombobox.vue";
-import EditorTagList from "../../ui/EditorTagList.vue";
-import { DamageType } from "@/core/types/game/DamageType";
+import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
+import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
+import EventIcon from '../EventIcon.vue';
+import { NIL as nilUUid } from 'uuid';
+import EditorLocaleText from '../../ui/EditorLocaleText.vue';
+import { useI18n } from 'vue-i18n';
+import EditorCheckbox from '../../ui/EditorCheckbox.vue';
+import EditorHearts from '../../ui/EditorHearts.vue';
+import EditorCombobox from '../../ui/EditorCombobox.vue';
+import EditorTagList from '../../ui/EditorTagList.vue';
+import { DamageType } from '@/core/types/game/DamageType';
 
 export default defineComponent({
-  name: "SelectEventEditor",
+  name: 'SelectEventEditor',
   components: {
     EditorLocaleInput,
     EditorLocaleMultiText,
@@ -199,7 +199,7 @@ export default defineComponent({
 
     const addVariant = () => {
       if (curEvent.value.outputEvents[newVariantKey.value]) {
-        alert(t("editor.keyAlreadyExists"));
+        alert(t('editor.keyAlreadyExists'));
         return;
       }
 
@@ -208,14 +208,14 @@ export default defineComponent({
       curEvent.value.variants.push(newVar);
 
       curEvent.value.outputEvents[newVariantKey.value] = nilUUid;
-      newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
+      newVariantKey.value = 'out' + (curEvent.value.variants.length + 1);
     };
 
     const removeVariant = (index: number) => {
       const [removedVariant] = curEvent.value.variants.splice(index, 1);
       delete curEvent.value.outputEvents[removedVariant.key];
 
-      newVariantKey.value = "out" + (curEvent.value.variants.length + 1);
+      newVariantKey.value = 'out' + (curEvent.value.variants.length + 1);
     };
 
     const damageTypes = Object.values(DamageType).map((type) => ({

@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "Modal",
+  name: 'Modal',
   props: {
     title: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   setup(props, { emit }) {

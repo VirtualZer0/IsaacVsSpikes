@@ -2,7 +2,7 @@
   <div class="eui top paper">
     <div class="title">
       {{ $t(`editor.${type}`) }} {{ res?.getDisplayName(store.currentLocale) }}
-      <span class="uuid">{{ res ? res.id : "" }}</span>
+      <span class="uuid">{{ res ? res.id : '' }}</span>
     </div>
     <editor-resource-controls
       @save="emit('save')"
@@ -13,15 +13,15 @@
 </template>
 
 <script lang="ts">
-import { Resource } from "@/core/classes/base/Resource";
-import { useMainStore } from "@/store/main";
-import { defineComponent, PropType } from "vue";
-import EditorResourceControls from "./EditorResourceControls.vue";
+import { Resource } from '@/core/classes/base/Resource';
+import { useMainStore } from '@/store/main';
+import { defineComponent, PropType } from 'vue';
+import EditorResourceControls from './EditorResourceControls.vue';
 
 /** Отображает верхнюю строку в редакторе ресурса */
 export default defineComponent({
-  name: "EditorResourceTop",
-  emits: ["save", "cancel"],
+  name: 'EditorResourceTop',
+  emits: ['save', 'cancel'],
   components: {
     EditorResourceControls,
   },
@@ -35,7 +35,7 @@ export default defineComponent({
     type: {
       type: String,
       required: false,
-      default: "resource",
+      default: 'resource',
     },
   },
 

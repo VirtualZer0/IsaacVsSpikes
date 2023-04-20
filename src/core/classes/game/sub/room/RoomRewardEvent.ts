@@ -1,8 +1,8 @@
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { RoomEvent } from "./RoomEvent";
-import { NIL as nilUUid } from "uuid";
-import { RoomEventType } from "./RoomEventType";
-import { ResourceLink } from "@/core/classes/base/ResourceLink";
+import { RoomEvent } from './RoomEvent';
+import { NIL as nilUUid } from 'uuid';
+import { RoomEventType } from './RoomEventType';
+import { ResourceLink } from '@/core/classes/base/ResourceLink';
+import { ItemPool } from '@/core/types/game/ItemPool';
 
 /** Ивент на выдачу наград */
 export class RoomRewardEvent extends RoomEvent {
@@ -15,6 +15,9 @@ export class RoomRewardEvent extends RoomEvent {
 
   /** Награда */
   reward: ResourceLink[] = [];
+
+  giveFromPool = false;
+  pool: ItemPool = ItemPool.DEFAULT;
 
   pickups = {
     coins: 0,

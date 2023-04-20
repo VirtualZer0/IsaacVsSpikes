@@ -26,11 +26,15 @@
       class="preview"
       :height="80"
     />
-    <div class="name" v-if="res" :title="resource.getDisplayName()">
-      {{ resource.getDisplayName() }}
+    <div
+      class="name"
+      v-if="res"
+      :title="resource?.getDisplayName() || 'Broken link'"
+    >
+      {{ resource?.getDisplayName() || 'Broken link' }}
     </div>
     <div class="uuid" v-if="res">
-      {{ resource.id }}
+      {{ resource?.id || 'Resource not found' }}
     </div>
     <button class="eui button remove" v-if="res" @click.stop="emit('remove')">
       <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
@@ -44,22 +48,23 @@
 </template>
 
 <script lang="ts">
-import { Resource } from "@/core/classes/base/Resource";
-import { defineComponent, PropType, ref } from "vue";
+import { Resource } from '@/core/classes/base/Resource';
+import { defineComponent, PropType, ref } from 'vue';
 
-import ResourcesList from "@/pages/editor/ResourcesList.vue";
-import EditorModal from "./EditorModal.vue";
-import { ResourceLink } from "@/core/classes/base/ResourceLink";
-import EditorResPreview from "./EditorResPreview.vue";
-import { computed } from "@vue/reactivity";
-import { useEditorStore } from "@/store/editor";
-import { library } from "@/core/Core";
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import { Asset } from "@/core/classes/game/Asset";
+import ResourcesList from '@/pages/editor/ResourcesList.vue';
+import EditorModal from './EditorModal.vue';
+import { ResourceLink } from '@/core/classes/base/ResourceLink';
+import EditorResPreview from './EditorResPreview.vue';
+import { computed } from '@vue/reactivity';
+import { useEditorStore } from '@/store/editor';
+import { library } from '@/core/Core';
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { Asset } from '@/core/classes/game/Asset';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
-  name: "EditorLink",
-  emits: ["select", "remove"],
+  name: 'EditorLink',
+  emits: ['select', 'remove'],
   components: {
     ResourcesList,
     EditorModal,
@@ -72,7 +77,7 @@ export default defineComponent({
       default: null,
     },
     type: {
-      type: String,
+      type: String as PropType<ResourceType>,
       required: true,
     },
     spriteMode: {
@@ -96,10 +101,10 @@ export default defineComponent({
         return null;
       }
 
-      const res = (editor as any)[props.type].get(propRes.id);
+      const res = (editor as any)[props.type]?.get(propRes.id);
 
       if (!res) {
-        return (library as any)[props.type].get(propRes.id);
+        return (library as any)[props.type]?.get(propRes.id);
       }
 
       return res;
@@ -124,9 +129,9 @@ export default defineComponent({
           };
         }
 
-        emit("select", output);
+        emit('select', output);
       } else {
-        emit("remove");
+        emit('remove');
       }
 
       showModal.value = false;

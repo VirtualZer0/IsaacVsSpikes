@@ -1,4 +1,4 @@
-import IDirectory from "./IDirectory";
+import IDirectory from './IDirectory';
 
 export default interface IBaseFS extends IDirectory {
   init(): Promise<this>;

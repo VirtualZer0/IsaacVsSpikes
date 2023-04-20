@@ -1,8 +1,8 @@
-import { ConsumablePool } from "@/core/types/game/ConsumablePool";
-import { SpriteSource } from "@/core/types/gfx/SpriteSource";
-import IConsumable from "../base/IConsumable";
-import { Resource } from "../base/Resource";
-import { ResourceFilter } from "../base/ResourceFilter";
+import { ConsumablePool } from '@/core/types/game/ConsumablePool';
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import IConsumable from '../base/IConsumable';
+import { Resource } from '../base/Resource';
+import { ResourceFilter } from '../base/ResourceFilter';
 
 /** Класс для монеток/бомб/ключей и их вариаций */
 export class ConsumableActive extends Resource implements IConsumable {
@@ -12,9 +12,9 @@ export class ConsumableActive extends Resource implements IConsumable {
 
   getFilters(): ResourceFilter[] {
     return [
-      { name: "isOpen", values: ["true", "false"] },
+      { name: 'isOpen', values: ['true', 'false'] },
       {
-        name: "pool",
+        name: 'pool',
         values: Object.values(ConsumablePool).map((v) => v.toString()),
       },
     ];
@@ -22,9 +22,9 @@ export class ConsumableActive extends Resource implements IConsumable {
 
   isMatchFilter(filter: string, value: string): boolean {
     switch (filter) {
-      case "isOpen":
+      case 'isOpen':
         return this.isOpen.toString() === value;
-      case "pool":
+      case 'pool':
         return this.pool.toString() === value;
       default:
         return super.isMatchFilter(filter, value);

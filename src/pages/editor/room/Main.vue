@@ -21,21 +21,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useEditorStore } from "@/store/editor";
-import { Room } from "@/core/classes/game/Room";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import reactiveCopy from "@/core/helpers/reactiveCopy";
+import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useEditorStore } from '@/store/editor';
+import { Room } from '@/core/classes/game/Room';
+import { v4 as uuid } from 'uuid';
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/utils/reactiveCopy';
 
-import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
-import EditorResourceMenu from "@/components/editor/EditorResourceMenu.vue";
-import { RoomEvent } from "@/core/classes/game/sub/room/RoomEvent";
-import { restoreEvents } from "@/core/helpers/restoreEvents";
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
+import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue';
+import { restoreEvents } from '@/core/utils/restoreEvents';
+import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { restoreClass } from '@/core/utils/restoreClass';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
-  name: "EditorRoom",
+  name: 'EditorRoom',
   components: {
     EditorResourceTop,
     EditorResourceMenu,
@@ -47,10 +50,10 @@ export default defineComponent({
     const store = useMainStore();
     let room: Room;
 
-    if (route.params.id == "new") {
+    if (route.params.id == 'new') {
       room = new Room();
       room.id = uuid();
-      await editor.createResource("rooms", room);
+      await editor.createResource(ResourceType.ROOM, room);
       await router.replace(`/editor/rooms/${room.id}`);
     }
 
@@ -60,10 +63,17 @@ export default defineComponent({
     );
 
     room.events = restoreEvents(room.events);
+    room.scenes = room.scenes.map((scene) => {
+      const curScene = restoreClass<RoomScene>(scene, RoomScene);
+      curScene.entities = curScene.entities.map((entity) =>
+        restoreClass<EntityInstance>(entity, EntityInstance)
+      );
+      return curScene;
+    });
 
     const saveRoom = async () => {
-      if (route.params.id != "new") {
-        await editor.updateResource("rooms", room);
+      if (route.params.id != 'new') {
+        await editor.updateResource(ResourceType.ROOM, room);
       }
 
       router.push(`/editor/list/rooms`);

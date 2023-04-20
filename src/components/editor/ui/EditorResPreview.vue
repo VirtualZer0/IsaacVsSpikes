@@ -8,11 +8,11 @@
 </template>
 
 <script lang="ts">
-import { Resource } from "@/core/classes/base/Resource";
-import { defineComponent, PropType, ref } from "vue";
+import { Resource } from '@/core/classes/base/Resource';
+import { defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
-  name: "EditorResPreview",
+  name: 'EditorResPreview',
   props: {
     res: {
       type: Object as PropType<Resource>,
@@ -25,7 +25,7 @@ export default defineComponent({
   },
 
   async setup(props) {
-    const preview = ref("");
+    const preview = ref('');
     preview.value = await props.res.getPreview();
 
     return { preview };

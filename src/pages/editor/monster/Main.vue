@@ -8,7 +8,10 @@
     />
 
     <editor-resource-menu
-      :items="[{ name: 'editor.general', value: 'general' }]"
+      :items="[
+        { name: 'editor.general', value: 'general' },
+        { name: 'editor.view', value: 'view' },
+      ]"
       @select="switchMenu"
     />
 
@@ -17,20 +20,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useEditorStore } from "@/store/editor";
-import { Monster } from "@/core/classes/game/Monster";
-import { v4 as uuid } from "uuid";
-import { useMainStore } from "@/store/main";
-import reactiveCopy from "@/core/helpers/reactiveCopy";
+import { defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useEditorStore } from '@/store/editor';
+import { Monster } from '@/core/classes/game/Monster';
+import { v4 as uuid } from 'uuid';
+import { useMainStore } from '@/store/main';
+import reactiveCopy from '@/core/utils/reactiveCopy';
 
-import EditorResourceTop from "@/components/editor/EditorResourceTop.vue";
-import EditorResourceMenu from "@/components/editor/EditorResourceMenu.vue";
-import { restoreEvents } from "@/core/helpers/restoreEvents";
+import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
+import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
-  name: "EditorMonster",
+  name: 'EditorMonster',
   components: {
     EditorResourceTop,
     EditorResourceMenu,
@@ -42,10 +45,10 @@ export default defineComponent({
     const store = useMainStore();
     let monster: Monster;
 
-    if (route.params.id == "new") {
+    if (route.params.id == 'new') {
       monster = new Monster();
       monster.id = uuid();
-      await editor.createResource("monsters", monster);
+      await editor.createResource(ResourceType.MONSTER, monster);
       await router.replace(`/editor/monsters/${monster.id}`);
     }
 
@@ -55,8 +58,8 @@ export default defineComponent({
     );
 
     const saveMonster = async () => {
-      if (route.params.id != "new") {
-        await editor.updateResource("monsters", monster);
+      if (route.params.id != 'new') {
+        await editor.updateResource(ResourceType.MONSTER, monster);
       }
 
       router.push(`/editor/list/monsters`);

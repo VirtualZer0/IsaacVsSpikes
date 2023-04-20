@@ -43,18 +43,18 @@
 </template>
 
 <script lang="ts">
-import { LocaleText } from "@/core/classes/base/LocaleText";
-import { useMainStore } from "@/store/main";
-import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
-import EditorCombobox from "./EditorCombobox.vue";
-import { QuillEditor, Quill } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { v4 as uuid } from "uuid";
+import { LocaleText } from '@/core/classes/base/LocaleText';
+import { useMainStore } from '@/store/main';
+import { defineComponent, PropType, ref, reactive, computed, watch } from 'vue';
+import EditorCombobox from './EditorCombobox.vue';
+import { QuillEditor, Quill } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { v4 as uuid } from 'uuid';
 
 export default defineComponent({
   components: { EditorCombobox, QuillEditor },
-  name: "EditorLocaleText",
-  emits: ["change"],
+  name: 'EditorLocaleText',
+  emits: ['change'],
   props: {
     text: {
       type: Object as PropType<LocaleText>,
@@ -73,7 +73,7 @@ export default defineComponent({
     const customToolbarId = `custom-toolbar-${uuid()}`;
 
     const currentText = computed(() => {
-      return copyText[currentLocale.value] || "";
+      return copyText[currentLocale.value] || '';
     });
 
     const textChange = () => {
@@ -82,7 +82,7 @@ export default defineComponent({
       }
 
       copyText[currentLocale.value] = textEditor.value.getHTML();
-      emit("change", copyText);
+      emit('change', copyText);
     };
 
     watch(currentLocale, (newVal, oldVal) => {
@@ -90,7 +90,7 @@ export default defineComponent({
         return;
       }
 
-      textEditor.value.setHTML(copyText[currentLocale.value] || "");
+      textEditor.value.setHTML(copyText[currentLocale.value] || '');
     });
 
     return {

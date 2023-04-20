@@ -1,4 +1,4 @@
-import { createI18n, LocaleMessages, VueMessageType } from "vue-i18n";
+import { createI18n, LocaleMessages, VueMessageType } from 'vue-i18n';
 
 /**
  * Load locale messages
@@ -10,7 +10,7 @@ function loadLocaleMessages(): {
   [key: string]: LocaleMessages<VueMessageType>;
 } {
   const locales = require.context(
-    "./locales",
+    './locales',
     true,
     /[A-Za-z0-9-_,\s]+\.json$/i
   );
@@ -27,8 +27,8 @@ function loadLocaleMessages(): {
 
 const i18n = createI18n({
   legacy: false,
-  locale: "ru",
-  fallbackLocale: "en",
+  locale: 'ru',
+  fallbackLocale: 'en',
   globalInjection: true,
   messages: loadLocaleMessages(),
 });
