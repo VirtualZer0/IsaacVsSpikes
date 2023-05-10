@@ -171,6 +171,24 @@
     "enabled": "Включено",
     "saveAspectRatio": "Сохранять сотношение сторон",
     "params": "Параметры",
+    "destroyable": "Разрушаемость",
+    "destructStages": "Стадии разрушения",
+    "lootTable": "Таблица лута",
+    "maxCount": "Максимальное количество",
+    "statsChanger": "Изменение статов",
+    "animStatcheck": "Визуализация проверки",
+    "spawnReward": "Спавн награды",
+    "combinatorError": "Комбинатор может подключаться только к блокам проверок",
+    "noEffects": "Нет эффектов",
+    "playerTags": "Теги игрока",
+    "roomTags": "Теги комнаты",
+    "effect": "Эффект",
+    "switchScene": "Переключить сцену",
+    "copyFromScene": "Копировать объекты со сцены",
+    "removeObjectsWithTags": "Удалить объекты с тегами",
+    "pickups": "Пикапы",
+    "chests": "Сундуки",
+    "maxLootTableCount": "Максимум лута",
 
     "entityType": {
       "main": "Тип объекта",
@@ -220,6 +238,7 @@
     "blueFriends": "Синие друзья",
 
     "pools": {
+      "main": "Пулы",
       "default": "Стандартный",
       "treasure": "Сокровищница",
       "boss": "Босс",

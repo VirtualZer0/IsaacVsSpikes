@@ -1,6 +1,6 @@
 <template>
   <div class="room-editor-scenaries">
-    <events-graph :events="room.events" />
+    <events-graph :events="room.events" :room="room" />
   </div>
 </template>
 

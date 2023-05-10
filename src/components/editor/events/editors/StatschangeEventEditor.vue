@@ -15,116 +15,7 @@
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
 
-    <div class="vertical-line">
-      <label class="eui label">{{ $t('editor.addHealth') }}</label>
-      <editor-hearts class="input" :health="event.addHealth" />
-    </div>
-
-    <div class="vertical-line">
-      <label class="eui label">{{ $t('editor.removeHealth') }}</label>
-      <editor-hearts class="input" :health="event.removeHealth" />
-    </div>
-
-    <div class="vertical-line">
-      <label class="eui label">{{ $t('editor.damage') }}</label>
-      <div class="nth-format">
-        <div class="stat-line">
-          <div class="checkbox">
-            <editor-checkbox v-model="event.damageEnabled" />
-            <div class="sub">{{ $t('editor.enableDamage') }}</div>
-          </div>
-        </div>
-        <template v-if="event.damageEnabled">
-          <div class="stat-line">
-            <div class="name">{{ $t('editor.count') }}</div>
-            <input
-              class="eui input"
-              type="number"
-              v-model.number="event.damage"
-            />
-          </div>
-          <div class="stat-line">
-            <div class="name">{{ $t('editor.damageType.main') }}</div>
-            <editor-combobox
-              :items="damageTypes"
-              :value="event.damageType"
-              @change="event.damageType = $event"
-              style="width: 210px"
-            />
-          </div>
-          <div class="stat-line">
-            <div class="name">{{ $t('editor.tags') }}</div>
-            <editor-tag-list :tags="event.damageTags" />
-          </div>
-        </template>
-      </div>
-    </div>
-
-    <div class="vertical-line">
-      <label class="eui label">{{ $t(`editor.changedStats`) }}</label>
-
-      <div class="nth-format">
-        <div
-          class="stat-line"
-          v-for="[stat, params] of Object.entries(requiredStats)"
-          :key="stat"
-        >
-          <div class="name">{{ $t(`game.${stat}`) }}</div>
-
-          <div class="checkbox" v-if="typeof params == 'boolean'">
-            <editor-checkbox v-model="(requiredStats as any)[stat]" />
-            <div class="sub">{{ $t(`editor.give`) }}</div>
-          </div>
-
-          <input
-            v-else
-            class="eui input"
-            type="number"
-            v-model.number="(requiredStats as any)[stat]"
-          />
-        </div>
-        <div class="stat-line">
-          <div class="name">{{ $t(`game.addTags`) }}</div>
-          <div class="range">
-            <editor-tag-list :tags="event.addedTags" />
-          </div>
-        </div>
-        <div class="stat-line">
-          <div class="name">{{ $t(`game.removeTags`) }}</div>
-          <div class="range">
-            <editor-tag-list :tags="event.removedTags" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="vertical-line">
-      <label class="eui label">{{ $t(`editor.changedConsumables`) }}</label>
-
-      <div class="nth-format">
-        <div
-          class="stat-line"
-          v-for="[consumable, params] of Object.entries(requiredConsumables)"
-          :key="consumable"
-        >
-          <div class="name">{{ $t(`game.${consumable}`) }}</div>
-
-          <div class="checkbox" v-if="typeof params == 'boolean'">
-            <editor-checkbox
-              v-model="(requiredConsumables as any)[consumable]"
-            />
-            <div class="sub">{{ $t('editor.give') }}</div>
-          </div>
-
-          <input
-            v-else
-            class="eui input"
-            type="number"
-            v-model.number="(requiredConsumables as any)[consumable]"
-          />
-        </div>
-      </div>
-    </div>
+    <editor-stats-form :stat-modifier="event" />
   </div>
 </template>
 
@@ -136,7 +27,6 @@ import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
 import EventIcon from '../EventIcon.vue';
 
 import EditorCheckbox from '../../ui/EditorCheckbox.vue';
-import EditorHearts from '../../ui/EditorHearts.vue';
 import EditorTagList from '../../ui/EditorTagList.vue';
 
 import { RoomStatsChangeEvent } from '@/core/classes/game/sub/room/RoomStatsChangeEvent';
@@ -146,6 +36,8 @@ import { DamageType } from '@/core/types/game/DamageType';
 
 import i18n from '@/i18n';
 import { CharacterHearts } from '@/core/classes/game/sub/character/CharacterHealth';
+import EditorConsumablesForm from '../../forms/EditorConsumablesForm.vue';
+import EditorStatsForm from '../../forms/EditorStatsForm.vue';
 
 const { t } = i18n.global;
 
@@ -157,8 +49,9 @@ export default defineComponent({
     EventIcon,
     EditorCheckbox,
     EditorTagList,
-    EditorHearts,
     EditorCombobox,
+    EditorConsumablesForm,
+    EditorStatsForm,
   },
   props: {
     event: {

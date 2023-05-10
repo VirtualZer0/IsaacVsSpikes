@@ -1,3 +1,4 @@
+import { AssetType } from '@/core/types/game/AssetType';
 import { ResourceCollectionType } from '@/core/types/game/ResourceCollectionType';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { dynamicImportUsingId } from '@/core/utils/dynamicImport';
@@ -9,6 +10,7 @@ import { Item } from './Item';
 
 export class Library {
   items: Map<string, Item> = new Map();
+  assets: Map<string, Asset> = new Map();
 
   loadItems() {
     this.items = dynamicImportUsingId(
@@ -68,6 +70,14 @@ export class Library {
     let editorMap = new Map(),
       libMap = new Map();
 
+    if (storage != ResourceCollectionType.CUSTOM) {
+      const res = this[type as keyof Library] as Map<string, T> | undefined;
+
+      if (res) {
+        libMap = new Map([...res]);
+      }
+    }
+
     if (storage != ResourceCollectionType.BUILTIN) {
       const editor = useEditorStore();
       editorMap = new Map([
@@ -75,12 +85,31 @@ export class Library {
       ]);
     }
 
-    if (storage != ResourceCollectionType.CUSTOM) {
-      const res = this[type as keyof Library] as Map<string, T> | undefined;
+    return new Map([...libMap, ...editorMap]);
+  }
 
-      if (res) {
-        libMap = new Map([...res]);
-      }
+  getAssetsByType(
+    type: AssetType | null = null,
+    storage: ResourceCollectionType = ResourceCollectionType.ALL
+  ): Map<string, Asset> {
+    let editorMap = new Map(),
+      libMap = new Map();
+
+    if (storage != ResourceCollectionType.CUSTOM) {
+      libMap = new Map(
+        [...this.assets].filter((asset) =>
+          type ? asset[1].type == type : true
+        )
+      );
+    }
+
+    if (storage != ResourceCollectionType.BUILTIN) {
+      const editor = useEditorStore();
+      editorMap = new Map(
+        [...editor.assets].filter((asset) =>
+          type ? asset[1].type == type : true
+        )
+      );
     }
 
     return new Map([...libMap, ...editorMap]);

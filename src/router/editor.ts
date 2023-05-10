@@ -176,6 +176,76 @@ export const EditorRoutes = [
   },
 
   {
+    path: 'items/:id',
+    name: 'EditorItemMain',
+    component: () =>
+      import(
+        /* webpackChunkName: "editoritem" */ '../pages/editor/item/Main.vue'
+      ),
+    children: [
+      {
+        path: 'general',
+        name: 'EditorItemGeneral',
+        component: () =>
+          import(
+            /* webpackChunkName: "editoritem" */ '../pages/editor/item/General.vue'
+          ),
+      },
+      {
+        path: 'view',
+        name: 'EditorItemView',
+        component: () =>
+          import(
+            /* webpackChunkName: "editoritem" */ '../pages/editor/item/View.vue'
+          ),
+      },
+      {
+        path: 'params',
+        name: 'EditorItemParams',
+        component: () =>
+          import(
+            /* webpackChunkName: "editoritem" */ '../pages/editor/item/Params.vue'
+          ),
+      },
+    ],
+  },
+
+  {
+    path: 'characters/:id',
+    name: 'EditorCharacterMain',
+    component: () =>
+      import(
+        /* webpackChunkName: "editorcharacter" */ '../pages/editor/character/Main.vue'
+      ),
+    children: [
+      {
+        path: 'general',
+        name: 'EditorCharacterGeneral',
+        component: () =>
+          import(
+            /* webpackChunkName: "editorcharacter" */ '../pages/editor/character/General.vue'
+          ),
+      },
+      {
+        path: 'view',
+        name: 'EditorCharacterView',
+        component: () =>
+          import(
+            /* webpackChunkName: "editorcharacter" */ '../pages/editor/character/View.vue'
+          ),
+      },
+      {
+        path: 'params',
+        name: 'EditorCharacterParams',
+        component: () =>
+          import(
+            /* webpackChunkName: "editorcharacter" */ '../pages/editor/character/Params.vue'
+          ),
+      },
+    ],
+  },
+
+  {
     path: 'assets/:id',
     name: 'EditorAssetMain',
     component: () =>

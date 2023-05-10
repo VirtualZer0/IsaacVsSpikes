@@ -15,6 +15,9 @@ export class RoomStatsCheckEvent extends RoomEvent {
   /** Диалог при неудачном прохождении ивента */
   failDialog: LocaleText[] = [{}];
 
+  /** Включить визуализацию проверки */
+  showAnim = false;
+
   /** Требуемый для прохождения предмет */
   requiredItems: ResourceLink[] = [];
 

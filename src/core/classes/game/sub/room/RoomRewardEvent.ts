@@ -13,6 +13,9 @@ export class RoomRewardEvent extends RoomEvent {
 
   type: RoomEventType = RoomEventType.REWARD;
 
+  /** Спавнить вместо прямой выдачи */
+  spawn = true;
+
   /** Награда */
   reward: ResourceLink[] = [];
 

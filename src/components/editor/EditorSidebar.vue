@@ -41,11 +41,11 @@
           >{{ $t('editor.objects') }}
           <span class="count">{{ editor.objects.size }}</span></router-link
         >
-        <router-link to="/editor/indev"
+        <router-link to="/editor/list/items"
           >{{ $t('editor.items') }}
           <span class="count">{{ editor.items.size }}</span></router-link
         >
-        <router-link to="/editor/indev"
+        <router-link to="/editor/list/characters"
           >{{ $t('editor.characters') }}
           <span class="count">{{ editor.characters.size }}</span></router-link
         >

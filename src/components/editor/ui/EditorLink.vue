@@ -8,6 +8,7 @@
       <editor-modal :title="$t(`editor.${type}`)" @close="showModal = false">
         <resources-list
           :resourceType="type"
+          :assetType="assetType"
           include-builtin
           select-mode
           @select="selectResource"
@@ -22,7 +23,7 @@
     </svg>
     <editor-res-preview
       :res="resource"
-      v-if="res"
+      v-if="res && resource"
       class="preview"
       :height="80"
     />
@@ -49,18 +50,18 @@
 
 <script lang="ts">
 import { Resource } from '@/core/classes/base/Resource';
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, PropType, ref, computed } from 'vue';
 
 import ResourcesList from '@/pages/editor/ResourcesList.vue';
 import EditorModal from './EditorModal.vue';
 import { ResourceLink } from '@/core/classes/base/ResourceLink';
 import EditorResPreview from './EditorResPreview.vue';
-import { computed } from '@vue/reactivity';
 import { useEditorStore } from '@/store/editor';
 import { library } from '@/core/Core';
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
 import { Asset } from '@/core/classes/game/Asset';
 import { ResourceType } from '@/core/types/game/ResourceType';
+import { AssetType } from '@/core/types/game/AssetType';
 
 export default defineComponent({
   name: 'EditorLink',
@@ -79,6 +80,10 @@ export default defineComponent({
     type: {
       type: String as PropType<ResourceType>,
       required: true,
+    },
+    assetType: {
+      type: String as PropType<AssetType>,
+      default: null,
     },
     spriteMode: {
       type: Boolean,
@@ -121,14 +126,15 @@ export default defineComponent({
               type: props.type,
               id: asset.id,
             },
+            metadata: asset.metadata,
           } as SpriteSource;
         } else {
           output = {
             type: props.type,
             id: resource.id,
+            metadata: (resource as any).metadata,
           };
         }
-
         emit('select', output);
       } else {
         emit('remove');

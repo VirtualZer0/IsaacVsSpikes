@@ -14,7 +14,7 @@
           type="number"
           class="eui input"
           min="0"
-          max="1"
+          max="999"
           step=".05"
           v-model.number="curLinks[num].weight"
         />
@@ -30,6 +30,7 @@
 
 <script lang="ts">
 import { WeightedResourceLink } from '@/core/classes/base/ResourceLink';
+import { ResourceType } from '@/core/types/game/ResourceType';
 import { WeightedSpriteSource } from '@/core/types/gfx/SpriteSource';
 import { defineComponent, PropType, ref } from 'vue';
 import EditorLink from './EditorLink.vue';
@@ -46,7 +47,7 @@ export default defineComponent({
       default: () => [],
     },
     type: {
-      type: String,
+      type: String as PropType<ResourceType>,
       required: true,
     },
     spriteMode: {

@@ -44,6 +44,10 @@ const upgradeFileds = async (fs: IBaseFS) => {
           res = restoreClass<Room>(await file.readAllText(), Room);
 
           res.events = restoreEvents(res.events, upgradeClass);
+          if (!res.scenes) {
+            res.scenes = [new RoomScene()];
+          }
+
           res.scenes = res.scenes.map((scene) => {
             const curScene = upgradeClass<RoomScene>(scene, RoomScene);
             curScene.entities = curScene.entities.map((entity) =>
@@ -330,9 +334,58 @@ const migrations: { [key: number]: any } = {
   },
 
   /**
-   * v6: Upgrade classes
+   * v6: Upgrade classes and rename asset directory
    */
   6: async (fs: IBaseFS) => {
     await upgradeFileds(fs);
+    const assetsDir = await fs.getDirectory('assets');
+    const index = await assetsDir.getFile('index.json');
+    const indexData = JSON.parse(await index.readAllText());
+    const mappedIndexData = indexData.map((f: any) => {
+      let newType = null;
+      switch (f.type) {
+        case 'image':
+          newType = 'gfx';
+          break;
+        case 'audio':
+          newType = 'sfx';
+          break;
+        case 'video':
+          newType = 'videos';
+          break;
+        case 'font':
+          newType = 'fonts';
+          break;
+        case 'script':
+          newType = 'scripts';
+          break;
+        case 'other':
+          newType = 'others';
+          break;
+      }
+
+      return {
+        ...f,
+        ...(newType ? { type: newType } : undefined),
+      };
+    });
+
+    index.writeAllText(JSON.stringify(mappedIndexData));
+
+    try {
+      (await assetsDir.getDirectory('image')).rename('gfx');
+      (await assetsDir.getDirectory('audio')).rename('sfx');
+      (await assetsDir.getDirectory('video')).rename('videos');
+      (await assetsDir.getDirectory('font')).rename('fonts');
+      (await assetsDir.getDirectory('script')).rename('scripts');
+      (await assetsDir.getDirectory('other')).rename('others');
+    } catch {
+      fancyLog(
+        'error',
+        'ProjectMigration',
+        `Can't rename directories in ./assets`,
+        '#FF9800'
+      );
+    }
   },
 };

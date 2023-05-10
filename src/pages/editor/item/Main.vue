@@ -8,7 +8,11 @@
     />
 
     <editor-resource-menu
-      :items="[{ name: 'editor.general', value: 'general' }]"
+      :items="[
+        { name: 'editor.general', value: 'general' },
+        { name: 'editor.view', value: 'view' },
+        { name: 'editor.params', value: 'params' },
+      ]"
       @select="switchMenu"
     />
 
@@ -62,8 +66,8 @@ export default defineComponent({
       router.push(`/editor/list/items`);
     };
 
-    const switchMenu = (link: { name: string; value: string }) => {
-      router.push(`/editor/items/${item.id}/${link.value}`);
+    const switchMenu = (el: { name: string; value: string }) => {
+      router.push(`/editor/items/${item.id}/${el.value}`);
     };
 
     return {
@@ -84,7 +88,6 @@ export default defineComponent({
   flex-direction: column;
   gap: 12px;
   padding-left: 24px;
-  max-height: 100%;
 }
 
 .content {

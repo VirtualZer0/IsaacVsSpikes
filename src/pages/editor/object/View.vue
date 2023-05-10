@@ -15,7 +15,7 @@
         :type="ResourceType.ASSET"
         spriteMode
         :res="selectedAnimation.spritesheet"
-        @select="(selectedAnimation as SpriteAnimation).spritesheet = $event"
+        @select="setSpritesheet"
         @remove="(selectedAnimation as SpriteAnimation).spritesheet = null"
       />
       <div class="horizontal-line">
@@ -63,6 +63,7 @@ import { SpriteAnimation } from '@/core/classes/game/sub/gfx/SpriteAnimation';
 import EditorAnimationList from '@/components/editor/ui/EditorAnimationList.vue';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
 
 const props = defineProps({
   entityObject: {
@@ -79,6 +80,12 @@ const selectedAnimation = computed(
       (anim) => anim.id == selectedAnimationId.value
     ) ?? null
 );
+
+const setSpritesheet = (spritesheet: SpriteSource) => {
+  const anim = selectedAnimation.value as SpriteAnimation;
+  anim.spritesheet = spritesheet;
+  anim.metadata = spritesheet.metadata;
+};
 </script>
 
 <style lang="scss" scoped>

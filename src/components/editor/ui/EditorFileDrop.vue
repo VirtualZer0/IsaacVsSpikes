@@ -58,7 +58,8 @@ export default defineComponent({
       e.stopPropagation();
 
       if (e.dataTransfer && e.dataTransfer.files.length) {
-        emit('select', e.dataTransfer.files[0]);
+        const file = e.dataTransfer.files[0];
+        emit('select', file);
       }
 
       dropReady.value = false;
@@ -69,7 +70,8 @@ export default defineComponent({
       const files = target.files;
 
       if (files && files.length) {
-        emit('select', files[0]);
+        const file = files[0];
+        emit('select', file);
       }
     };
 

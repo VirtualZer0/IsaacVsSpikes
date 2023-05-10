@@ -18,12 +18,17 @@
           {{ $t('editor.objects') }}
           <span class="count">{{ editor.objects.size }}</span>
         </router-link>
-        <div class="eui card item shadow-l1">
-          {{ $t('editor.items') }} <span class="count">0</span>
-        </div>
-        <div class="eui card item shadow-l1">
-          {{ $t('editor.characters') }} <span class="count">0</span>
-        </div>
+        <router-link to="/editor/list/items" class="eui card item shadow-l1">
+          {{ $t('editor.items') }}
+          <span class="count">{{ editor.items.size }}</span>
+        </router-link>
+        <router-link
+          to="/editor/list/characters"
+          class="eui card item shadow-l1"
+        >
+          {{ $t('editor.characters') }}
+          <span class="count">{{ editor.characters.size }}</span>
+        </router-link>
         <router-link to="/editor/list/assets" class="eui card item shadow-l1"
           >{{ $t('editor.assets') }}
           <span class="count">{{ editor.assets.size }}</span></router-link

@@ -92,6 +92,7 @@ import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
 import EditorRoomScenes from './EditorRoomScenes.vue';
 import { computed } from 'vue';
 import EditorRoomProperties from './EditorRoomProperties.vue';
+import { ResourceLink } from '@/core/classes/base/ResourceLink';
 
 const props = defineProps({
   room: {
@@ -116,7 +117,17 @@ const selectedEntity = ref<EntityInstance | null>(null);
 const addEntity = (entity: Entity) => {
   const instance = new EntityInstance();
   instance.setSource(entity);
-  instance.position = { x: 200, y: 200 };
+  instance.x = 200;
+  instance.y = 200;
+
+  if (entity.animations[0]?.metadata?.width) {
+    instance.width =
+      entity.animations[0]?.metadata?.width / entity.animations[0].count;
+  } else {
+    instance.width = 64;
+  }
+
+  instance.height = entity.animations[0]?.metadata?.height ?? 64;
   (curScene.value as RoomScene).entities.push(instance);
 };
 </script>

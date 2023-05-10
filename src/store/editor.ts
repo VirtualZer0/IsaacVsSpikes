@@ -20,6 +20,7 @@ import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
 import { EntityObject } from '@/core/classes/game/EntityObject';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { AssetType } from '@/core/types/game/AssetType';
+import { Character } from '@/core/classes/game/Character';
 
 /** Текущая версия проекта */
 const CURRENT_VERSION = 6;
@@ -34,7 +35,7 @@ export const useEditorStore = defineStore('editor', {
     version: CURRENT_VERSION,
 
     isOpen: false,
-    characters: new Map<string, Resource>(),
+    characters: new Map<string, Character>(),
     items: new Map<string, Item>(),
     levels: new Map<string, Level>(),
     monsters: new Map<string, Monster>(),
@@ -118,6 +119,7 @@ export const useEditorStore = defineStore('editor', {
           const assets = JSON.parse(await index.readAllText());
           assets.forEach(async (asset: Asset) => {
             const restoredAsset = restoreClass<Asset>(asset, Asset);
+            delete restoredAsset.file;
             this.assets.set(asset.id, restoredAsset);
           });
           return;

@@ -2,8 +2,8 @@
   <div
     class="entity"
     :style="{
-      left: `${entity.position.x / scale}px`,
-      top: `${entity.position.y / scale}px`,
+      left: `${entity.x / scale}px`,
+      top: `${entity.y / scale}px`,
       zIndex: entity.layer,
     }"
   >

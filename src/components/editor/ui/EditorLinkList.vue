@@ -5,12 +5,14 @@
       :key="num"
       :res="res"
       :type="type"
+      :assetType="assetType"
       @select="curLinks[num] = $event"
       @remove="curLinks.splice(num, 1)"
       :spriteMode="spriteMode"
     />
     <editor-link
       :type="type"
+      :assetType="assetType"
       @select="curLinks.push($event)"
       :spriteMode="spriteMode"
     />
@@ -19,6 +21,7 @@
 
 <script lang="ts">
 import { ResourceLink } from '@/core/classes/base/ResourceLink';
+import { AssetType } from '@/core/types/game/AssetType';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
 import { defineComponent, PropType, ref } from 'vue';
@@ -38,6 +41,10 @@ export default defineComponent({
     type: {
       type: String as PropType<ResourceType>,
       required: true,
+    },
+    assetType: {
+      type: String as PropType<AssetType>,
+      default: null,
     },
     spriteMode: {
       type: Boolean,

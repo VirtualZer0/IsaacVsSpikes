@@ -92,4 +92,13 @@ export class FSAccessDirectory implements IDirectory {
     if (this.parent) return await this.parent.deleteDirectory(this.name);
     else throw new Error('Cannot delete root directory');
   }
+
+  async rename(name: string): Promise<void> {
+    if (!this.handler.move) {
+      throw new Error(
+        'Current browser does not suppor Move method. Try to enable it in chrome://flags/#enable-experimental-web-platform-features'
+      );
+    }
+    return await this.handler.move(name);
+  }
 }

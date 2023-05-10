@@ -14,17 +14,9 @@
           <label class="eui label">{{ $t('editor.position') }}</label>
           <div class="sub-line">
             X:
-            <input
-              class="eui input"
-              type="number"
-              v-model="entity.position.x"
-            />
+            <input class="eui input" type="number" v-model="entity.x" />
             Y:
-            <input
-              class="eui input"
-              type="number"
-              v-model="entity.position.y"
-            />
+            <input class="eui input" type="number" v-model="entity.y" />
           </div>
         </div>
         <div class="vertical-line">

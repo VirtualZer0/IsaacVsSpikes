@@ -92,6 +92,7 @@
           editEvent.type.charAt(0).toUpperCase() + editEvent.type.slice(1)
         }EventEditor`"
         :event="editEvent"
+        :room="room"
       />
     </div>
   </div>
@@ -110,13 +111,15 @@ import { RoomEffectEvent } from '@/core/classes/game/sub/room/RoomEffectEvent';
 import { RoomOrEvent } from '@/core/classes/game/sub/room/RoomOrEvent';
 import { RoomCounterEvent } from '@/core/classes/game/sub/room/RoomCounterEvent';
 
-import { reactive, ref } from '@vue/reactivity';
+import { reactive, ref } from 'vue';
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { Coords } from '@/core/classes/base/Coords';
 import { v4 as uuid, NIL as nilUUid } from 'uuid';
 
 import EventElement from './EventElement.vue';
 import EventIcon from './EventIcon.vue';
+import { useI18n } from 'vue-i18n';
+import { Room } from '@/core/classes/game/Room';
 
 /** Событие создания подключения */
 type ConnectionEvent = {
@@ -175,9 +178,14 @@ export default defineComponent({
       required: true,
       default: () => [],
     },
+    room: {
+      type: Object as PropType<Room>,
+      required: true,
+    },
   },
 
   setup(props) {
+    const { t } = useI18n();
     const editEvent = ref<RoomEvent | null>(null);
     const curEvents = ref<RoomEvent[]>(props.events);
 
@@ -232,7 +240,7 @@ export default defineComponent({
         inputNode?.type != RoomEventType.COUNTER &&
         newLink.outputKey != 'fail'
       ) {
-        alert('Комбинатор может подключаться только к блокам проверок');
+        alert(t('editor.combinatorError'));
         newLink.outputId = '';
         newLink.inputId = '';
         newLink.visible = false;
@@ -501,6 +509,8 @@ export default defineComponent({
     /** Восстановление сохраненных связей */
     curEvents.value.forEach((outputNode) => {
       for (const [key, value] of Object.entries(outputNode.outputEvents)) {
+        if (!value || value == nilUUid) continue;
+
         const inputNode = curEvents.value.find((node) => node.id === value);
         if (inputNode) {
           links.push({

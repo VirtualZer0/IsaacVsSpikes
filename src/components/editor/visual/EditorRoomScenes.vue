@@ -51,7 +51,11 @@
       <div class="edit-scene">
         <div class="vertical-line">
           <label class="eui label">{{ $t(`editor.name`) }}</label>
-          <EditorLocaleInput class="input" :text="activeScene?.name || {}" />
+          <EditorLocaleInput
+            class="input"
+            :text="activeScene?.name || {}"
+            :key="activeScene?.id"
+          />
         </div>
       </div>
     </div>

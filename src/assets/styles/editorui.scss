@@ -6,6 +6,50 @@
     transition: fill .3s ease;
   }
 
+  .audio-editor-preview {
+    width: 100%;
+  }
+
+  &.base-form {
+    .nth-format {
+        .stat-line:nth-child(2n + 1) {
+          background-color: $editorBgInvariant;
+        }
+      }
+
+      .stat-line {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 48px;
+        padding: 8px;
+
+        .range {
+          .input {
+            width: 60px;
+            margin-left: 8px;
+            margin-right: 16px;
+          }
+        }
+
+        &:nth-child(2n) {
+          background: #f5f5f5;
+        }
+
+        .name {
+          font-weight: bold;
+          min-width: 150px;
+          text-align: left;
+        }
+
+        .checkbox {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+      }
+  }
+
   &.edit-form {
     padding: 16px;
     overflow: auto;

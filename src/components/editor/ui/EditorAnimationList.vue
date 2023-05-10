@@ -28,12 +28,11 @@
       </div>
     </div>
     <div class="eui button editor-animation-list-add" @click="addAnimation()">
-      <svg data-v-3f7c6525="" viewBox="0 0 24 24">
+      <svg viewBox="0 0 24 24">
         <path
-          data-v-3f7c6525=""
           fill="currentColor"
           d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-        ></path>
+        />
       </svg>
     </div>
   </div>
@@ -42,11 +41,11 @@
 import { PropType, ref } from 'vue';
 import Sprite from '@/components/gfx/Sprite.vue';
 import { SpriteAnimation } from '@/core/classes/game/sub/gfx/SpriteAnimation';
-import { Entity } from '@/core/classes/base/Entity';
+import { IVisibleSprite } from '@/core/classes/base/IVisibleSprite';
 
 const props = defineProps({
   entity: {
-    type: Object as PropType<Entity>,
+    type: Object as PropType<IVisibleSprite>,
     required: true,
   },
   selected: {

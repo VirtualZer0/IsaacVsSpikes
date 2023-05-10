@@ -10,7 +10,7 @@ export class FSAccessAPI extends FSAccessDirectory implements IBaseFS {
     const win = window as GameWindow;
     if (win && win.showDirectoryPicker) {
       this.setHandler(await win.showDirectoryPicker());
-      await this.handler.queryPermission({ mode: 'readwrite' });
+      await this.handler.requestPermission({ mode: 'readwrite' });
       return this;
     } else {
       throw 'FS Access API not available';

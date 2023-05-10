@@ -62,11 +62,17 @@
         </div>
         <Suspense v-if="item.entity">
           <Sprite
+            v-if="Object.values(item.entity.animations)[0].count > 1"
             class="preview"
             :animation="Object.values(item.entity.animations)[0]"
             :width="64"
             :height="64"
             static
+          />
+          <EditorResPreview
+            v-else
+            :res="item.entity"
+            style="width: 64px; height: 64px"
           />
         </Suspense>
       </div>
@@ -76,11 +82,16 @@
 <script lang="ts" setup>
 import Sprite from '@/components/gfx/Sprite.vue';
 import { Entity } from '@/core/classes/base/Entity';
+import { ResourceLink } from '@/core/classes/base/ResourceLink';
+import { EntityObject } from '@/core/classes/game/EntityObject';
 import { Monster } from '@/core/classes/game/Monster';
 import { library } from '@/core/Core';
+import { EntityType } from '@/core/types/game/EntityType';
 import { ResourceType } from '@/core/types/game/ResourceType';
+import { useEditorStore } from '@/store/editor';
 import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import EditorResPreview from '../ui/EditorResPreview.vue';
 
 const { t } = useI18n();
 
@@ -89,6 +100,18 @@ interface IMenuItem {
   children?: IMenuItem[];
   entity?: Entity;
 }
+
+const objects = [
+  ...library.getResourcesByType<EntityObject>(ResourceType.OBJECT),
+];
+
+const getObjectsByType = (type: EntityType) =>
+  objects
+    .filter((obj) => obj[1].type == type)
+    .map((child) => ({
+      name: child[1].getDisplayName(),
+      entity: child[1],
+    }));
 
 const menu = reactive<IMenuItem>({
   name: 'root',
@@ -104,11 +127,19 @@ const menu = reactive<IMenuItem>({
     },
     {
       name: 'objects',
-      children: [],
+      children: getObjectsByType(EntityType.OBJECT),
+    },
+    {
+      name: 'pickups',
+      children: getObjectsByType(EntityType.PICKUP),
+    },
+    {
+      name: 'chests',
+      children: getObjectsByType(EntityType.CHEST),
     },
     {
       name: 'special',
-      children: [],
+      children: getObjectsByType(EntityType.SPECIAL),
     },
   ],
 });

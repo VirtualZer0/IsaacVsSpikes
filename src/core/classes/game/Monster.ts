@@ -15,13 +15,6 @@ export class Monster extends Entity {
   /** Теги монстра */
   tags = ['monster'];
 
-  constructor() {
-    super();
-    const anim = new SpriteAnimation();
-    anim.name = 'idle';
-    this.animations.push(anim);
-  }
-
   override getPreview(): Promise<string> {
     if (
       this.animations[0]?.spritesheet &&

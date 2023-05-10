@@ -17,7 +17,7 @@
       <!-- Встроенные ресурсы -->
       <div
         class="eui items builtin"
-        v-if="includeBuiltin && (library as any)[resource]"
+        v-if="includeBuiltin && (library as any)[resource] && (library as any)[resource].length > 0"
       >
         <div class="group">
           <div class="group-title">{{ $t('editor.builtin') }}</div>
@@ -156,6 +156,7 @@ import { ResourceType } from '@/core/types/game/ResourceType';
 import { ResourceCollectionType } from '@/core/types/game/ResourceCollectionType';
 import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
 import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { AssetType } from '@/core/types/game/AssetType';
 
 export default defineComponent({
   name: 'EditorResourcesListScreen',
@@ -176,6 +177,10 @@ export default defineComponent({
       type: String as PropType<ResourceType>,
       default: '',
     },
+    assetType: {
+      type: String as PropType<AssetType>,
+      default: null,
+    },
   },
   components: {
     EditorResPreview,
@@ -189,12 +194,15 @@ export default defineComponent({
     const resource: ResourceType =
       props.resourceType || (route.params.resource as ResourceType);
     const items = computed(() =>
-      library.getResourcesByType<Resource>(
-        resource,
-        props.includeBuiltin
-          ? ResourceCollectionType.ALL
-          : ResourceCollectionType.CUSTOM
-      )
+      resource == ResourceType.ASSET
+        ? library.getAssetsByType(
+            props.assetType,
+            ResourceCollectionType.CUSTOM
+          )
+        : library.getResourcesByType<Resource>(
+            resource,
+            ResourceCollectionType.CUSTOM
+          )
     );
     const filter = ref('');
 

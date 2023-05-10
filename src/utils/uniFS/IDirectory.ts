@@ -14,4 +14,5 @@ export default interface IDirectory {
   createDirectory(name: string): Promise<IDirectory>;
   deleteDirectory(name: string): Promise<void>;
   delete(): Promise<void>;
+  rename(name: string): Promise<void>;
 }

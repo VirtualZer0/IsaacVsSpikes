@@ -4,7 +4,10 @@
       type="asset"
       :res="asset"
       @save="saveAsset"
-      @cancel="router.push('/editor/list/assets')"
+      @cancel="
+        saveAsset();
+        router.push('/editor/list/assets');
+      "
     />
 
     <div class="eui paper content">
@@ -55,6 +58,7 @@ export default defineComponent({
       if (!editor.fs) {
         return;
       }
+
       asset.value = await Asset.create(ev, editor.fs);
       await editor.saveAsset(asset.value);
 

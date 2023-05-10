@@ -8,6 +8,7 @@ import { ResourceFilter } from '../base/ResourceFilter';
 import IDirectory from '@/utils/uniFS/IDirectory';
 import { useEditorStore } from '@/store/editor';
 import { AssetType } from '@/core/types/game/AssetType';
+import { IImageMetadata } from './sub/asset/IImageMetadata';
 
 export class Asset extends Resource {
   type: AssetType = AssetType.OTHER;
@@ -16,6 +17,7 @@ export class Asset extends Resource {
   exportFolder = '';
   exportName = '';
   file?: Nullable<IFile> = null;
+  metadata?: IImageMetadata;
 
   async getPreview(): Promise<string> {
     const editor = useEditorStore();
@@ -28,7 +30,14 @@ export class Asset extends Resource {
       return '';
     }
 
-    return `<img lazy src="${await file.getUrl()}"/>`;
+    switch (this.type) {
+      case AssetType.GFX:
+        return `<img lazy src="${await file.getUrl()}"/>`;
+      case AssetType.SFX:
+        return `<audio src="${await file.getUrl()}" preload="none" controls class="audio-editor-preview"/>`;
+      default:
+        return '';
+    }
   }
 
   public static async create(file: File, fs: IBaseFS): Promise<Asset> {
@@ -40,6 +49,8 @@ export class Asset extends Resource {
     asset.extension = file.name.split('.').pop() || '';
     asset.type = detectFileType(file.type);
 
+    assetsDir.getDirectory(asset.type).catch((err) => console.log(err));
+
     const targetDir = await assetsDir.getDirectory(asset.type);
     const newFile = await targetDir.createFile(
       `${asset.id}.${asset.extension}`
@@ -48,7 +59,31 @@ export class Asset extends Resource {
 
     asset.file = newFile;
 
-    return asset;
+    return new Promise((resolve, reject) => {
+      if (asset.type == AssetType.GFX) {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        const timeout = setTimeout(
+          () => reject('Image loading timeout'),
+          10000
+        );
+        img.onload = () => {
+          asset.metadata = {
+            width: img.width,
+            height: img.height,
+          };
+
+          URL.revokeObjectURL(url);
+          clearTimeout(timeout);
+          resolve(asset);
+        };
+
+        img.onerror = () => reject('Image loading error');
+        img.src = url;
+      } else {
+        resolve(asset);
+      }
+    });
   }
 
   public async getFile(assetDir: IDirectory): Promise<Nullable<IFile>> {

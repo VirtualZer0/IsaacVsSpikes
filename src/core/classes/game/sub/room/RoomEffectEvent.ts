@@ -10,7 +10,10 @@ export class RoomEffectEvent extends RoomEvent {
     next: nilUUid,
   };
 
-  sound: Asset | null = null;
-
   type: RoomEventType = RoomEventType.EFFECT;
+
+  sound: Asset | null = null;
+  switchScene = '';
+  copyFromScene = '';
+  removeObjectsWithTags: string[] = [];
 }

@@ -16,6 +16,14 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{ $t('editor.animStatcheck') }}</label>
+      <div class="horizontal-line">
+        <EditorCheckbox v-model="event.showAnim" />
+        <div class="name">{{ $t('editor.enabled') }}</div>
+      </div>
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.requiredItems`) }}</label>
       <editor-link-list :links="event.requiredItems" type="items" />
     </div>
@@ -163,6 +171,13 @@ export default defineComponent({
       height: 32px;
       margin-right: 12px;
     }
+  }
+
+  .horizontal-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
   }
 
   .nth-format {

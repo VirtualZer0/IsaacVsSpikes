@@ -2,13 +2,19 @@ import { ItemPool } from '@/core/types/game/ItemPool';
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
 import { Resource } from '../base/Resource';
 import { LocaleText } from '../base/LocaleText';
+import {
+  createStatModifier,
+  IStatModifier,
+} from './sub/character/IStatModifier';
+import { SpriteAnimation } from './sub/gfx/SpriteAnimation';
+import { ItemEffect } from './sub/item/ItemEffect';
 
 export class Item extends Resource {
-  /** Открыт-ли предмет */
-  isOpen = false;
+  /** Анимации предмета */
+  animations: SpriteAnimation[] = [];
 
-  /** Спрайт предмета */
-  sprite: SpriteSource | null = null;
+  /** Открыт ли предмет */
+  isOpen = false;
 
   /** Описание предмета */
   desc: LocaleText = {};
@@ -16,19 +22,32 @@ export class Item extends Resource {
   /** Приоритет предмета */
   priority = 0;
 
-  /** Пересчитывать статы */
-  recalculateStats = false;
+  /** Эффекты предмета */
+  effects: ItemEffect[] = [];
 
   /** Пул предмета */
-  pool: ItemPool = ItemPool.DEFAULT;
+  pools: ItemPool[] = [];
+
+  constructor() {
+    super();
+    const anim = new SpriteAnimation();
+    anim.name = 'idle';
+    this.animations.push(anim);
+  }
 
   onPickup?: Nullable<() => void> = null;
   onRoomChange?: Nullable<() => void> = null;
 
   override getPreview(): Promise<string> {
-    if (this.sprite && 'src' in this.sprite) {
+    if (
+      this.animations.length > 0 &&
+      this.animations[0].spritesheet &&
+      'src' in this.animations[0].spritesheet
+    ) {
       return Promise.resolve(
-        `<img lazy src="/assets/${(this.sprite as SpriteSource).src}"/>`
+        `<img lazy src="/assets/${
+          (this.animations[0].spritesheet as SpriteSource).src
+        }"/>`
       );
     } else return super.getPreview();
   }

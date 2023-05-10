@@ -87,7 +87,6 @@ watch(
     imgUrl.value = `url(${await resolveResourceLink(
       curAnim.value.spritesheet?.src
     )})`;
-    console.log(imgUrl.value);
   }
 );
 
@@ -124,11 +123,5 @@ onBeforeUnmount(() => {
 .sprite {
   background-repeat: no-repeat;
   background-position-y: center;
-}
-
-@keyframes sprite {
-  to {
-    background-position: 200%;
-  }
 }
 </style>

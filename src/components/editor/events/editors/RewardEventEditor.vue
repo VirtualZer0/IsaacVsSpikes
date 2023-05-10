@@ -16,6 +16,14 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{ $t('editor.spawnReward') }}</label>
+      <div class="horizontal-line">
+        <EditorCheckbox v-model="event.spawn" />
+        <div class="name">{{ $t('editor.enabled') }}</div>
+      </div>
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.items`) }}</label>
       <editor-link-list :links="event.reward" :type="ResourceType.ITEM" />
     </div>
@@ -146,6 +154,13 @@ export default defineComponent({
     .stat-line:nth-child(2n + 1) {
       background-color: $editorBgInvariant;
     }
+  }
+
+  .horizontal-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
   }
 
   .stat-line {

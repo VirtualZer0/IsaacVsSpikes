@@ -22,7 +22,7 @@
     <div class="editor-tag-list-new">
       <input
         type="text"
-        class="eui input small"
+        class="eui input"
         v-model="newTag"
         @keypress.enter="addTag()"
       />
@@ -95,6 +95,7 @@ export default defineComponent({
 
     input {
       width: 140px;
+      min-width: 120px;
     }
   }
 

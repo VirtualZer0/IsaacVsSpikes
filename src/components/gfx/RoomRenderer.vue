@@ -138,7 +138,7 @@ const mouseMove = (e: MouseEvent) => {
   if (movableEntity.value) {
     if (props.showGrid) {
       const prevScale = getCellScale(
-        movableEntity.value.position.y + movableEntity.value.height
+        movableEntity.value.y + movableEntity.value.height
       );
       const nearest = getNearestSmartGridCell(mousePos.x, mousePos.y - 10);
 
@@ -149,17 +149,17 @@ const mouseMove = (e: MouseEvent) => {
           (movableEntity.value.width / prevScale) * nearest.scale;
       }
 
-      movableEntity.value.position.x = Math.round(
+      movableEntity.value.x = Math.round(
         nearest.x - movableEntity.value.width / 2
       );
-      movableEntity.value.position.y = Math.round(
+      movableEntity.value.y = Math.round(
         nearest.y - movableEntity.value.height
       );
     } else {
-      movableEntity.value.position.x = Math.round(
+      movableEntity.value.x = Math.round(
         mousePos.x - movableEntity.value.width / 2
       );
-      movableEntity.value.position.y = Math.round(
+      movableEntity.value.y = Math.round(
         mousePos.y - movableEntity.value.height / 2
       );
     }
@@ -170,10 +170,10 @@ const mouseMove = (e: MouseEvent) => {
       rotatableEntityStart.value +
       Math.atan2(
         mousePos.x -
-          (rotatableEntity.value.position.x + rotatableEntity.value.width / 2),
+          (rotatableEntity.value.x + rotatableEntity.value.width / 2),
         -(
           mousePos.y -
-          (rotatableEntity.value.position.y + rotatableEntity.value.height / 2)
+          (rotatableEntity.value.y + rotatableEntity.value.height / 2)
         )
       ) *
         (180 / Math.PI);
@@ -182,13 +182,13 @@ const mouseMove = (e: MouseEvent) => {
   if (scalableEntity.value) {
     if (scalableMode.value.includes('x')) {
       scalableEntity.value.width = Math.round(
-        mousePos.x - scalableEntity.value.position.x - 10
+        mousePos.x - scalableEntity.value.x - 10
       );
     }
 
     if (scalableMode.value.includes('y')) {
       scalableEntity.value.height = Math.round(
-        mousePos.y - scalableEntity.value.position.y - 15
+        mousePos.y - scalableEntity.value.y - 15
       );
     }
   }
@@ -242,8 +242,8 @@ const duplicateContextEntity = () => {
     EntityInstance
   );
   newEntity.id = uuid();
-  newEntity.position.x += 15;
-  newEntity.position.y += 15;
+  newEntity.x += 15;
+  newEntity.y += 15;
 
   props.scene.entities.push(newEntity);
 };

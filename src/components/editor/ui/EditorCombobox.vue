@@ -3,7 +3,7 @@
     <slot />
 
     <div class="editor-combobox-main" @click="expanded = !expanded">
-      <div class="editor-combobox-text">{{ items[selectedIndex].name }}</div>
+      <div class="editor-combobox-text">{{ items[selectedIndex]?.name }}</div>
 
       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7">
         <path
@@ -40,7 +40,6 @@ export default defineComponent({
     },
     value: {
       type: [String, Number],
-      default: 0,
     },
   },
 
@@ -51,8 +50,12 @@ export default defineComponent({
       emit('change', item.value);
     };
 
+    if (props.value === undefined) {
+      emit('change', props.items[0]?.value);
+    }
+
     const selectedIndex = computed(() => {
-      return props.items.findIndex((item) => item.value == props.value);
+      return props.items.findIndex((item) => item.value == props.value) ?? 0;
     });
 
     return {

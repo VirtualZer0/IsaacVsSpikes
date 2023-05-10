@@ -201,7 +201,7 @@ export class CharacterHealthController {
     /** Синие сердца */
     [HeartType.BLUE]: (fullHearts: number, halfHeart: boolean) => {
       if (this.health.value.containers.length == 12) return;
-      if (this.character.rules.replaceBlueToBlack) {
+      if (this.character.rules.replaceBlueHeartsToBlack) {
         this.heartRules[HeartType.BLACK]?.(fullHearts, halfHeart);
         return;
       }
@@ -263,7 +263,7 @@ export class CharacterHealthController {
     /** Черные сердца */
     [HeartType.BLACK]: (fullHearts: number, halfHeart: boolean) => {
       if (this.health.value.containers.length == 12) return;
-      if (this.character.rules.replaceBlueToBlack) {
+      if (this.character.rules.replaceBlueHeartsToBlack) {
         this.heartRules[HeartType.BLACK]?.(fullHearts, halfHeart);
         return;
       }
