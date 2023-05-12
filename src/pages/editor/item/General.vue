@@ -7,7 +7,7 @@
 
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.note`) }}</label>
-      <textarea v-model="curCharacter.note" class="eui textarea small" />
+      <textarea v-model="curItem.note" class="eui textarea small" />
     </div>
 
     <div class="vertical-line">
@@ -19,13 +19,18 @@
       <label class="eui label">{{ $t(`editor.description`) }}</label>
       <editor-locale-text class="input" :text="item.desc" />
     </div>
+
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`game.pools.main`) }}</label>
+      <editor-pool-list :pools="item.pools" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
-import { Character } from '@/core/classes/game/Character';
+import { Item } from '@/core/classes/game/Item';
 import { defineComponent, PropType, reactive } from 'vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 import EditorCombobox from '@/components/editor/ui/EditorCombobox.vue';
@@ -39,19 +44,19 @@ export default defineComponent({
     EditorCombobox,
     EditorPoolList,
   },
-  name: 'EditorCharacterGeneral',
+  name: 'EditorItemGeneral',
   props: {
     item: {
-      type: Object as PropType<Character>,
+      type: Object as PropType<Item>,
       required: true,
     },
   },
 
   setup(props, { emit }) {
-    const curCharacter = reactive(props.item);
+    const curItem = reactive(props.item);
 
     return {
-      curCharacter,
+      curItem,
       emit,
     };
   },

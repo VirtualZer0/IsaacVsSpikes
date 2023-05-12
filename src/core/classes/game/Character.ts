@@ -1,6 +1,7 @@
 import { IVisibleSprite } from '../base/IVisibleSprite';
 import { LocaleText } from '../base/LocaleText';
 import { Resource } from '../base/Resource';
+import { ResourceLink } from '../base/ResourceLink';
 import { CharacterConsumables } from './sub/character/CharacterConsumables';
 import { CharacterHearts } from './sub/character/CharacterHealth';
 import { CharacterStats } from './sub/character/CharcterStats';
@@ -16,6 +17,7 @@ export class Character
   consumables: CharacterConsumables = new CharacterConsumables();
   addHealth: CharacterHearts = new CharacterHearts();
   addedTags: string[] = [];
+  startItems: ResourceLink[] = [];
 
   /** Описание объекта */
   desc: LocaleText = {};

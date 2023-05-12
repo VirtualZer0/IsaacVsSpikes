@@ -23,7 +23,7 @@ import { AssetType } from '@/core/types/game/AssetType';
 import { Character } from '@/core/classes/game/Character';
 
 /** Текущая версия проекта */
-const CURRENT_VERSION = 6;
+const CURRENT_VERSION = 7;
 
 /** Хранилище редактора контента */
 export const useEditorStore = defineStore('editor', {

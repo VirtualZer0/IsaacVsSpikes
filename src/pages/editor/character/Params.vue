@@ -1,7 +1,14 @@
 <template>
-  <div class="object-editor-general eui edit-form">
+  <div class="character-editor-general eui edit-form">
     <!-- Stats changer -->
     <editor-stats-form :stat-modifier="curCharacter" />
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.items`) }}</label>
+      <editor-link-list
+        :links="curCharacter.startItems"
+        :type="ResourceType.ITEM"
+      />
+    </div>
   </div>
 </template>
 
@@ -16,6 +23,8 @@ import { EntityType } from '@/core/types/game/EntityType';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';
 import EditorEntityStagesList from '@/components/editor/ui/EditorEntityStagesList.vue';
 import EditorStatsForm from '@/components/editor/forms/EditorStatsForm.vue';
+import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
+import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
   components: {
@@ -26,6 +35,7 @@ export default defineComponent({
     EditorCheckbox,
     EditorEntityStagesList,
     EditorStatsForm,
+    EditorLinkList,
   },
   name: 'EditorCharacterParams',
   props: {
@@ -42,6 +52,7 @@ export default defineComponent({
       EntityType,
       curCharacter,
       emit,
+      ResourceType,
     };
   },
 });
@@ -52,9 +63,9 @@ export default defineComponent({
   width: 100px;
 }
 
-.object-split {
+.character-split {
   display: flex;
-  align-characters: center;
+  align-items: center;
   justify-content: flex-start;
   gap: 24px;
 
