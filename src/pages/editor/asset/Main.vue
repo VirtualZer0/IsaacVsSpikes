@@ -22,7 +22,7 @@ import { defineComponent, Ref, ref } from 'vue';
 
 import { useRoute, useRouter } from 'vue-router';
 import { useEditorStore } from '@/store/editor';
-import { Asset } from '@/core/classes/game/Asset';
+import { Asset } from '@/core/classes/game/resources/Asset';
 import { useMainStore } from '@/store/main';
 import reactiveCopy from '@/core/utils/reactiveCopy';
 import { restoreClass } from '@/core/utils/restoreClass';

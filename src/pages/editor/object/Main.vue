@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditorStore } from '@/store/editor';
-import { EntityObject } from '@/core/classes/game/EntityObject';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
 import { v4 as uuid } from 'uuid';
 import { useMainStore } from '@/store/main';
 import reactiveCopy from '@/core/utils/reactiveCopy';

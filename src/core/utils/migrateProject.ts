@@ -1,20 +1,20 @@
 import { useEditorStore } from '@/store/editor';
-import { Room } from '../classes/game/Room';
+import { Room } from '../classes/game/resources/Room';
 import { restoreMap } from './restoreMap';
 import IBaseFS from '@/utils/uniFS/IBaseFS';
 import { restoreClass, upgradeClass } from './restoreClass';
 import { asyncWait } from './asyncWait';
 import { fancyLog } from './fancyLog';
-import { Asset } from '../classes/game/Asset';
-import { DoorDesc } from '../classes/game/DoorDesc';
-import { Item } from '../classes/game/Item';
-import { Level } from '../classes/game/Level';
-import { Monster } from '../classes/game/Monster';
+import { Asset } from '../classes/game/resources/Asset';
+import { DoorDesc } from '../classes/game/resources/DoorDesc';
+import { Item } from '../classes/game/resources/Item';
+import { Level } from '../classes/game/resources/Level';
+import { Monster } from '../classes/game/resources/Monster';
 import { Resource } from '../classes/base/Resource';
-import { RoomScene } from '../classes/game/sub/room/RoomScene';
-import { EntityInstance } from '../classes/game/sub/gfx/EntityInstance';
+import { RoomScene } from '../classes/game/resources/sub/room/RoomScene';
+import { EntityInstance } from '../classes/game/resources/sub/gfx/EntityInstance';
 import { restoreEvents } from './restoreEvents';
-import { EntityObject } from '../classes/game/EntityObject';
+import { EntityObject } from '../classes/game/resources/EntityObject';
 
 let editor: ReturnType<typeof useEditorStore>;
 

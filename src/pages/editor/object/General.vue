@@ -25,7 +25,7 @@
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
-import { EntityObject } from '@/core/classes/game/EntityObject';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
 import { defineComponent, PropType, reactive } from 'vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 

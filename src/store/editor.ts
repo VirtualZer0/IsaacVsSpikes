@@ -1,26 +1,26 @@
 import { Resource } from '@/core/classes/base/Resource';
-import { Item } from '@/core/classes/game/Item';
-import { Level } from '@/core/classes/game/Level';
-import { Monster } from '@/core/classes/game/Monster';
-import { Room } from '@/core/classes/game/Room';
+import { Item } from '@/core/classes/game/resources/Item';
+import { Level } from '@/core/classes/game/resources/Level';
+import { Monster } from '@/core/classes/game/resources/Monster';
+import { Room } from '@/core/classes/game/resources/Room';
 import IBaseFS from '@/utils/uniFS/IBaseFS';
 
 import { v4 as uuid } from 'uuid';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 import { createFS } from '@/utils/uniFS/createFS';
-import { Asset } from '@/core/classes/game/Asset';
+import { Asset } from '@/core/classes/game/resources/Asset';
 
 import { restoreClass } from '@/core/utils/restoreClass';
 import { restoreEvents } from '@/core/utils/restoreEvents';
-import { DoorDesc } from '@/core/classes/game/DoorDesc';
+import { DoorDesc } from '@/core/classes/game/resources/DoorDesc';
 import { runMigration } from '@/core/utils/migrateProject';
 import { fancyLog } from '@/core/utils/fancyLog';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
-import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
-import { EntityObject } from '@/core/classes/game/EntityObject';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/resources/sub/room/RoomScene';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { AssetType } from '@/core/types/game/AssetType';
-import { Character } from '@/core/classes/game/Character';
+import { Character } from '@/core/classes/game/resources/Character';
 
 /** Текущая версия проекта */
 const CURRENT_VERSION = 7;

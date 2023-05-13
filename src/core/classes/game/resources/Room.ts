@@ -1,9 +1,9 @@
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
-import { Resource } from '../base/Resource';
-import { LocaleText } from '../base/LocaleText';
+import { Resource } from '../../base/Resource';
+import { LocaleText } from '../../base/LocaleText';
 import { RoomEvent } from './sub/room/RoomEvent';
-import { ResourceLink, WeightedResourceLink } from '../base/ResourceLink';
-import { RoomType } from '../../types/game/RoomType';
+import { ResourceLink, WeightedResourceLink } from '../../base/ResourceLink';
+import { RoomType } from '../../../types/game/RoomType';
 import { RoomScene } from './sub/room/RoomScene';
 
 export class Room extends Resource {

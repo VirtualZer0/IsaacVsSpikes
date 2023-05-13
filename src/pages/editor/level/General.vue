@@ -74,7 +74,7 @@
 
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
-import { Level } from '@/core/classes/game/Level';
+import { Level } from '@/core/classes/game/resources/Level';
 import { defineComponent, PropType, ref } from 'vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';

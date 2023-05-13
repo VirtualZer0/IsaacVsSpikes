@@ -1,6 +1,6 @@
 import { ItemPool } from '@/core/types/game/ItemPool';
-import { WeightedResourceLink } from '../base/ResourceLink';
-import { EntityObject } from './EntityObject';
+import { WeightedResourceLink } from '../../../base/ResourceLink';
+import { EntityObject } from '../EntityObject';
 
 export class LootTable {
   weight = 1;

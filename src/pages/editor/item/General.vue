@@ -30,7 +30,7 @@
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
-import { Item } from '@/core/classes/game/Item';
+import { Item } from '@/core/classes/game/resources/Item';
 import { defineComponent, PropType, reactive } from 'vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 import EditorCombobox from '@/components/editor/ui/EditorCombobox.vue';

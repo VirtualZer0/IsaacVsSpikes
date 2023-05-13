@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Level } from '@/core/classes/game/Level';
+import { Level } from '@/core/classes/game/resources/Level';
 import { defineComponent, PropType } from 'vue';
 import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
 import { RoomType } from '@/core/types/game/RoomType';

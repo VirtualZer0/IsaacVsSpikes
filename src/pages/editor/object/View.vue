@@ -57,9 +57,9 @@
 
 <script setup lang="ts">
 import EditorLink from '@/components/editor/ui/EditorLink.vue';
-import { EntityObject } from '@/core/classes/game/EntityObject';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
 import { PropType, ref, computed } from 'vue';
-import { SpriteAnimation } from '@/core/classes/game/sub/gfx/SpriteAnimation';
+import { SpriteAnimation } from '@/core/classes/game/resources/sub/gfx/SpriteAnimation';
 import EditorAnimationList from '@/components/editor/ui/EditorAnimationList.vue';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';

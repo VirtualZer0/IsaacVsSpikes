@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { DoorDesc } from '@/core/classes/game/DoorDesc';
+import { DoorDesc } from '@/core/classes/game/resources/DoorDesc';
 import { defineComponent, PropType, ref } from 'vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';

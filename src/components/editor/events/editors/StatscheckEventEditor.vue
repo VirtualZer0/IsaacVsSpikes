@@ -119,7 +119,7 @@ import EventIcon from '../EventIcon.vue';
 
 import EditorCheckbox from '../../ui/EditorCheckbox.vue';
 
-import { RoomStatsCheckEvent } from '@/core/classes/game/sub/room/RoomStatsCheckEvent';
+import { RoomStatsCheckEvent } from '@/core/classes/game/resources/sub/room/RoomStatsCheckEvent';
 import EditorLinkList from '../../ui/EditorLinkList.vue';
 import EditorTagList from '../../ui/EditorTagList.vue';
 import EditorHearts from '../../ui/EditorHearts.vue';

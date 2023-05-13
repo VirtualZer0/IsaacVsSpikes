@@ -83,8 +83,8 @@
 import Sprite from '@/components/gfx/Sprite.vue';
 import { Entity } from '@/core/classes/base/Entity';
 import { ResourceLink } from '@/core/classes/base/ResourceLink';
-import { EntityObject } from '@/core/classes/game/EntityObject';
-import { Monster } from '@/core/classes/game/Monster';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
+import { Monster } from '@/core/classes/game/resources/Monster';
 import { library } from '@/core/Core';
 import { EntityType } from '@/core/types/game/EntityType';
 import { ResourceType } from '@/core/types/game/ResourceType';

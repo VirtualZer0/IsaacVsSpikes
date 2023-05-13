@@ -142,11 +142,11 @@ import { defineComponent } from 'vue';
 import { Resource } from '@/core/classes/base/Resource';
 import { v4 as uuid } from 'uuid';
 import { useMainStore } from '@/store/main';
-import { Asset } from '@/core/classes/game/Asset';
+import { Asset } from '@/core/classes/game/resources/Asset';
 import { restoreClass } from '@/core/utils/restoreClass';
-import { Level } from '@/core/classes/game/Level';
-import { Room } from '@/core/classes/game/Room';
-import { Item } from '@/core/classes/game/Item';
+import { Level } from '@/core/classes/game/resources/Level';
+import { Room } from '@/core/classes/game/resources/Room';
+import { Item } from '@/core/classes/game/resources/Item';
 
 import EditorResPreview from '@/components/editor/ui/EditorResPreview.vue';
 
@@ -154,8 +154,8 @@ import { library } from '@/core/Core';
 import { restoreEvents } from '@/core/utils/restoreEvents';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { ResourceCollectionType } from '@/core/types/game/ResourceCollectionType';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
-import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/resources/sub/room/RoomScene';
 import { AssetType } from '@/core/types/game/AssetType';
 
 export default defineComponent({

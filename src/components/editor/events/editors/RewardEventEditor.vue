@@ -96,7 +96,7 @@ import EventIcon from '../EventIcon.vue';
 import EditorCheckbox from '../../ui/EditorCheckbox.vue';
 import EditorCombobox from '../../ui/EditorCombobox.vue';
 
-import { RoomRewardEvent } from '@/core/classes/game/sub/room/RoomRewardEvent';
+import { RoomRewardEvent } from '@/core/classes/game/resources/sub/room/RoomRewardEvent';
 import EditorLinkList from '../../ui/EditorLinkList.vue';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { ItemPool } from '@/core/types/game/ItemPool';

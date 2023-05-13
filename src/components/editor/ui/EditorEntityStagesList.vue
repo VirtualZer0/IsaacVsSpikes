@@ -41,8 +41,8 @@
 <script lang="ts" setup>
 import { PropType, ref } from 'vue';
 import Sprite from '@/components/gfx/Sprite.vue';
-import { EntityObject } from '@/core/classes/game/EntityObject';
-import { IEntityObjectData } from '@/core/classes/game/sub/entityObject/IEntityObjectData';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
+import { IEntityObjectData } from '@/core/classes/game/resources/sub/entityObject/IEntityObjectData';
 import { computed } from '@vue/reactivity';
 import EditorCombobox from './EditorCombobox.vue';
 

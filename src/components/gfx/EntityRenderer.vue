@@ -46,7 +46,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
 import { library } from '@/core/Core';
 import { EntityType } from '@/core/types/game/EntityType';
 import { Entity } from '@/core/classes/base/Entity';

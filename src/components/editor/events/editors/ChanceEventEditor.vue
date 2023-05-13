@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { RoomChanceEvent } from '@/core/classes/game/sub/room/RoomChanceEvent';
+import { RoomChanceEvent } from '@/core/classes/game/resources/sub/room/RoomChanceEvent';
 import { defineComponent, PropType, ref } from 'vue';
 
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';

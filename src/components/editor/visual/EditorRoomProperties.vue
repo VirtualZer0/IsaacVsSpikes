@@ -57,13 +57,13 @@
 </template>
 <script lang="ts" setup>
 import { PropType, ref } from 'vue';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
 import EditorCombobox from '../ui/EditorCombobox.vue';
 import { Entity } from '@/core/classes/base/Entity';
 import { EntityType } from '@/core/types/game/EntityType';
 import { library } from '@/core/Core';
 import { ResourceType } from '@/core/types/game/ResourceType';
-import { Monster } from '@/core/classes/game/Monster';
+import { Monster } from '@/core/classes/game/resources/Monster';
 import EditorCheckbox from '../ui/EditorCheckbox.vue';
 
 const props = defineProps({

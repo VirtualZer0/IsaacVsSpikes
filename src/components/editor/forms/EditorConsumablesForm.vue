@@ -28,7 +28,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { CharacterConsumables } from '@/core/classes/game/sub/character/CharacterConsumables';
+import { CharacterConsumables } from '@/core/classes/game/resources/sub/character/CharacterConsumables';
 import { PropType, ref } from 'vue';
 
 import EditorCheckbox from '../ui/EditorCheckbox.vue';

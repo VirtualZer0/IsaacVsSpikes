@@ -19,4 +19,10 @@ export class EntityInstance {
     this.srcId = entity.id;
     this.type = entity.type;
   }
+
+  static create(entity: Entity): EntityInstance {
+    const instance = new EntityInstance();
+    instance.setSource(entity);
+    return instance;
+  }
 }

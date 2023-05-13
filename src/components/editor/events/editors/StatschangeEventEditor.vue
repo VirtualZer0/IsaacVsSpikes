@@ -29,13 +29,13 @@ import EventIcon from '../EventIcon.vue';
 import EditorCheckbox from '../../ui/EditorCheckbox.vue';
 import EditorTagList from '../../ui/EditorTagList.vue';
 
-import { RoomStatsChangeEvent } from '@/core/classes/game/sub/room/RoomStatsChangeEvent';
+import { RoomStatsChangeEvent } from '@/core/classes/game/resources/sub/room/RoomStatsChangeEvent';
 import { isArray } from '@vue/shared';
 import EditorCombobox from '../../ui/EditorCombobox.vue';
 import { DamageType } from '@/core/types/game/DamageType';
 
 import i18n from '@/i18n';
-import { CharacterHearts } from '@/core/classes/game/sub/character/CharacterHealth';
+import { CharacterHearts } from '@/core/classes/game/resources/sub/character/CharacterHealth';
 import EditorConsumablesForm from '../../forms/EditorConsumablesForm.vue';
 import EditorStatsForm from '../../forms/EditorStatsForm.vue';
 

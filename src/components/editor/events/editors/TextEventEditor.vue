@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { RoomTextEvent } from '@/core/classes/game/sub/room/RoomTextEvent';
+import { RoomTextEvent } from '@/core/classes/game/resources/sub/room/RoomTextEvent';
 import { defineComponent, PropType } from 'vue';
 
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';

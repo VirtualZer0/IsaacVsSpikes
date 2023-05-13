@@ -70,8 +70,8 @@ import {
   PropType,
   ref,
 } from 'vue';
-import { RoomEventType } from '@/core/classes/game/sub/room/RoomEventType';
-import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
+import { RoomEventType } from '@/core/classes/game/resources/sub/room/RoomEventType';
+import { RoomEvent } from '@/core/classes/game/resources/sub/room/RoomEvent';
 import { computed } from '@vue/reactivity';
 
 import EventIcon from './EventIcon.vue';

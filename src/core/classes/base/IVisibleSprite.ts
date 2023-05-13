@@ -1,4 +1,4 @@
-import { SpriteAnimation } from '../game/sub/gfx/SpriteAnimation';
+import { SpriteAnimation } from '../game/resources/sub/gfx/SpriteAnimation';
 
 export interface IVisibleSprite {
   animations: SpriteAnimation[];

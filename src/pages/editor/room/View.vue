@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import EditorRoomVisual from '@/components/editor/visual/EditorRoomVisual.vue';
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import { defineComponent, PropType, reactive } from 'vue';
 
 export default defineComponent({

@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ResourceLink } from '@/core/classes/base/ResourceLink';
-import { SpriteAnimation } from '@/core/classes/game/sub/gfx/SpriteAnimation';
+import { SpriteAnimation } from '@/core/classes/game/resources/sub/gfx/SpriteAnimation';
 import { core } from '@/core/Core';
 import { useEditorStore } from '@/store/editor';
 import { watch } from 'vue';

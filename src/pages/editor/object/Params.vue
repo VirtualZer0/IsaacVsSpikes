@@ -49,7 +49,7 @@
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
-import { EntityObject } from '@/core/classes/game/EntityObject';
+import { EntityObject } from '@/core/classes/game/resources/EntityObject';
 import { defineComponent, onBeforeMount, PropType, reactive } from 'vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
 import EditorCombobox from '@/components/editor/ui/EditorCombobox.vue';
@@ -58,16 +58,16 @@ import { useI18n } from 'vue-i18n';
 import {
   IEntityObjectData,
   createEntityObjectData,
-} from '@/core/classes/game/sub/entityObject/IEntityObjectData';
+} from '@/core/classes/game/resources/sub/entityObject/IEntityObjectData';
 import {
   createStatModifier,
   IStatModifier,
-} from '@/core/classes/game/sub/character/IStatModifier';
+} from '@/core/classes/game/resources/sub/character/IStatModifier';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';
 import EditorEntityStagesList from '@/components/editor/ui/EditorEntityStagesList.vue';
 import EditorStatsForm from '@/components/editor/forms/EditorStatsForm.vue';
 import EditorLootTable from '@/components/editor/ui/EditorLootTable.vue';
-import { LootTable } from '@/core/classes/game/LootTable';
+import { LootTable } from '@/core/classes/game/resources/sub/LootTable';
 
 export default defineComponent({
   components: {

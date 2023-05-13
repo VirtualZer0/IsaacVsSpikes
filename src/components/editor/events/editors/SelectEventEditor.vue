@@ -159,7 +159,7 @@
 import {
   RoomSelectEvent,
   RoomSelectEventVariant,
-} from '@/core/classes/game/sub/room/RoomSelectEvent';
+} from '@/core/classes/game/resources/sub/room/RoomSelectEvent';
 import { defineComponent, PropType, ref } from 'vue';
 
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';

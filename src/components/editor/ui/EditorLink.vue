@@ -59,7 +59,7 @@ import EditorResPreview from './EditorResPreview.vue';
 import { useEditorStore } from '@/store/editor';
 import { library } from '@/core/Core';
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
-import { Asset } from '@/core/classes/game/Asset';
+import { Asset } from '@/core/classes/game/resources/Asset';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { AssetType } from '@/core/types/game/AssetType';
 

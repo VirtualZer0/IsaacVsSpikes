@@ -90,7 +90,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { IStatModifier } from '@/core/classes/game/sub/character/IStatModifier';
+import { IStatModifier } from '@/core/classes/game/resources/sub/character/IStatModifier';
 import { DamageType } from '@/core/types/game/DamageType';
 import { PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';

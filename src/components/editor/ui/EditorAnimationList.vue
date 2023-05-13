@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { PropType, ref } from 'vue';
 import Sprite from '@/components/gfx/Sprite.vue';
-import { SpriteAnimation } from '@/core/classes/game/sub/gfx/SpriteAnimation';
+import { SpriteAnimation } from '@/core/classes/game/resources/sub/gfx/SpriteAnimation';
 import { IVisibleSprite } from '@/core/classes/base/IVisibleSprite';
 
 const props = defineProps({

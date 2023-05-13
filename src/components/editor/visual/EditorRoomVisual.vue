@@ -84,11 +84,11 @@
 <script lang="ts" setup>
 import RoomRenderer from '@/components/gfx/RoomRenderer.vue';
 import { Entity } from '@/core/classes/base/Entity';
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import { PropType, reactive, ref, watch } from 'vue';
 import EditorRoomEntityList from './EditorRoomEntityList.vue';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
-import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/resources/sub/room/RoomScene';
 import EditorRoomScenes from './EditorRoomScenes.vue';
 import { computed } from 'vue';
 import EditorRoomProperties from './EditorRoomProperties.vue';

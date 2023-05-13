@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Room } from '../../core/classes/game/Room';
+import { Room } from '../../core/classes/game/resources/Room';
 import {
   computed,
   onBeforeUnmount,
@@ -67,12 +67,12 @@ import {
   ref,
 } from 'vue';
 import { library } from '@/core/Core';
-import { Level } from '@/core/classes/game/Level';
+import { Level } from '@/core/classes/game/resources/Level';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { fitAspectRatio } from '@/core/utils/fitAspectRatio';
 import EntityRenderer from './EntityRenderer.vue';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
-import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/resources/sub/room/RoomScene';
 import { v4 as uuid } from 'uuid';
 import EditorRoomContextMenu from '../editor/visual/EditorRoomContextMenu.vue';
 import { restoreClass } from '@/core/utils/restoreClass';

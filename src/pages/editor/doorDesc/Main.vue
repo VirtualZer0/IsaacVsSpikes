@@ -20,7 +20,7 @@
 import { defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditorStore } from '@/store/editor';
-import { DoorDesc } from '@/core/classes/game/DoorDesc';
+import { DoorDesc } from '@/core/classes/game/resources/DoorDesc';
 import { v4 as uuid } from 'uuid';
 import { useMainStore } from '@/store/main';
 import reactiveCopy from '@/core/utils/reactiveCopy';

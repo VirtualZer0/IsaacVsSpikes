@@ -51,11 +51,11 @@ import { defineComponent, PropType, ref } from 'vue';
 
 import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
 import EventIcon from '../EventIcon.vue';
-import { RoomEffectEvent } from '@/core/classes/game/sub/room/RoomEffectEvent';
+import { RoomEffectEvent } from '@/core/classes/game/resources/sub/room/RoomEffectEvent';
 import EditorLink from '../../ui/EditorLink.vue';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { AssetType } from '@/core/types/game/AssetType';
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import EditorCombobox from '../../ui/EditorCombobox.vue';
 import EditorTagList from '../../ui/EditorTagList.vue';
 

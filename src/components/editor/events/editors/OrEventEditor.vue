@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { RoomOrEvent } from '@/core/classes/game/sub/room/RoomOrEvent';
+import { RoomOrEvent } from '@/core/classes/game/resources/sub/room/RoomOrEvent';
 import { defineComponent, PropType, ref } from 'vue';
 
 import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';

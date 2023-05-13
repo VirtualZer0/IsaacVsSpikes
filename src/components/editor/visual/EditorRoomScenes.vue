@@ -62,13 +62,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import { PropType, computed, reactive } from 'vue';
 import EditorLocaleInput from '../ui/EditorLocaleInput.vue';
-import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { RoomScene } from '@/core/classes/game/resources/sub/room/RoomScene';
 import reactiveCopy from '@/core/utils/reactiveCopy';
 import { restoreClass } from '@/core/utils/restoreClass';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
 import { v4 as uuid } from 'uuid';
 
 const props = defineProps({

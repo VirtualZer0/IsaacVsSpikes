@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditorStore } from '@/store/editor';
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import { v4 as uuid } from 'uuid';
 import { useMainStore } from '@/store/main';
 import reactiveCopy from '@/core/utils/reactiveCopy';
@@ -32,8 +32,8 @@ import reactiveCopy from '@/core/utils/reactiveCopy';
 import EditorResourceTop from '@/components/editor/EditorResourceTop.vue';
 import EditorResourceMenu from '@/components/editor/EditorResourceMenu.vue';
 import { restoreEvents } from '@/core/utils/restoreEvents';
-import { EntityInstance } from '@/core/classes/game/sub/gfx/EntityInstance';
-import { RoomScene } from '@/core/classes/game/sub/room/RoomScene';
+import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
+import { RoomScene } from '@/core/classes/game/resources/sub/room/RoomScene';
 import { restoreClass } from '@/core/utils/restoreClass';
 import { ResourceType } from '@/core/types/game/ResourceType';
 

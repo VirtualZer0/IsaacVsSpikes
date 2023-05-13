@@ -5,8 +5,8 @@ import { dynamicImportUsingId } from '@/core/utils/dynamicImport';
 import { fancyLog } from '@/core/utils/fancyLog';
 import { useEditorStore } from '@/store/editor';
 import IBaseFS from '@/utils/uniFS/IBaseFS';
-import { Asset } from './Asset';
-import { Item } from './Item';
+import { Asset } from './resources/Asset';
+import { Item } from './resources/Item';
 
 export class Library {
   items: Map<string, Item> = new Map();

@@ -66,8 +66,8 @@
 </template>
 
 <script lang="ts">
-import { CharacterHearts } from '@/core/classes/game/sub/character/CharacterHealth';
-import { CharacterHealthController } from '@/core/classes/game/sub/character/CharacterHealthController';
+import { CharacterHearts } from '@/core/classes/game/resources/sub/character/CharacterHealth';
+import { CharacterHealthController } from '@/core/classes/game/resources/sub/character/CharacterHealthController';
 import { HeartContainerType } from '@/core/types/game/HeartContainerType';
 import { HeartType } from '@/core/types/game/HeartType';
 import { defineComponent, PropType, ref } from 'vue';

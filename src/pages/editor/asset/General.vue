@@ -57,7 +57,7 @@
 import EditorResPreview from '@/components/editor/ui/EditorResPreview.vue';
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
-import { Asset } from '@/core/classes/game/Asset';
+import { Asset } from '@/core/classes/game/resources/Asset';
 import { defineComponent, PropType, ref } from 'vue';
 import { restoreClass } from '@/core/utils/restoreClass';
 import { FSAccessFile } from '@/utils/uniFS/FSAccess/FSAccessFile';

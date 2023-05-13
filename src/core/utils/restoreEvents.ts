@@ -1,15 +1,15 @@
-import { RoomChanceEvent } from '../classes/game/sub/room/RoomChanceEvent';
-import { RoomSelectEvent } from '../classes/game/sub/room/RoomSelectEvent';
-import { RoomEvent } from '../classes/game/sub/room/RoomEvent';
-import { RoomEventType } from '../classes/game/sub/room/RoomEventType';
-import { RoomRewardEvent } from '../classes/game/sub/room/RoomRewardEvent';
-import { RoomStatsChangeEvent } from '../classes/game/sub/room/RoomStatsChangeEvent';
-import { RoomStatsCheckEvent } from '../classes/game/sub/room/RoomStatsCheckEvent';
-import { RoomTextEvent } from '../classes/game/sub/room/RoomTextEvent';
+import { RoomChanceEvent } from '../classes/game/resources/sub/room/RoomChanceEvent';
+import { RoomSelectEvent } from '../classes/game/resources/sub/room/RoomSelectEvent';
+import { RoomEvent } from '../classes/game/resources/sub/room/RoomEvent';
+import { RoomEventType } from '../classes/game/resources/sub/room/RoomEventType';
+import { RoomRewardEvent } from '../classes/game/resources/sub/room/RoomRewardEvent';
+import { RoomStatsChangeEvent } from '../classes/game/resources/sub/room/RoomStatsChangeEvent';
+import { RoomStatsCheckEvent } from '../classes/game/resources/sub/room/RoomStatsCheckEvent';
+import { RoomTextEvent } from '../classes/game/resources/sub/room/RoomTextEvent';
 import { restoreClass } from './restoreClass';
-import { RoomEffectEvent } from '../classes/game/sub/room/RoomEffectEvent';
-import { RoomOrEvent } from '../classes/game/sub/room/RoomOrEvent';
-import { RoomCounterEvent } from '../classes/game/sub/room/RoomCounterEvent';
+import { RoomEffectEvent } from '../classes/game/resources/sub/room/RoomEffectEvent';
+import { RoomOrEvent } from '../classes/game/resources/sub/room/RoomOrEvent';
+import { RoomCounterEvent } from '../classes/game/resources/sub/room/RoomCounterEvent';
 
 /** Восстанавливает типы событий комнат */
 export function restoreEvents(

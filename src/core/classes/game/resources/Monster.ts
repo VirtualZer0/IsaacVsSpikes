@@ -1,9 +1,9 @@
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
-import { LocaleText } from '../base/LocaleText';
-import { ResourceLink } from '../base/ResourceLink';
+import { LocaleText } from '../../base/LocaleText';
+import { ResourceLink } from '../../base/ResourceLink';
 import { useEditorStore } from '@/store/editor';
 import { SpriteAnimation } from './sub/gfx/SpriteAnimation';
-import { Entity } from '../base/Entity';
+import { Entity } from '../../base/Entity';
 import { EntityType } from '@/core/types/game/EntityType';
 
 export class Monster extends Entity {

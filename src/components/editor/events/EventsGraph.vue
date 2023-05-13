@@ -99,17 +99,17 @@
 </template>
 
 <script lang="ts">
-import { RoomEvent } from '@/core/classes/game/sub/room/RoomEvent';
-import { RoomEventType } from '@/core/classes/game/sub/room/RoomEventType';
-import { RoomStatsCheckEvent } from '@/core/classes/game/sub/room/RoomStatsCheckEvent';
-import { RoomSelectEvent } from '@/core/classes/game/sub/room/RoomSelectEvent';
-import { RoomStatsChangeEvent } from '@/core/classes/game/sub/room/RoomStatsChangeEvent';
-import { RoomRewardEvent } from '@/core/classes/game/sub/room/RoomRewardEvent';
-import { RoomTextEvent } from '@/core/classes/game/sub/room/RoomTextEvent';
-import { RoomChanceEvent } from '@/core/classes/game/sub/room/RoomChanceEvent';
-import { RoomEffectEvent } from '@/core/classes/game/sub/room/RoomEffectEvent';
-import { RoomOrEvent } from '@/core/classes/game/sub/room/RoomOrEvent';
-import { RoomCounterEvent } from '@/core/classes/game/sub/room/RoomCounterEvent';
+import { RoomEvent } from '@/core/classes/game/resources/sub/room/RoomEvent';
+import { RoomEventType } from '@/core/classes/game/resources/sub/room/RoomEventType';
+import { RoomStatsCheckEvent } from '@/core/classes/game/resources/sub/room/RoomStatsCheckEvent';
+import { RoomSelectEvent } from '@/core/classes/game/resources/sub/room/RoomSelectEvent';
+import { RoomStatsChangeEvent } from '@/core/classes/game/resources/sub/room/RoomStatsChangeEvent';
+import { RoomRewardEvent } from '@/core/classes/game/resources/sub/room/RoomRewardEvent';
+import { RoomTextEvent } from '@/core/classes/game/resources/sub/room/RoomTextEvent';
+import { RoomChanceEvent } from '@/core/classes/game/resources/sub/room/RoomChanceEvent';
+import { RoomEffectEvent } from '@/core/classes/game/resources/sub/room/RoomEffectEvent';
+import { RoomOrEvent } from '@/core/classes/game/resources/sub/room/RoomOrEvent';
+import { RoomCounterEvent } from '@/core/classes/game/resources/sub/room/RoomCounterEvent';
 
 import { reactive, ref } from 'vue';
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
@@ -119,7 +119,7 @@ import { v4 as uuid, NIL as nilUUid } from 'uuid';
 import EventElement from './EventElement.vue';
 import EventIcon from './EventIcon.vue';
 import { useI18n } from 'vue-i18n';
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 
 /** Событие создания подключения */
 type ConnectionEvent = {

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import { defineComponent, PropType } from 'vue';
 
 import EventsGraph from '@/components/editor/events/EventsGraph.vue';

@@ -1,5 +1,5 @@
 import { AnimationState } from '@/core/types/gfx/AnimationState';
-import { AnimationManager } from './AnimationManager';
+
 import { SpriteAnimation } from './SpriteAnimation';
 
 export class SpriteController {
@@ -8,15 +8,10 @@ export class SpriteController {
   playbackRate = 1;
 
   el: HTMLElement | null = null;
-  manager: AnimationManager | null = null;
   animation: Animation | null | undefined = null;
 
   public constructor(source: SpriteAnimation) {
     this.source = source;
-  }
-
-  public bindManager(manager: AnimationManager) {
-    this.manager = manager;
   }
 
   public play() {

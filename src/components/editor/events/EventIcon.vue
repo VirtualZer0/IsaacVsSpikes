@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { RoomEventType } from '@/core/classes/game/sub/room/RoomEventType';
+import { RoomEventType } from '@/core/classes/game/resources/sub/room/RoomEventType';
 import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({

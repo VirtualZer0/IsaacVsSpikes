@@ -1,4 +1,4 @@
-import { Monster } from '@/core/classes/game/Monster';
+import { Monster } from '@/core/classes/game/resources/Monster';
 
 const monster: Monster = Object.assign(new Monster(), {
   id: '53c7cbb5-9956-4a76-a605-2f99823653b3',

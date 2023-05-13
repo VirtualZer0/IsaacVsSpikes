@@ -1,5 +1,5 @@
 import { EntityType } from '@/core/types/game/EntityType';
-import { SpriteAnimation } from '../game/sub/gfx/SpriteAnimation';
+import { SpriteAnimation } from '../game/resources/sub/gfx/SpriteAnimation';
 import { Resource } from './Resource';
 import { ResourceLink } from './ResourceLink';
 import { useEditorStore } from '@/store/editor';

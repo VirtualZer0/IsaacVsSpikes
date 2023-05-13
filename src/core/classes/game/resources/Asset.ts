@@ -1,10 +1,10 @@
 import IBaseFS from '@/utils/uniFS/IBaseFS';
 import IFile from '@/utils/uniFS/IFile';
-import { Resource } from '../base/Resource';
+import { Resource } from '../../base/Resource';
 
 import { v4 as uuid } from 'uuid';
 import { detectFileType } from '@/core/utils/detectFileType';
-import { ResourceFilter } from '../base/ResourceFilter';
+import { ResourceFilter } from '../../base/ResourceFilter';
 import IDirectory from '@/utils/uniFS/IDirectory';
 import { useEditorStore } from '@/store/editor';
 import { AssetType } from '@/core/types/game/AssetType';

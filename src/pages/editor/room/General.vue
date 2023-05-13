@@ -91,7 +91,7 @@
 <script lang="ts">
 import EditorLocaleInput from '@/components/editor/ui/EditorLocaleInput.vue';
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
-import { Room } from '@/core/classes/game/Room';
+import { Room } from '@/core/classes/game/resources/Room';
 import { computed, defineComponent, PropType, reactive } from 'vue';
 import EditorLinkList from '@/components/editor/ui/EditorLinkList.vue';
 import EditorLink from '@/components/editor/ui/EditorLink.vue';

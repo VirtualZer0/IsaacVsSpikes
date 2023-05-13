@@ -85,7 +85,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { LootTable } from '@/core/classes/game/LootTable';
+import { LootTable } from '@/core/classes/game/resources/sub/LootTable';
 import { PropType, reactive, ref } from 'vue';
 import EditorWeightedLinkList from './EditorWeightedLinkList.vue';
 import EditorCombobox from './EditorCombobox.vue';

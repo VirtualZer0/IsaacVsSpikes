@@ -1,7 +1,7 @@
 import { ItemPool } from '@/core/types/game/ItemPool';
 import { SpriteSource } from '@/core/types/gfx/SpriteSource';
-import { Resource } from '../base/Resource';
-import { LocaleText } from '../base/LocaleText';
+import { Resource } from '../../base/Resource';
+import { LocaleText } from '../../base/LocaleText';
 import {
   createStatModifier,
   IStatModifier,

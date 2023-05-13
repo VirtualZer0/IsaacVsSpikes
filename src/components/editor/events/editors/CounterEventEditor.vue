@@ -60,7 +60,7 @@
 import {
   CounterEventScope,
   RoomCounterEvent,
-} from '@/core/classes/game/sub/room/RoomCounterEvent';
+} from '@/core/classes/game/resources/sub/room/RoomCounterEvent';
 import { defineComponent, PropType, ref, watch } from 'vue';
 
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
