@@ -11,6 +11,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.tags`) }}</label>
+      <editor-tag-list :tags="event.tags" />
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
@@ -62,6 +67,7 @@ import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
 import EventIcon from '../EventIcon.vue';
 import { NIL as nilUUid } from 'uuid';
 import { useI18n } from 'vue-i18n';
+import EditorTagList from '../../ui/EditorTagList.vue';
 
 export default defineComponent({
   name: 'ChanceEventEditor',
@@ -69,6 +75,7 @@ export default defineComponent({
     EditorLocaleInput,
     EditorLocaleMultiText,
     EventIcon,
+    EditorTagList,
   },
   props: {
     event: {

@@ -4,16 +4,18 @@ import {
   createWebHistory,
   RouteRecordRaw,
 } from 'vue-router';
-import Home from '../pages/Home.vue';
 
 // Routes for editor screen
 import { EditorRoutes } from './editor';
 
+// Game routes
+import { GameRoutes } from './game';
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Root',
+    redirect: { path: '/game/menu/main-menu' },
   },
   {
     path: '/dev/library',
@@ -28,6 +30,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "editormain" */ '../pages/editor/Main.vue'),
     children: EditorRoutes,
+  },
+
+  {
+    path: '/game',
+    name: 'Game',
+    component: () =>
+      import(/* webpackChunkName: "game" */ '../pages/game/Main.vue'),
+    children: GameRoutes,
   },
 ];
 

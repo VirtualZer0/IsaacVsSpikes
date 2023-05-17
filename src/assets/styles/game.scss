@@ -1,0 +1,16 @@
+.game {
+  .screen {
+    overflow: hidden;
+    min-width: 100vw;
+    max-width: 100vw;
+    min-height: 100vh;
+    max-height: 100vh;
+    margin: 0;
+    font-size: .9vw;
+    font-family: sans-serif;
+
+    button {
+      border: none;
+    }
+  }
+}

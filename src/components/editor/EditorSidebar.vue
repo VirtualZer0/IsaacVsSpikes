@@ -1,5 +1,5 @@
 <template>
-  <aside class="editor-sidebar">
+  <aside class="eui editor-sidebar">
     <button
       class="expand eui circleButton"
       @click="expanded = !expanded"

@@ -10,6 +10,11 @@
       <editor-locale-input class="input" :text="event.name" />
     </div>
 
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.tags`) }}</label>
+      <editor-tag-list :tags="event.tags" />
+    </div>
+
     <div class="vertical-line small">
       <label class="eui label">{{ $t(`editor.variants`) }}</label>
       <div class="variants">

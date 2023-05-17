@@ -5,6 +5,7 @@ import { LevelGenSystemType } from './sub/level/LevelGenSystemType';
 import { RoomRuleGen } from './sub/room/RoomRuleGen';
 import { ResourceLink } from '../../base/ResourceLink';
 import { RoomType } from '../../../types/game/RoomType';
+import { LootTable } from './sub/LootTable';
 
 export class Level extends Resource {
   /** Описание уровня */
@@ -48,6 +49,9 @@ export class Level extends Resource {
 
   /** Правила генерации комнат */
   roomRules: RoomRuleGen[] = [];
+
+  /** Таблица дропа после зачистки комнаты */
+  lootTable: LootTable[] = [];
 
   constructor() {
     super();

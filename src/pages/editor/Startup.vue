@@ -145,6 +145,7 @@ export default defineComponent({
     font-weight: bold;
     font-size: 26px;
     margin-bottom: 50px;
+    text-align: center;
   }
 
   .buttons {

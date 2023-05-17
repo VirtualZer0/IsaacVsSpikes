@@ -67,14 +67,6 @@ export const EditorRoutes = [
             /* webpackChunkName: "editorlevel" */ '../pages/editor/level/View.vue'
           ),
       },
-      {
-        path: 'generation',
-        name: 'EditorLevelGeneration',
-        component: () =>
-          import(
-            /* webpackChunkName: "editorlevel" */ '../pages/editor/level/Generation.vue'
-          ),
-      },
     ],
   },
 

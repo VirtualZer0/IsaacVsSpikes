@@ -119,6 +119,7 @@ const addEntity = (entity: Entity) => {
   instance.setSource(entity);
   instance.x = 200;
   instance.y = 200;
+  instance.animation = entity.animations[0]?.id;
 
   if (entity.animations[0]?.metadata?.width) {
     instance.width =

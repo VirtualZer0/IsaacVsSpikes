@@ -19,6 +19,9 @@ export class RoomEvent extends Resource {
   /** Тип ивента */
   type: RoomEventType = RoomEventType.BASE;
 
+  /** Теги ивента */
+  tags: string[] = [];
+
   /** Координаты ноды */
   pos: { x: number; y: number } = { x: 100, y: 100 };
 

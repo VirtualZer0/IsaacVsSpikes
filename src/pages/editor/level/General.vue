@@ -50,6 +50,12 @@
       </div>
     </div>
 
+    <!-- Loot table -->
+    <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.lootTable`) }}</label>
+      <editor-loot-table :loot-table="curLevel.lootTable" />
+    </div>
+
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.musicStart`) }}</label>
       <editor-link
@@ -80,6 +86,7 @@ import EditorLocaleText from '@/components/editor/ui/EditorLocaleText.vue';
 import EditorCheckbox from '@/components/editor/ui/EditorCheckbox.vue';
 import EditorLink from '@/components/editor/ui/EditorLink.vue';
 import EditorTagList from '@/components/editor/ui/EditorTagList.vue';
+import EditorLootTable from '@/components/editor/ui/EditorLootTable.vue';
 import { ResourceType } from '@/core/types/game/ResourceType';
 
 export default defineComponent({
@@ -89,6 +96,7 @@ export default defineComponent({
     EditorCheckbox,
     EditorLink,
     EditorTagList,
+    EditorLootTable,
   },
   name: 'EditorLevelGeneral',
   props: {

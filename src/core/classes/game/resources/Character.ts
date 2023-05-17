@@ -1,3 +1,5 @@
+import { SpriteSource } from '@/core/types/gfx/SpriteSource';
+import { useEditorStore } from '@/store/editor';
 import { IVisibleSprite } from '../../base/IVisibleSprite';
 import { LocaleText } from '../../base/LocaleText';
 import { Resource } from '../../base/Resource';
@@ -31,5 +33,33 @@ export class Character
     const anim = new SpriteAnimation();
     anim.name = 'idle';
     this.animations.push(anim);
+  }
+
+  override getPreview(): Promise<string> {
+    if (
+      this.animations[0]?.spritesheet &&
+      'src' in this.animations[0]?.spritesheet
+    ) {
+      const sprite = this.animations[0].spritesheet;
+
+      if (typeof sprite.src !== 'string') {
+        const resLink = this.animations[0].spritesheet.src as ResourceLink;
+        const editor = useEditorStore();
+
+        const res = editor.assets.get(resLink.id);
+
+        if (!res) {
+          return super.getPreview();
+        } else {
+          return res.getPreview();
+        }
+      } else {
+        return Promise.resolve(
+          `<img lazy src="/assets/${
+            (this.animations[0].spritesheet as SpriteSource).src
+          }"/>`
+        );
+      }
+    } else return super.getPreview();
   }
 }

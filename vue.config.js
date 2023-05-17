@@ -3,6 +3,9 @@ module.exports = {
 
   css: {
     loaderOptions: {
+      css: {
+        url: false,
+      },
       sass: {
         additionalData: '@import "@/assets/styles/vars.scss";',
       },

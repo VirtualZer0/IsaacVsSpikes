@@ -11,6 +11,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.tags`) }}</label>
+      <editor-tag-list :tags="event.tags" />
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.startDialog`) }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>
@@ -25,7 +30,10 @@
 
     <div class="vertical-line">
       <label class="eui label">{{ $t(`editor.requiredItems`) }}</label>
-      <editor-link-list :links="event.requiredItems" type="items" />
+      <editor-link-list
+        :links="event.requiredItems"
+        :type="ResourceType.ITEM"
+      />
     </div>
 
     <div class="vertical-line">
@@ -45,8 +53,8 @@
           <editor-checkbox v-model="params.enabled" />
           <div class="name">{{ $t(`game.${stat}`) }}</div>
 
-          <div class="checkbox" v-if="params.type == 'boolean'">
-            <editor-checkbox v-model="params.value" />
+          <div class="checkbox" v-if="(params as any).type == 'boolean'">
+            <editor-checkbox v-model="(params as any).value" />
             <div class="sub">{{ $t(`editor.required`) }}</div>
           </div>
 
@@ -124,6 +132,8 @@ import EditorLinkList from '../../ui/EditorLinkList.vue';
 import EditorTagList from '../../ui/EditorTagList.vue';
 import EditorHearts from '../../ui/EditorHearts.vue';
 
+import { ResourceType } from '@/core/types/game/ResourceType';
+
 export default defineComponent({
   name: 'StatscheckEventEditor',
   components: {
@@ -153,6 +163,7 @@ export default defineComponent({
       requiredStats,
       requiredConsumables,
       changeParam,
+      ResourceType,
     };
   },
 });

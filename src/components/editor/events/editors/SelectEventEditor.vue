@@ -11,6 +11,11 @@
     </div>
 
     <div class="vertical-line">
+      <label class="eui label">{{ $t(`editor.tags`) }}</label>
+      <editor-tag-list :tags="event.tags" />
+    </div>
+
+    <div class="vertical-line">
       <label class="eui label">{{ $t('editor.startDialog') }}</label>
       <editor-locale-multi-text class="input" :text="event.startDialog" />
     </div>

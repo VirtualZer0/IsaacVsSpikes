@@ -41,7 +41,8 @@
           <EditorCombobox
             v-if="parent"
             :items="(animationList as any) || []"
-            :value="entity.animation"
+            :value="(selectedAnimation as string)"
+            @change="curEntity.animation = $event"
           />
         </div>
         <div class="vertical-line">
@@ -56,7 +57,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { PropType, ref } from 'vue';
+import { computed, PropType, ref } from 'vue';
 import { EntityInstance } from '@/core/classes/game/resources/sub/gfx/EntityInstance';
 import EditorCombobox from '../ui/EditorCombobox.vue';
 import { Entity } from '@/core/classes/base/Entity';
@@ -73,6 +74,7 @@ const props = defineProps({
   },
 });
 
+const curEntity = ref(props.entity);
 const emits = defineEmits(['close']);
 const parent = ref<Entity | null>(null);
 
@@ -88,9 +90,17 @@ if (props.entity.type == EntityType.MONSTER) {
   ) as Entity;
 }
 
+const selectedAnimation = computed(() => {
+  return (
+    parent.value?.animations.find(
+      (anim) => anim.id == curEntity.value.animation
+    )?.id || parent.value?.animations[0].id
+  );
+});
+
 const animationList = parent.value?.animations.map((anim) => ({
   name: anim.name,
-  value: anim.name,
+  value: anim.id,
 }));
 </script>
 <style lang="scss" scoped>

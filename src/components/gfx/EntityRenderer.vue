@@ -11,9 +11,8 @@
       :style="{
         transform: `rotate(${entity.rotation}deg)`,
       }"
-      :animation="
-        entityData?.animations.find((anim) => anim.name === entity.animation)
-      "
+      :key="curAnim?.id"
+      :animation="curAnim"
       :width="curEntity.width / scale"
       :height="curEntity.height / scale"
       :saveAspect="curEntity.saveAspectRatio"
@@ -51,7 +50,7 @@ import { library } from '@/core/Core';
 import { EntityType } from '@/core/types/game/EntityType';
 import { Entity } from '@/core/classes/base/Entity';
 import { ResourceType } from '@/core/types/game/ResourceType';
-import { PropType, reactive } from 'vue';
+import { computed, PropType, reactive } from 'vue';
 import Sprite from './Sprite.vue';
 
 const props = defineProps({
@@ -92,6 +91,12 @@ const entityData = library.getResourceById<Entity>(
     ? ResourceType.MONSTER
     : ResourceType.OBJECT
 );
+
+const curAnim = computed(() =>
+  entityData?.animations.find((anim) => anim.id === curEntity.animation)
+);
+
+console.log(entityData);
 </script>
 <style lang="scss" scoped>
 .entity {

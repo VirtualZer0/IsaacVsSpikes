@@ -8,6 +8,8 @@ import {
 } from './sub/character/IStatModifier';
 import { SpriteAnimation } from './sub/gfx/SpriteAnimation';
 import { ItemEffect } from './sub/item/ItemEffect';
+import { ResourceLink } from '../../base/ResourceLink';
+import { useEditorStore } from '@/store/editor';
 
 export class Item extends Resource {
   /** Анимации предмета */
@@ -40,15 +42,29 @@ export class Item extends Resource {
 
   override getPreview(): Promise<string> {
     if (
-      this.animations.length > 0 &&
-      this.animations[0].spritesheet &&
-      'src' in this.animations[0].spritesheet
+      this.animations[0]?.spritesheet &&
+      'src' in this.animations[0]?.spritesheet
     ) {
-      return Promise.resolve(
-        `<img lazy src="/assets/${
-          (this.animations[0].spritesheet as SpriteSource).src
-        }"/>`
-      );
+      const sprite = this.animations[0].spritesheet;
+
+      if (typeof sprite.src !== 'string') {
+        const resLink = this.animations[0].spritesheet.src as ResourceLink;
+        const editor = useEditorStore();
+
+        const res = editor.assets.get(resLink.id);
+
+        if (!res) {
+          return super.getPreview();
+        } else {
+          return res.getPreview();
+        }
+      } else {
+        return Promise.resolve(
+          `<img lazy src="/assets/${
+            (this.animations[0].spritesheet as SpriteSource).src
+          }"/>`
+        );
+      }
     } else return super.getPreview();
   }
 }
