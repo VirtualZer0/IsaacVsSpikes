@@ -29,6 +29,7 @@ import { defineComponent, PropType } from 'vue';
 import EditorLocaleMultiText from '@/components/editor/ui/EditorLocaleMultiText.vue';
 import EditorLocaleInput from '../../ui/EditorLocaleInput.vue';
 import EventIcon from '../EventIcon.vue';
+import EditorTagList from '../../ui/EditorTagList.vue';
 
 export default defineComponent({
   name: 'TextEventEditor',
@@ -36,6 +37,7 @@ export default defineComponent({
     EditorLocaleInput,
     EditorLocaleMultiText,
     EventIcon,
+    EditorTagList,
   },
   props: {
     event: {

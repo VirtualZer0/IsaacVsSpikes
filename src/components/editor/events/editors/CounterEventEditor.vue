@@ -76,6 +76,7 @@ import { NIL as nilUUid } from 'uuid';
 import { useI18n } from 'vue-i18n';
 import { CounterEventMode } from '@/core/types/game/CounterEventMode';
 import { CounterEventCheck } from '@/core/types/game/CounterEventCheck';
+import EditorTagList from '../../ui/EditorTagList.vue';
 
 export default defineComponent({
   name: 'CounterEventEditor',
@@ -84,6 +85,7 @@ export default defineComponent({
     EditorLocaleMultiText,
     EventIcon,
     EditorCombobox,
+    EditorTagList,
   },
   props: {
     event: {

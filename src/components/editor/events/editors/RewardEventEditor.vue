@@ -106,6 +106,7 @@ import EditorLinkList from '../../ui/EditorLinkList.vue';
 import { ResourceType } from '@/core/types/game/ResourceType';
 import { ItemPool } from '@/core/types/game/ItemPool';
 import { useI18n } from 'vue-i18n';
+import EditorTagList from '../../ui/EditorTagList.vue';
 
 export default defineComponent({
   name: 'RewardEventEditor',
@@ -116,6 +117,7 @@ export default defineComponent({
     EditorCheckbox,
     EditorLinkList,
     EditorCombobox,
+    EditorTagList,
   },
   props: {
     event: {

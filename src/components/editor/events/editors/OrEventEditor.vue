@@ -85,6 +85,7 @@ import EditorCombobox from '../../ui/EditorCombobox.vue';
 import { NIL as nilUUid } from 'uuid';
 import { useI18n } from 'vue-i18n';
 import { OrChecksMode } from '@/core/types/game/OrChecksMode';
+import EditorTagList from '../../ui/EditorTagList.vue';
 
 export default defineComponent({
   name: 'OrEventEditor',
@@ -93,6 +94,7 @@ export default defineComponent({
     EventIcon,
     EditorCheckbox,
     EditorCombobox,
+    EditorTagList,
   },
   props: {
     event: {
